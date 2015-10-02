@@ -1,0 +1,23 @@
+﻿Build started 16.9.2015 12:18:06.
+     1>Project "C:\Users\VKraka\Documents\World_of_Wraith_backup\Source\WOW_Server\WOW_Server.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\..\cppconn\include /I..\..\boost_1_59_0 /I..\..\Irrlicht\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt CWOWServer.cpp
+         CWOWServer.cpp
+     1>c:\users\vkraka\documents\world_of_wraith_backup\cppconn\include\cppconn\sqlstring.h(39): warning C4251: 'sql::SQLString::realStr' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'sql::SQLString'
+     1>c:\users\vkraka\documents\world_of_wraith_backup\cppconn\include\cppconn\exception.h(61): warning C4251: 'sql::SQLException::sql_state' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'sql::SQLException'
+     1>c:\users\vkraka\documents\world_of_wraith_backup\cppconn\include\cppconn\exception.h(145): warning C4251: 'sql::SQLUnsupportedOptionException::option' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of struct 'sql::SQLUnsupportedOptionException'
+     1>c:\users\vkraka\documents\world_of_wraith_backup\cppconn\include\mysql_driver.h(52): warning C4251: 'sql::mysql::MySQL_Driver::proxy' : class 'boost::scoped_ptr<sql::mysql::NativeAPI::NativeDriverWrapper>' needs to have dll-interface to be used by clients of class 'sql::mysql::MySQL_Driver'
+     1>c:\users\vkraka\documents\world_of_wraith_backup\cppconn\include\mysql_connection.h(175): warning C4251: 'sql::mysql::MySQL_Connection::proxy' : class 'boost::shared_ptr<sql::mysql::NativeAPI::NativeConnectionWrapper>' needs to have dll-interface to be used by clients of class 'sql::mysql::MySQL_Connection'
+     1>c:\users\vkraka\documents\world_of_wraith_backup\cppconn\include\mysql_connection.h(179): warning C4251: 'sql::mysql::MySQL_Connection::service' : class 'boost::scoped_ptr<sql::mysql::MySQL_Statement>' needs to have dll-interface to be used by clients of class 'sql::mysql::MySQL_Connection'
+     1>c:\users\vkraka\documents\world_of_wraith_backup\source\wow_server\cwowserver.cpp(83): warning C4129: '%' : unrecognized character escape sequence
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\VKraka\Documents\World_of_Wraith_backup\Visual Studio\Debug\WOW_Server.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\..\cppconn\lib\debug /LIBPATH:..\..\boost_1_59_0\stage\lib mysqlcppconn.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\VKraka\Documents\World_of_Wraith_backup\Visual Studio\Debug\WOW_Server.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\VKraka\Documents\World_of_Wraith_backup\Visual Studio\Debug\WOW_Server.lib" /MACHINE:X86 Debug\CBasicFunctions.obj
+         Debug\CServerInit.obj
+         Debug\CServerInstance.obj
+         Debug\CWOWServer.obj
+         WOW_Server.vcxproj -> C:\Users\VKraka\Documents\World_of_Wraith_backup\Visual Studio\Debug\WOW_Server.exe
+     1>Done Building Project "C:\Users\VKraka\Documents\World_of_Wraith_backup\Source\WOW_Server\WOW_Server.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:04.39
