@@ -29,8 +29,8 @@ namespace WowKlient
 
 	void WoWGameKlient::gameRun()
 	{
-		gState.gConf = loadGraphicConfiguration("");
-		gState.sConf = loadSoundConfiguration("");
+		gState.gConf = loadGraphicConfiguration(configFileGraphic);
+		gState.sConf = loadSoundConfiguration(configFileSound);
 
 		irrlichtDevice = createDevice(EDT_OPENGL, dimension2d<u32>(1366, 768), 32, false, false, false);
 
@@ -46,12 +46,17 @@ namespace WowKlient
 
 		irrlichtDevice->getCursorControl()->changeIcon(ECURSOR_ICON::ECI_NORMAL, *cursorSprite);
 
-		irrklangDevice->play2D("..\\..\\..\\Data\\music\\intro\\intro.ogg", false);
+		//irrklangDevice->play2D("..\\..\\..\\Data\\music\\intro\\intro.ogg", false);
 
-		playIntroImage(irrlichtDevice, "..\\..\\..\\Data\\img\\intro\\gapilogo.png", 7);
-		playIntroImage(irrlichtDevice, "..\\..\\..\\Data\\img\\intro\\irrlogo.png", 7);
-		playIntroImage(irrlichtDevice, "..\\..\\..\\Data\\img\\intro\\present.png", 10);
-		playIntroImage(irrlichtDevice, "..\\..\\..\\Data\\img\\intro\\wowlogo.png", 15);
+		//playIntroImage(irrlichtDevice, "..\\..\\..\\Data\\img\\intro\\gapilogo.png", 7);
+		//playIntroImage(irrlichtDevice, "..\\..\\..\\Data\\img\\intro\\irrlogo.png", 7);
+		//playIntroImage(irrlichtDevice, "..\\..\\..\\Data\\img\\intro\\present.png", 10);
+		//playIntroImage(irrlichtDevice, "..\\..\\..\\Data\\img\\intro\\wowlogo.png", 15);
+
+
+
+
+
 	};
 }
 

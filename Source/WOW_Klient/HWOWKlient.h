@@ -6,6 +6,7 @@
 #include <irrKlang.h>
 #include "HIntro.h"
 #include "HConfigLoader.h"
+#include "HLoginScreen.h"
 #include "HCore.h"
 
 
