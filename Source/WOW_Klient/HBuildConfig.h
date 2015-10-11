@@ -3,7 +3,7 @@
 
 //#define BUILD_SUBSYSTEM_WINDOWS 1
 
-#define configFileGraphic "gconf.conf"
+#define configFileGraphic "..\\..\\..\\Data\\gconf.conf"
 #define configFileSound "sconf.conf"
 
 #define dbUser "wow_gapi"
