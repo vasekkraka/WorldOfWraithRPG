@@ -12,12 +12,14 @@ namespace WowKlient
 				irr::IrrlichtDevice *nullDev = irr::createDevice(irr::video::E_DRIVER_TYPE::EDT_NULL);
 				irr::io::IXMLReaderUTF8* xml = nullDev->getFileSystem()->createXMLReaderUTF8(file);
 
+				printf("\nNacitani graficke konfigurace:\n-------------------------------------------\n");
+
 				while (xml->read())
 				{
 					switch (xml->getNodeType())
 					{
 					case irr::io::EXN_ELEMENT:
-						printf("%s\n", xml->getNodeName());
+						printf("\n<%s>\n", xml->getNodeName());
 
 						if ((irr::core::string<char>)xml->getNodeName() == "resolution")
 						{
@@ -37,17 +39,57 @@ namespace WowKlient
 								{
 									gConf->fullScreen = xml->getAttributeValueAsInt(i);
 								}
-							}
-							printf("\t %i\t%i\n", gConf->resolution.Width, gConf->resolution.Height);
-							printf("%i\n", gConf->fullScreen);
-						}
 
-						
-						break;
+								if ((irr::core::string<char>)xml->getAttributeName(i) == "stencilbuffer")
+								{
+									gConf->stencilBuffer = xml->getAttributeValueAsInt(i);
+								}
+
+								printf("\t%s: \"%i\"", xml->getAttributeName(i), xml->getAttributeValueAsInt(i));
+							}
+						}
+						if ((irr::core::string<char>)xml->getNodeName() == "driver")
+						{
+							for (int i = 0; i < xml->getAttributeCount(); i++)
+							{
+								if ((irr::core::string<char>)xml->getAttributeName(i) == "type")
+								{
+									switch (xml->getAttributeValueAsInt(i))
+									{
+									case 0:
+										gConf->driverType = irr::video::EDT_NULL;
+										break;
+									case 1:
+										gConf->driverType = irr::video::EDT_OPENGL;
+										break;
+									case 2:
+										gConf->driverType = irr::video::EDT_DIRECT3D9;
+										break;
+									}
+								}
+
+								if ((irr::core::string<char>)xml->getAttributeName(i) == "bits")
+								{
+									gConf->bits = xml->getAttributeValueAsInt(i);
+								}
+
+								if ((irr::core::string<char>)xml->getAttributeName(i) == "vsync")
+								{
+									gConf->vSync = xml->getAttributeValueAsInt(i);
+								}
+
+								printf("\t%s: \"%i\"", xml->getAttributeName(i), xml->getAttributeValueAsInt(i));
+							}
+						}
+							break;
 
 						case irr::io::EXN_TEXT:
 							printf("%s\n", xml->getNodeData());
-						break;
+							break;
+
+						case irr::io::EXN_ELEMENT_END :
+							printf("\n<\\%s>\n", xml->getNodeName());
+							break;
 					}
 				}
 
