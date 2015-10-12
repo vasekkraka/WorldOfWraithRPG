@@ -27,14 +27,15 @@ namespace WowKlient
 	{
 	};
 
-	void WoWGameKlient::gameRun()
+	bool WoWGameKlient::initialize()
 	{
 		gState.gConf = loadGraphicConfiguration(configFileGraphic);
 		gState.sConf = loadSoundConfiguration(configFileSound);
 
-		irrlichtDevice = createDevice(gState.gConf->driverType, gState.gConf->resolution, gState.gConf->bits, gState.gConf->fullScreen, gState.gConf->stencilBuffer, gState.gConf->vSync);
+		irrlichtDevice = initializeGraphicEngine(gState.gConf);
 
 		irrklangDevice = initializeSoundEngine();
+		
 
 		SCursorSprite * cursorSprite = new SCursorSprite();
 
@@ -45,6 +46,13 @@ namespace WowKlient
 		cursorSprite->SpriteId = cursorSprite->SpriteBank->addTextureAsSprite(tex);
 
 		irrlichtDevice->getCursorControl()->changeIcon(ECURSOR_ICON::ECI_NORMAL, *cursorSprite);
+
+		return true;
+	}
+
+	void WoWGameKlient::gameRun()
+	{
+		initialize();
 
 		//irrklangDevice->play2D("..\\..\\..\\Data\\music\\intro\\intro.ogg", false);
 

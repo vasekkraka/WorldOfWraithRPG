@@ -26,6 +26,7 @@ namespace WowKlient
 		public:
 			WoWGameKlient();
 			~WoWGameKlient();
+			bool initialize();
 			void gameRun();
 
 		private:

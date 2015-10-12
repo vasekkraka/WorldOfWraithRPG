@@ -12,7 +12,7 @@ namespace WowKlient
 				irr::IrrlichtDevice *nullDev = irr::createDevice(irr::video::E_DRIVER_TYPE::EDT_NULL);
 				irr::io::IXMLReaderUTF8* xml = nullDev->getFileSystem()->createXMLReaderUTF8(file);
 
-				printf("\nNacitani graficke konfigurace:\n-------------------------------------------\n");
+				printf("\nNacitani graficke konfigurace:\n-------------------------------------\n");
 
 				while (xml->read())
 				{
