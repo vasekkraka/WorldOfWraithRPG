@@ -4,10 +4,10 @@
 #include "HBuildConfig.h"
 #include <irrlicht.h>
 #include <irrKlang.h>
-#include "HIntro.h"
 #include "HConfigLoader.h"
-#include "HLoginScreen.h"
 #include "HCore.h"
+#include "HIntro.h"
+#include "HLoginManager.h"
 
 
 using namespace irr;
@@ -28,11 +28,13 @@ namespace WowKlient
 			~WoWGameKlient();
 			bool initialize();
 			void gameRun();
+			void playIntro();
 
 		private:
 			Core::GameState gState;
 			IrrlichtDevice * irrlichtDevice;
 			ISoundEngine * irrklangDevice;
+			LoginManager * loginScreen;
 	};
 
 }

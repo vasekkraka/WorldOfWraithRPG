@@ -92,9 +92,6 @@ namespace WowKlient
 							break;
 					}
 				}
-
-				getchar();
-
 				return gConf;
 			}
 

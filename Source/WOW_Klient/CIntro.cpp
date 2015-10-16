@@ -57,6 +57,7 @@ namespace WowKlient
 					
 					driver->endScene();
 				}
+				driver->removeTexture(image);
 			}
 		}
 	}

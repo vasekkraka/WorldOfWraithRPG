@@ -11,6 +11,8 @@ namespace WowKlient
 		{
 			Configuration::graphicConfiguration * gConf;
 			Configuration::soundConfiguration * sConf;
+			irr::IrrlichtDevice * irrDevice;
+			irrklang::ISoundEngine * klangDevice;
 		};
 
 		/*

@@ -11,7 +11,8 @@ int main()
 {
 
 	WoWGameKlient * localGame = new WoWGameKlient();
-
+	localGame->initialize();
+	//localGame->playIntro();
 	localGame->gameRun();
 
 	return 0;

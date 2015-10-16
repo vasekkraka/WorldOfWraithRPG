@@ -92,14 +92,14 @@
     <ClInclude Include="HConfigLoader.h" />
     <ClInclude Include="HCore.h" />
     <ClInclude Include="HIntro.h" />
-    <ClInclude Include="HLoginScreen.h" />
+    <ClInclude Include="HLoginManager.h" />
     <ClInclude Include="HWOWKlient.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CConfigLoader.cpp" />
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CIntro.cpp" />
-    <ClCompile Include="CLoginScreen.cpp" />
+    <ClCompile Include="CLoginManager.cpp" />
     <ClCompile Include="CMain.cpp" />
     <ClCompile Include="CWOWKlient.cpp" />
   </ItemGroup>

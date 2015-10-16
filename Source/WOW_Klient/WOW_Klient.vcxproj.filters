@@ -30,7 +30,7 @@
     <ClInclude Include="HBuildConfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HLoginScreen.h">
+    <ClInclude Include="HLoginManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -50,7 +50,7 @@
     <ClCompile Include="CMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CLoginScreen.cpp">
+    <ClCompile Include="CLoginManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
