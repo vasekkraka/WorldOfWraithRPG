@@ -10,9 +10,11 @@
 
 
 #include "HWOWServer.h"
+#include <boost\asio.hpp>
 
 using namespace std;
 using namespace WowServer;
+using boost::asio::ip::tcp;
 
 class thr
 {
@@ -80,7 +82,7 @@ void thr::thread_beta(int a)
 	}
 	cislo = 11299984;
 	mut.unlock();
-	printf("\%i\n", a);
+	printf("%i\n", a);
 }
 
 
@@ -88,10 +90,10 @@ int main()
 {
 
 	thr vlakno;
-	boost::thread alfa{ &thr::thread_alfa, &vlakno };
-	boost::thread beta{ &thr::thread_beta, &vlakno, 99 };
-	alfa.join();
-	beta.join();
+	//boost::thread alfa{ &thr::thread_alfa, &vlakno };
+	//boost::thread beta{ &thr::thread_beta, &vlakno, 99 };
+	//alfa.join();
+	//beta.join();
 	
 	printServerInfo();
 
@@ -108,7 +110,10 @@ int main()
 	//localServer->initializeInstance();
 
 
+
+
 	system("PAUSE");
+
 
 
 }

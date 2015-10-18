@@ -1,9 +1,63 @@
-﻿Build started 12. 10. 2015 12:21:53.
-     1>Project "C:\Users\vkraka\Documents\WorldOfWraithRPG\Source\WOW_Server\WOW_Server.vcxproj" on node 2 (Build target(s)).
-     1>Link:
-         WOW_Server.vcxproj -> C:\Users\vkraka\Documents\WorldOfWraithRPG\Visual Studio\Debug\WOW_Server.exe
-     1>Done Building Project "C:\Users\vkraka\Documents\WorldOfWraithRPG\Source\WOW_Server\WOW_Server.vcxproj" (Build target(s)).
+﻿Build started 18. 10. 2015 21:34:25.
+     1>Project "C:\Users\m1tnick\Documents\WorldOfWraithRPG\Source\WOW_Server\WOW_Server.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\..\cppconn\include /I..\..\boost_1_59_0 /I..\..\Irrlicht\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt CBasicFunctions.cpp CServerInit.cpp CServerInstance.cpp CWOWServer.cpp
+         CBasicFunctions.cpp
+         Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+         - add -D_WIN32_WINNT=0x0501 to the compiler command line; or
+         - add _WIN32_WINNT=0x0501 to your project's Preprocessor Definitions.
+         Assuming _WIN32_WINNT=0x0501 (i.e. Windows XP target).
+     1>c:\users\m1tnick\documents\worldofwraithrpg\cppconn\include\cppconn\sqlstring.h(39): warning C4251: 'sql::SQLString::realStr' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'sql::SQLString'
+     1>c:\users\m1tnick\documents\worldofwraithrpg\cppconn\include\cppconn\exception.h(61): warning C4251: 'sql::SQLException::sql_state' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'sql::SQLException'
+     1>c:\users\m1tnick\documents\worldofwraithrpg\cppconn\include\cppconn\exception.h(145): warning C4251: 'sql::SQLUnsupportedOptionException::option' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of struct 'sql::SQLUnsupportedOptionException'
+     1>c:\users\m1tnick\documents\worldofwraithrpg\cppconn\include\mysql_driver.h(52): warning C4251: 'sql::mysql::MySQL_Driver::proxy' : class 'boost::scoped_ptr<sql::mysql::NativeAPI::NativeDriverWrapper>' needs to have dll-interface to be used by clients of class 'sql::mysql::MySQL_Driver'
+     1>c:\users\m1tnick\documents\worldofwraithrpg\cppconn\include\mysql_connection.h(175): warning C4251: 'sql::mysql::MySQL_Connection::proxy' : class 'boost::shared_ptr<sql::mysql::NativeAPI::NativeConnectionWrapper>' needs to have dll-interface to be used by clients of class 'sql::mysql::MySQL_Connection'
+     1>c:\users\m1tnick\documents\worldofwraithrpg\cppconn\include\mysql_connection.h(179): warning C4251: 'sql::mysql::MySQL_Connection::service' : class 'boost::scoped_ptr<sql::mysql::MySQL_Statement>' needs to have dll-interface to be used by clients of class 'sql::mysql::MySQL_Connection'
+         Generating Code...
+         Compiling...
+         CWOWServer.cpp
+         Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+         - add -D_WIN32_WINNT=0x0501 to the compiler command line; or
+         - add _WIN32_WINNT=0x0501 to your project's Preprocessor Definitions.
+         Assuming _WIN32_WINNT=0x0501 (i.e. Windows XP target).
+     1>c:\users\m1tnick\documents\worldofwraithrpg\cppconn\include\cppconn\sqlstring.h(39): warning C4251: 'sql::SQLString::realStr' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'sql::SQLString'
+     1>c:\users\m1tnick\documents\worldofwraithrpg\cppconn\include\cppconn\exception.h(61): warning C4251: 'sql::SQLException::sql_state' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'sql::SQLException'
+     1>c:\users\m1tnick\documents\worldofwraithrpg\cppconn\include\cppconn\exception.h(145): warning C4251: 'sql::SQLUnsupportedOptionException::option' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of struct 'sql::SQLUnsupportedOptionException'
+     1>c:\users\m1tnick\documents\worldofwraithrpg\cppconn\include\mysql_driver.h(52): warning C4251: 'sql::mysql::MySQL_Driver::proxy' : class 'boost::scoped_ptr<sql::mysql::NativeAPI::NativeDriverWrapper>' needs to have dll-interface to be used by clients of class 'sql::mysql::MySQL_Driver'
+     1>c:\users\m1tnick\documents\worldofwraithrpg\cppconn\include\mysql_connection.h(175): warning C4251: 'sql::mysql::MySQL_Connection::proxy' : class 'boost::shared_ptr<sql::mysql::NativeAPI::NativeConnectionWrapper>' needs to have dll-interface to be used by clients of class 'sql::mysql::MySQL_Connection'
+     1>c:\users\m1tnick\documents\worldofwraithrpg\cppconn\include\mysql_connection.h(179): warning C4251: 'sql::mysql::MySQL_Connection::service' : class 'boost::scoped_ptr<sql::mysql::MySQL_Statement>' needs to have dll-interface to be used by clients of class 'sql::mysql::MySQL_Connection'
+         CServerInstance.cpp
+         Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+         - add -D_WIN32_WINNT=0x0501 to the compiler command line; or
+         - add _WIN32_WINNT=0x0501 to your project's Preprocessor Definitions.
+         Assuming _WIN32_WINNT=0x0501 (i.e. Windows XP target).
+     1>c:\users\m1tnick\documents\worldofwraithrpg\cppconn\include\cppconn\sqlstring.h(39): warning C4251: 'sql::SQLString::realStr' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'sql::SQLString'
+     1>c:\users\m1tnick\documents\worldofwraithrpg\cppconn\include\cppconn\exception.h(61): warning C4251: 'sql::SQLException::sql_state' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'sql::SQLException'
+     1>c:\users\m1tnick\documents\worldofwraithrpg\cppconn\include\cppconn\exception.h(145): warning C4251: 'sql::SQLUnsupportedOptionException::option' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of struct 'sql::SQLUnsupportedOptionException'
+     1>c:\users\m1tnick\documents\worldofwraithrpg\cppconn\include\mysql_driver.h(52): warning C4251: 'sql::mysql::MySQL_Driver::proxy' : class 'boost::scoped_ptr<sql::mysql::NativeAPI::NativeDriverWrapper>' needs to have dll-interface to be used by clients of class 'sql::mysql::MySQL_Driver'
+     1>c:\users\m1tnick\documents\worldofwraithrpg\cppconn\include\mysql_connection.h(175): warning C4251: 'sql::mysql::MySQL_Connection::proxy' : class 'boost::shared_ptr<sql::mysql::NativeAPI::NativeConnectionWrapper>' needs to have dll-interface to be used by clients of class 'sql::mysql::MySQL_Connection'
+     1>c:\users\m1tnick\documents\worldofwraithrpg\cppconn\include\mysql_connection.h(179): warning C4251: 'sql::mysql::MySQL_Connection::service' : class 'boost::scoped_ptr<sql::mysql::MySQL_Statement>' needs to have dll-interface to be used by clients of class 'sql::mysql::MySQL_Connection'
+         CServerInit.cpp
+         Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+         - add -D_WIN32_WINNT=0x0501 to the compiler command line; or
+         - add _WIN32_WINNT=0x0501 to your project's Preprocessor Definitions.
+         Assuming _WIN32_WINNT=0x0501 (i.e. Windows XP target).
+     1>c:\users\m1tnick\documents\worldofwraithrpg\cppconn\include\cppconn\sqlstring.h(39): warning C4251: 'sql::SQLString::realStr' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'sql::SQLString'
+     1>c:\users\m1tnick\documents\worldofwraithrpg\cppconn\include\cppconn\exception.h(61): warning C4251: 'sql::SQLException::sql_state' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'sql::SQLException'
+     1>c:\users\m1tnick\documents\worldofwraithrpg\cppconn\include\cppconn\exception.h(145): warning C4251: 'sql::SQLUnsupportedOptionException::option' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of struct 'sql::SQLUnsupportedOptionException'
+     1>c:\users\m1tnick\documents\worldofwraithrpg\cppconn\include\mysql_driver.h(52): warning C4251: 'sql::mysql::MySQL_Driver::proxy' : class 'boost::scoped_ptr<sql::mysql::NativeAPI::NativeDriverWrapper>' needs to have dll-interface to be used by clients of class 'sql::mysql::MySQL_Driver'
+     1>c:\users\m1tnick\documents\worldofwraithrpg\cppconn\include\mysql_connection.h(175): warning C4251: 'sql::mysql::MySQL_Connection::proxy' : class 'boost::shared_ptr<sql::mysql::NativeAPI::NativeConnectionWrapper>' needs to have dll-interface to be used by clients of class 'sql::mysql::MySQL_Connection'
+     1>c:\users\m1tnick\documents\worldofwraithrpg\cppconn\include\mysql_connection.h(179): warning C4251: 'sql::mysql::MySQL_Connection::service' : class 'boost::scoped_ptr<sql::mysql::MySQL_Statement>' needs to have dll-interface to be used by clients of class 'sql::mysql::MySQL_Connection'
+         Generating Code...
+     1>c:\users\m1tnick\documents\worldofwraithrpg\source\wow_server\cserverinstance.cpp(72): warning C4715: 'WowServer::ServerInstance::connectDatabase' : not all control paths return a value
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\m1tnick\Documents\WorldOfWraithRPG\Visual Studio\Debug\WOW_Server.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\..\cppconn\lib\debug /LIBPATH:..\..\boost_1_59_0\stage\lib mysqlcppconn.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\m1tnick\Documents\WorldOfWraithRPG\Visual Studio\Debug\WOW_Server.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\m1tnick\Documents\WorldOfWraithRPG\Visual Studio\Debug\WOW_Server.lib" /MACHINE:X86 Debug\CBasicFunctions.obj
+         Debug\CServerInit.obj
+         Debug\CServerInstance.obj
+         Debug\CWOWServer.obj
+         WOW_Server.vcxproj -> C:\Users\m1tnick\Documents\WorldOfWraithRPG\Visual Studio\Debug\WOW_Server.exe
+     1>Done Building Project "C:\Users\m1tnick\Documents\WorldOfWraithRPG\Source\WOW_Server\WOW_Server.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.24
+Time Elapsed 00:00:10.74

@@ -6,6 +6,10 @@
 #define loginBoxHeight 333
 #define loginBoxWidth 254
 
+#define loginButtonHeight 43
+#define loginButtonWidth 151
+#define loginButtonTop 250
+#define loginButtonLeft 52
 
 #define loginNameHeight 30
 #define loginNameWidth 180

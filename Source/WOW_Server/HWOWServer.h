@@ -11,6 +11,8 @@
 #ifndef HWOWKlient
 #define HWOWKlient
 
+#include <boost\asio.hpp>
+#include <boost\thread.hpp>
 #include <cstdio>
 #include <Windows.h> 
 
@@ -20,7 +22,6 @@
 #include <mysql_connection.h>
 #include <mysql_error.h>
 
-#include <boost\thread.hpp>
 
 #include <cppconn/exception.h>
 #include <cppconn/resultset.h>
