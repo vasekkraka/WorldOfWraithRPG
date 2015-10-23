@@ -22,6 +22,9 @@
 #define loginPassTop 173
 #define loginPassChar L"*"
 
+#define campfirePositionNormal 446, 299, -150
+#define campfirePositionWide 438, 312, -150
+
 namespace WowKlient
 {
 	class LoginManager

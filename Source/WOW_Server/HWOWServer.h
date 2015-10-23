@@ -8,6 +8,9 @@
 |--------------------------------------------------------------------|
 */
 
+#pragma warning(disable:4251)
+#define _WIN32_WINNT 0x0501
+
 #ifndef HWOWKlient
 #define HWOWKlient
 

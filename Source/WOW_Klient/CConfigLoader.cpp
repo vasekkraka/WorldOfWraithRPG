@@ -23,7 +23,7 @@ namespace WowKlient
 
 						if ((irr::core::string<char>)xml->getNodeName() == "resolution")
 						{
-							for (int i = 0; i < xml->getAttributeCount(); i++)
+							for (u32 i = 0; i < xml->getAttributeCount(); i++)
 							{
 								if ((irr::core::string<char>)xml->getAttributeName(i) == "width")
 								{
@@ -37,12 +37,14 @@ namespace WowKlient
 
 								if ((irr::core::string<char>)xml->getAttributeName(i) == "fullscreen")
 								{
-									gConf->fullScreen = xml->getAttributeValueAsInt(i);
+									int attr = xml->getAttributeValueAsInt(i);
+									gConf->fullScreen = attr == 1 ? true : false;
 								}
 
 								if ((irr::core::string<char>)xml->getAttributeName(i) == "stencilbuffer")
 								{
-									gConf->stencilBuffer = xml->getAttributeValueAsInt(i);
+									int attr = xml->getAttributeValueAsInt(i);
+									gConf->stencilBuffer = attr == 1 ? true : false;
 								}
 
 								printf("\t%s: \"%i\"", xml->getAttributeName(i), xml->getAttributeValueAsInt(i));
@@ -50,7 +52,7 @@ namespace WowKlient
 						}
 						if ((irr::core::string<char>)xml->getNodeName() == "driver")
 						{
-							for (int i = 0; i < xml->getAttributeCount(); i++)
+							for (u32 i = 0; i < xml->getAttributeCount(); i++)
 							{
 								if ((irr::core::string<char>)xml->getAttributeName(i) == "type")
 								{
@@ -75,7 +77,8 @@ namespace WowKlient
 
 								if ((irr::core::string<char>)xml->getAttributeName(i) == "vsync")
 								{
-									gConf->vSync = xml->getAttributeValueAsInt(i);
+									int attr = xml->getAttributeValueAsInt(i);
+									gConf->vSync = attr == 1 ? true : false;
 								}
 
 								printf("\t%s: \"%i\"", xml->getAttributeName(i), xml->getAttributeValueAsInt(i));

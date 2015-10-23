@@ -68,5 +68,6 @@ bool ServerInstance::connectDatabase()
 		e.getSQLState();
 		std::cout << "\n" << e.what();
 		std::cout << " (MySQL error code: " << e.getErrorCode() << ")" << std::endl;
+		return false;
 	}
 }
