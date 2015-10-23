@@ -19,6 +19,12 @@ namespace WowKlient
 		irr::video::IVideoDriver * driver = gState->irrDevice->getVideoDriver();
 		irr::scene::ISceneManager * smgr = gState->irrDevice->getSceneManager();
 
+		gui::IGUIFont * font = guienv->getFont("..\\..\\..\\Data\\img\\login_screen\\wowfont.xml");
+
+		
+
+		guienv->getSkin()->setFont(font);
+
 		irr::core::dimension2d<s32> center;
 		center.set((s32)(gState->gConf->resolution.Width + 0.0) / 2, (s32)(gState->gConf->resolution.Height + 0.0) / 2);
 
@@ -43,21 +49,6 @@ namespace WowKlient
 		irr::gui::IGUIImage * loginBorder = guienv->addImage(irr::core::rect<irr::s32>(center.Width - (loginBoxWidth / 2), center.Height - (loginBoxHeight / 2), (loginBoxWidth / 2) + center.Width, center.Height + (loginBoxHeight / 2)));
 		loginBorder->setImage(driver->getTexture(L"..\\..\\..\\Data\\img\\login_screen\\login_border.png"));
 
-
-		irr::gui::IGUIImage * rain = guienv->addImage(core::rect<s32>(0, 0, 512, 1080));
-		rain->setImage(driver->getTexture(L"..\\..\\..\\Data\\img\\login_screen\\rain.png"));
-		rain->setScaleImage(true);
-
-		irr::gui::IGUIImage * rain1 = guienv->addImage(core::rect<s32>(512, -100, 1024, 1412));
-		rain1->setImage(driver->getTexture(L"..\\..\\..\\Data\\img\\login_screen\\rain.png"));
-		rain1->setScaleImage(true);
-		//rain1->
-
-		irr::gui::IGUIImage * rain2 = guienv->addImage(core::rect<s32>(1024, 100, 1536, 1612));
-		rain2->setImage(driver->getTexture(L"..\\..\\..\\Data\\img\\login_screen\\rain.png"));
-		rain2->setScaleImage(true);
-
-
 		irr::gui::IGUIImage * cloud = guienv->addImage(core::rect<s32>(0, 0, 512, 256));
 		cloud->setImage(driver->getTexture(L"..\\..\\..\\Data\\img\\login_screen\\cloud.png"));
 
@@ -71,6 +62,8 @@ namespace WowKlient
 		gui::IGUIEditBox * editboxUserPass = guienv->addEditBox(L"Heslo", core::rect<s32>(loginPassLeft, loginPassTop, loginPassLeft + loginPassWidth, loginPassTop + loginPassHeight), true, loginBorder); // vycentrovano 
 		editboxUserPass->setPasswordBox(true, L'*');
 
+		editboxUserName->setOverrideFont(font);
+
 		guienv->getSkin()->setColor(gui::EGUI_DEFAULT_COLOR::EGDC_3D_FACE, video::SColor(255, 0, 0, 0));
 
 		gui::IGUIButton * loginButton = guienv->addButton(core::rect<s32>(loginButtonLeft, loginButtonTop, loginButtonLeft + loginButtonWidth, loginButtonTop + loginButtonHeight), loginBorder, 0, L"", L"Prihlasi vas do hry");
@@ -78,6 +71,8 @@ namespace WowKlient
 		loginButton->setScaleImage(true);
 		loginButton->setUseAlphaChannel(true);
 		loginButton->setDrawBorder(false);
+
+
 		
 		scene::IParticleSystemSceneNode* ps =
 			smgr->addParticleSystemSceneNode(false);
@@ -112,16 +107,13 @@ namespace WowKlient
 
 		camera->setTarget(core::vector3df(400,300,-150));
 
-		rain->setEnabled(false);
-		rain1->setEnabled(false);
-		rain2->setEnabled(false);
 
 		int f = 0;
 		while (gState->irrDevice->run())
 		{
 			u32 oldtime = gState->irrDevice->getTimer()->getTime();
 			f++;
-			if ((f % 5) == 0)
+			if ((f % 3) == 0)
 			{
 				cloud->move(core::vector2d<s32>(1, 0));
 				cloud2->move(core::vector2d<s32>(1, 0));
@@ -135,9 +127,6 @@ namespace WowKlient
 				printf("%i, %i\n", poloha.UpperLeftCorner.X, poloha.UpperLeftCorner.Y);
 			}
 
-			rain->move(core::vector2d<s32>(0, 1));
-			rain1->move(core::vector2d<s32>(0, 1));
-			rain2->move(core::vector2d<s32>(0, 1));
 			
 			int fps = driver->getFPS();
 
