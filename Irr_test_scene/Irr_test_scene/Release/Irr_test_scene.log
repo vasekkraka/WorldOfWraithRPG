@@ -1,0 +1,19 @@
+﻿Build started 17.3.2014 10:42:38.
+     1>Project "D:\Projects\Irr_test_scene\Irr_test_scene\Irr_test_scene.vcxproj" on node 2 (build target(s)).
+     1>PrepareForBuild:
+         Creating directory "D:\Projects\Irr_test_scene\Release\".
+       InitializeBuildStatus:
+         Creating "Release\Irr_test_scene.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt CColManager.cpp Cmain.cpp CWoWCollisionAnimator.cpp
+         CColManager.cpp
+     1>CColManager.cpp(1): fatal error C1083: Cannot open include file: 'irrlicht.h': No such file or directory
+         Cmain.cpp
+     1>Cmain.cpp(1): fatal error C1083: Cannot open include file: 'irrlicht.h': No such file or directory
+         CWoWCollisionAnimator.cpp
+     1>d:\projects\irr_test_scene\irr_test_scene\CWoWCollisionAnimator.h(8): fatal error C1083: Cannot open include file: 'ISceneNodeAnimatorCollisionResponse.h': No such file or directory
+     1>Done Building Project "D:\Projects\Irr_test_scene\Irr_test_scene\Irr_test_scene.vcxproj" (build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:01.83
