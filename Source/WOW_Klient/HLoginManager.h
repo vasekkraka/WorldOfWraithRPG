@@ -27,6 +27,18 @@
 
 namespace WowKlient
 {
+	// ---- Event Reciever
+
+	class LoginManagerEvent : public irr::IEventReceiver
+	{
+	public:
+		LoginManagerEvent() 
+		{ }
+
+		virtual bool OnEvent(const irr::SEvent& event);
+	};
+
+
 	class LoginManager
 	{
 	public:

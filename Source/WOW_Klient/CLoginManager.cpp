@@ -4,6 +4,16 @@ using namespace irr;
 
 namespace WowKlient
 {
+	// ---- Event Reciever
+
+	bool LoginManagerEvent::OnEvent(const irr::SEvent& event)
+	{
+		printf("Event :\n");
+		
+		return true;
+	};
+
+	// ---- Login Manager
 	LoginManager::~LoginManager()
 	{
 	}
@@ -18,6 +28,10 @@ namespace WowKlient
 		irr::gui::IGUIEnvironment* guienv = gState->irrDevice->getGUIEnvironment();
 		irr::video::IVideoDriver * driver = gState->irrDevice->getVideoDriver();
 		irr::scene::ISceneManager * smgr = gState->irrDevice->getSceneManager();
+
+		LoginManagerEvent * LoginManagerEventReciever = new LoginManagerEvent();
+
+		gState->irrDevice->setEventReceiver(LoginManagerEventReciever);
 
 		gui::IGUIFont * font = guienv->getFont("..\\..\\..\\Data\\img\\login_screen\\wowfont.xml");
 

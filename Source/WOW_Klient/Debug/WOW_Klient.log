@@ -1,4 +1,4 @@
-﻿Build started 23. 10. 2015 15:14:57.
+﻿Build started 27. 10. 2015 8:03:10.
      1>Project "C:\Users\vkraka\Documents\WorldOfWraithRPG\Source\WOW_Klient\WOW_Klient.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\vkraka\Documents\WorldOfWraithRPG\Visual Studio\\..\Irrlicht\include\\" /I"C:\Users\vkraka\Documents\WorldOfWraithRPG\Visual Studio\\..\irrKlang\include\\" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt CLoginManager.cpp
@@ -15,4 +15,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.25
+Time Elapsed 00:00:01.17
