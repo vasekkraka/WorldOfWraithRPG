@@ -14,7 +14,7 @@ using namespace gui;
 
 #define okruh 500
 #define rotspeed 1
-#define krok 10
+#define krok 50
 
 class wwAnim : public ISceneNodeAnimator
 	{
@@ -259,7 +259,7 @@ int main()
 		node->setRotation(vector3df(0, 45, 0));
 	}
 
-	IMeshSceneNode* terrain = smgr->addMeshSceneNode(smgr->getMesh("schodiste.obj"), 0, 0, core::vector3df(0.f, -1000.f, 140.f), core::vector3df(0.f, 0.f, 0.f), core::vector3df(100.0f, 100.0f, 100.0f));
+	IMeshSceneNode* terrain = smgr->addMeshSceneNode(smgr->getMesh("test_ramp.obj"), 0, 0, core::vector3df(0.f, -3000.f, 140.f), core::vector3df(0.f, 0.f, 0.f), core::vector3df(100.0f, 100.0f, 100.0f));
 	ITriangleSelector * trg = smgr->createOctreeTriangleSelector(terrain->getMesh(), terrain);
 
 	//printf("Trg : %i\n ", trg->getTriangleCount());
@@ -267,20 +267,28 @@ int main()
 	terrain->setTriangleSelector(trg);
 	trg->drop();
 
-	//ISceneNodeAnimatorCollisionResponse * colAnim = new irr::scene::CSceneNodeAnimatorWoWCollisionAnimator(smgr, trg, node, core::vector3df(60.0f, 20.0f, 60.0f), core::vector3df(0.0f, -100.0f, 0.0f), core::vector3df(0.0f, 0.0f, 0.0f), 0.000009f);
+	//ICameraSceneNode* cam = smgr->addCameraSceneNodeFPS();
 
-	ISceneNodeAnimatorCollisionResponse * colAnim = smgr->createCollisionResponseAnimator(trg, node, core::vector3df(60.0f, 20.0f, 60.0f), core::vector3df(0.0f, -10.0f, 0.0f), core::vector3df(0.0f, 0.0f, 0.0f), 0.0f);
+	
+	ICameraSceneNode* cam = smgr->addCameraSceneNode(0, vector3df(0, 100, 100), vector3df(0, 0, 0), 1, true);
+
+	//ISceneNodeAnimatorCollisionResponse * colAnim = new irr::scene::CSceneNodeAnimatorWoWCollisionAnimator(smgr, trg, cam, core::vector3df(60.0f, 20.0f, 60.0f), core::vector3df(0.0f, -100.0f, 0.0f), core::vector3df(0.0f, 0.0f, 0.0f), 0.000009f);
+
+
+	ISceneNodeAnimatorCollisionResponse * colAnim = smgr->createCollisionResponseAnimator(trg, node, core::vector3df(60.0f, 20.0f, 60.0f), core::vector3df(0.0f, -10.0f, 0.0f), core::vector3df(0.0f, 0.0f, 0.0f), 0.05f);
 
 	node->addAnimator(colAnim);
 	colAnim->drop();
 	terrain->setMaterialFlag(video::EMF_LIGHTING, false);
-    //terrain->setMaterialTexture(0,driver->getTexture("terrain-t.png"));
+	//terrain->setMaterialType(video::EMT_SOLID);
+    terrain->setMaterialTexture(0,driver->getTexture("test_mapa.png"));
 	
-
-	ICameraSceneNode* cam = smgr->addCameraSceneNode(0, vector3df(0,100,100), vector3df(0,0,0), 1, true);
+	cam->setPosition(vector3df(0, 100, 100));
 	cam->setTarget(node->getPosition());
 	
 	ISceneNodeAnimator * animator = new wwAnim(node, 0.0f, 0.0f, dev->getCursorControl(), terrain);
+	
+		
 	cam->addAnimator(animator);
 
 	float time = dev->getTimer()->getTime();

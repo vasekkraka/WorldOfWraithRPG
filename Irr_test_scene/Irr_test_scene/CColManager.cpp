@@ -413,6 +413,8 @@ core::vector3df collideWithWorldNoSliding(s32 recursionDepth, SCollisionData &co
 {
 	f32 veryCloseDistance = colData.slidingSpeed;
 
+	printf("-> INFO collideWithWorldNoSliding\n");
+
 	/*SYSTEMTIME zacatek;
 	GetSystemTime(&zacatek);*/
 
