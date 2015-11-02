@@ -12,9 +12,9 @@ using namespace io;
 using namespace gui;
 
 
-#define okruh 500
+#define okruh 50
 #define rotspeed 1
-#define krok 50
+#define krok 10
 
 class wwAnim : public ISceneNodeAnimator
 	{
@@ -236,7 +236,7 @@ class wwAnim : public ISceneNodeAnimator
 int main()
 {
 	
-	IrrlichtDevice * dev = createDevice(EDT_OPENGL, dimension2d<u32>(1366, 768), 16, false, false, false);
+	IrrlichtDevice * dev = createDevice(EDT_DIRECT3D9, dimension2d<u32>(1366, 768), 16, false, false, false);
 	IVideoDriver* driver = dev->getVideoDriver();
     ISceneManager* smgr = dev->getSceneManager();
     IGUIEnvironment* guienv = dev->getGUIEnvironment();

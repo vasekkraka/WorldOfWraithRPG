@@ -411,21 +411,12 @@ core::vector3df collideWithWorldNoSliding(s32 recursionDepth, SCollisionData &co
 {
 	f32 veryCloseDistance = colData.slidingSpeed;
 
-	printf("-> INFO collideWithWorldNoSliding\n");
-
-	/*SYSTEMTIME zacatek;
-	GetSystemTime(&zacatek);*/
-
 	if (recursionDepth > 5)
 		return pos;
 
 	colData.velocity = vel;
-
-	//printf("%f, %f, %f\n | ", vel.X, vel.Y, vel.Z);
-
 	colData.normalizedVelocity = vel;
 	colData.normalizedVelocity.normalize();
-	//printf("%f, %f, %f\n | ", colData.normalizedVelocity.X, colData.normalizedVelocity.Y, colData.normalizedVelocity.Z);
 	colData.basePoint = pos;
 	colData.foundCollision = false;
 	colData.nearestDistance = FLT_MAX;
@@ -438,46 +429,25 @@ core::vector3df collideWithWorldNoSliding(s32 recursionDepth, SCollisionData &co
 	box.MinEdge -= colData.eRadius;
 	box.MaxEdge += colData.eRadius;
 
-	//printf("%f, %f, %f |", box.MinEdge.X, box.MinEdge.Y, box.MinEdge.Z);
-	//printf("%f, %f, %f |\n", box.MaxEdge.X, box.MaxEdge.Y, box.MaxEdge.Z);
-	//printf("%f, %f, %f |\n", colData.eRadius.X, colData.eRadius.Y, colData.eRadius.Z);
-
-	//printf("%f, %f, %f | ", colData.R3Position.X, colData.R3Position.Y, colData.R3Position.Z);
-
-	//printf("%f, %f, %f\n", colData.R3Velocity.X, colData.R3Velocity.Y, colData.R3Velocity.Z);
-
 	s32 totalTriangleCnt = colData.selector->getTriangleCount();
 	Triangles.set_used(totalTriangleCnt);
 
 	core::matrix4 scaleMatrix;
 	scaleMatrix.setScale(
-			core::vector3df(1.0f / colData.eRadius.X,
-					1.0f / colData.eRadius.Y,
-					1.0f / colData.eRadius.Z));
+		core::vector3df(1.0f / colData.eRadius.X,
+		1.0f / colData.eRadius.Y,
+		1.0f / colData.eRadius.Z));
 
 	s32 triangleCnt = 0;
 
-	/*SYSTEMTIME zacatek;
-	GetSystemTime(&zacatek);*/
-
-	//printf("Max : %i\n", totalTriangleCnt);
+	SYSTEMTIME zacatek;
+	GetSystemTime(&zacatek);
 
 	colData.selector->getTriangles(Triangles.pointer(), totalTriangleCnt, triangleCnt, box, &scaleMatrix);
 
-	//printf("Box : %i\n", triangleCnt);
-
-	/*SYSTEMTIME konec;
-	GetSystemTime(&konec);*/
-	//printf("Cas: %f, %i\n", (double)((konec.wMilliseconds - zacatek.wMilliseconds)), triangleCnt);
-	//SYSTEMTIME zacatek;
-	//GetSystemTime(&zacatek);
-	for (s32 i=0; i<triangleCnt; ++i)
-		if(testTriangleIntersection(&colData, Triangles[i]))
-			colData.triangleIndex = i;
-
-	//SYSTEMTIME konec;
-	//GetSystemTime(&konec);
-	//printf("Cas: %f, %i, %i\n", (double)((konec.wMilliseconds - zacatek.wMilliseconds)), triangleCnt, recursionDepth);
+	for (s32 i = 0; i < triangleCnt; ++i)
+	if (testTriangleIntersection(&colData, Triangles[i]))
+		colData.triangleIndex = i;
 
 	//---------------- end collide with world
 
@@ -485,49 +455,10 @@ core::vector3df collideWithWorldNoSliding(s32 recursionDepth, SCollisionData &co
 	{
 		return pos + vel;
 	}
-
-	return pos;
-
-	// original destination point
-	const core::vector3df destinationPoint = pos + vel;
-	core::vector3df newBasePoint = pos;
-
-	// only update if we are not already very close
-	// and if so only move very close to intersection, not to the
-	// exact point
-
-
-	// calculate sliding plane
-
-	const core::vector3df slidePlaneOrigin = colData.intersectionPoint;
-	const core::vector3df slidePlaneNormal = (newBasePoint - colData.intersectionPoint).normalize();
-	core::plane3d<f32> slidingPlane(slidePlaneOrigin, slidePlaneNormal);
-
-	core::vector3df newDestinationPoint =
-		destinationPoint -
-		(slidePlaneNormal * slidingPlane.getDistanceTo(destinationPoint));
-
-	// generate slide vector
-
-	const core::vector3df newVelocityVector = newDestinationPoint -
-		colData.intersectionPoint;
-	
-	/*SYSTEMTIME konec;
-	GetSystemTime(&konec);
-	printf("Cas: %f\n", (double)((konec.wMilliseconds - zacatek.wMilliseconds)));*/
-
-	
-
-	//printf("Recurs Depth : %i | %i\n", recursionDepth, Triangles.size());
-	
-
-	if (newVelocityVector.getLength() < veryCloseDistance)
+	else
 	{
-		return newBasePoint;
+		return pos;
 	}
-
-	return collideWithWorld(recursionDepth+1, colData,
-		newBasePoint, newVelocityVector);
 }
 
 
