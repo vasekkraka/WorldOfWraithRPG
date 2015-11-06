@@ -440,8 +440,6 @@ core::vector3df collideWithWorldNoSliding(s32 recursionDepth, SCollisionData &co
 
 	s32 triangleCnt = 0;
 
-	SYSTEMTIME zacatek;
-	GetSystemTime(&zacatek);
 
 	colData.selector->getTriangles(Triangles.pointer(), totalTriangleCnt, triangleCnt, box, &scaleMatrix);
 
@@ -544,8 +542,6 @@ core::vector3df getCollResultPosition(
 		f32 slidingSpeed,
 		const core::vector3df& gravity) // fall velocity
 {
-
-	//printf("%f, %f, %f\n | ", gravity.X, gravity.Y, gravity.Z);
 
 	return collideEllipsoidWithWorld(selector, position,
 		radius, direction, slidingSpeed, gravity, triout, hitPosition, outFalling, outNode);

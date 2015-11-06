@@ -172,8 +172,6 @@ void CSceneNodeAnimatorWoWCollisionAnimator::animateNode(ISceneNode* node, u32 t
 		FirstUpdate = false;
 	}
 
-	//printf("%f, %f, %f\n", LastPosition.X, LastPosition.Y, LastPosition.Z);
-
 	const u32 diff = timeMs - LastTime;
 	LastTime = timeMs;
 
@@ -187,12 +185,8 @@ void CSceneNodeAnimatorWoWCollisionAnimator::animateNode(ISceneNode* node, u32 t
 	CollisionResultPosition = core::vector3df();
 	CollisionNode = 0;
 
-	// core::vector3df force = vel + FallingVelocity;
-
 	if ( AnimateCameraTarget )
 	{
-		// TODO: divide SlidingSpeed by frame time
-		//printf("Fall : %f, %f, %f\n | ", FallingVelocity.X, FallingVelocity.Y, FallingVelocity.Z);
 		bool f = false;
 		CollisionResultPosition
 			= getCollResultPosition(
