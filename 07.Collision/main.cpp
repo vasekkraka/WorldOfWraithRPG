@@ -1,18 +1,6 @@
-/** Example 007 Collision
-
-We will describe 2 methods: Automatic collision detection for moving through
-3d worlds with stair climbing and sliding, and manual scene node and triangle
-picking using a ray.  In this case, we will use a ray coming out from the
-camera, but you can use any ray.
-
-To start, we take the program from tutorial 2, which loads and displays a
-quake 3 level. We will use the level to walk in it and to pick triangles from.
-In addition we'll place 3 animated models into it for triangle picking. The
-following code starts up the engine and loads the level, as per tutorial 2.
-*/
 #include <irrlicht.h>
 #include "driverChoice.h"
-#include "exampleHelper.h"
+//#include "exampleHelper.h"
 
 #include "CWoWCollisionAnimator.h"
 #include "CColManager.h"
@@ -330,7 +318,7 @@ int main()
 	// create device
 
 	IrrlichtDevice *device =
-		createDevice(driverType, core::dimension2d<u32>(1366, 768), 16, false);
+		createDevice(driverType, core::dimension2d<u32>(800, 600), 16, false);
 
 	if (device == 0)
 		return 1; // could not create selected driver.
@@ -338,23 +326,27 @@ int main()
 	video::IVideoDriver* driver = device->getVideoDriver();
 	scene::ISceneManager* smgr = device->getSceneManager();
 
-	const io::path mediaPath = getExampleMediaPath();
+	//const io::path mediaPath = getExampleMediaPath();
 
-	device->getFileSystem()->addFileArchive(mediaPath + "map-20kdm2.pk3");
+	//device->getFileSystem()->addFileArchive(mediaPath + "map-20kdm2.pk3");
 
-	scene::IAnimatedMesh* q3levelmesh = smgr->getMesh("20kdm2.bsp");
+	scene::IAnimatedMesh* q3levelmesh = smgr->getMesh("drtt.obj");
 	scene::IMeshSceneNode* q3node = 0;
 
 	// The Quake mesh is pickable, but doesn't get highlighted.
 	if (q3levelmesh)
 		q3node = smgr->addOctreeSceneNode(q3levelmesh->getMesh(0), 0, IDFlag_IsPickable);
+	q3node->setScale(vector3df(2,6,3));
+	q3node->getMaterial(0).Lighting = true;
+	q3node->setMaterialType(EMT_SOLID);
+	q3node->setMaterialFlag(EMF_LIGHTING, false);
 
 
 	scene::ITriangleSelector* selector = 0;
 
 	if (q3node)
 	{
-		q3node->setPosition(core::vector3df(-1350,-130,-1400));
+		q3node->setPosition(core::vector3df(0,-1000,-0));
 
 		selector = smgr->createOctreeTriangleSelector(
 				q3node->getMesh(), q3node, 128);
@@ -367,7 +359,7 @@ int main()
 	scene::IAnimatedMeshSceneNode* playernode = 0;
 
 	// And this mdl file uses skinned skeletal animation.
-	playernode = smgr->addAnimatedMeshSceneNode(smgr->getMesh(mediaPath + "yodan.mdl"),
+	playernode = smgr->addAnimatedMeshSceneNode(smgr->getMesh("yodan.mdl"),
 		0);
 	playernode->setPosition(core::vector3df(-40, -25, 20));
 	playernode->setScale(core::vector3df(0.2f));
@@ -408,13 +400,13 @@ int main()
 	video::SMaterial material;
 
 	// Add an MD2 node, which uses vertex-based animation.
-	node = smgr->addAnimatedMeshSceneNode(smgr->getMesh(mediaPath + "faerie.md2"),
+	node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("faerie.md2"),
 						0, IDFlag_IsPickable | IDFlag_IsHighlightable);
 	node->setPosition(core::vector3df(-90,-15,-140)); // Put its feet on the floor.
 	node->setScale(core::vector3df(1.6f)); // Make it appear realistically scaled
 	node->setMD2Animation(scene::EMAT_POINT);
 	node->setAnimationSpeed(20.f);
-	material.setTexture(0, driver->getTexture(mediaPath + "faerie2.bmp"));
+	material.setTexture(0, driver->getTexture("faerie2.bmp"));
 	material.Lighting = true;
 	material.NormalizeNormals = true;
 	node->getMaterial(0) = material;
@@ -425,7 +417,7 @@ int main()
 	selector->drop(); // We're done with this selector, so drop it now.
 
 	// And this B3D file uses skinned skeletal animation.
-	node = smgr->addAnimatedMeshSceneNode(smgr->getMesh(mediaPath + "ninja.b3d"),
+	node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("ninja.b3d"),
 						0, IDFlag_IsPickable | IDFlag_IsHighlightable);
 	node->setScale(core::vector3df(10));
 	node->setPosition(core::vector3df(-75,-66,-80));
@@ -439,7 +431,7 @@ int main()
 	selector->drop();
 
 	// This X files uses skeletal animation, but without skinning.
-	node = smgr->addAnimatedMeshSceneNode(smgr->getMesh(mediaPath + "dwarf.x"),
+	node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("dwarf.x"),
 						0, IDFlag_IsPickable | IDFlag_IsHighlightable);
 	node->setPosition(core::vector3df(-70,-66,-30)); // Put its feet on the floor.
 	node->setRotation(core::vector3df(0,-90,0)); // And turn it towards the camera.
@@ -451,7 +443,7 @@ int main()
 
 
 	// And this mdl file uses skinned skeletal animation.
-	node = smgr->addAnimatedMeshSceneNode(smgr->getMesh(mediaPath + "yodan.mdl"),
+	node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("yodan.mdl"),
 						0, IDFlag_IsPickable | IDFlag_IsHighlightable);
 	node->setPosition(core::vector3df(-90,-25,20));
 	node->setScale(core::vector3df(0.8f));
@@ -468,9 +460,9 @@ int main()
 
 
 	// Add a light, so that the unselected nodes aren't completely dark.
-	scene::ILightSceneNode * light = smgr->addLightSceneNode(0, core::vector3df(-60,100,400),
-		video::SColorf(1.0f,1.0f,1.0f,1.0f), 600.0f);
-	light->setID(ID_IsNotPickable); // Make it an invalid target for selection.
+	/*scene::ILightSceneNode * light = smgr->addLightSceneNode(0, core::vector3df(-60,100,400),
+		video::SColorf(1.0f,1.0f,1.0f,1.0f), 600.0f);*/
+	/*light->setID(ID_IsNotPickable); */// Make it an invalid target for selection.
 
 	// Remember which scene node is highlighted
 	scene::ISceneCollisionManager* collMan = smgr->getSceneCollisionManager();

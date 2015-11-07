@@ -1,27 +1,28 @@
-﻿Build started 5. 11. 2015 12:55:17.
-     1>Project "C:\Users\vkraka\Desktop\Irrlicht 1.9 svn\examples\07.Collision\Collision_vc12.vcxproj" on node 2 (Build target(s)).
+﻿Build started 6. 11. 2015 23:21:43.
+     1>Project "C:\Users\Véna\Desktop\Irrlicht 1.9 svn\examples\07.Collision\Collision_vc12.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\..\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _VC80_UPGRADE=0x0710 /D _MBCS /Gm- /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
          main.cpp
-     1>c:\users\vkraka\desktop\irrlicht 1.9 svn\examples\07.collision\main.cpp(40): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\vkraka\desktop\irrlicht 1.9 svn\examples\07.collision\main.cpp(41): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\vkraka\desktop\irrlicht 1.9 svn\examples\07.collision\main.cpp(79): warning C4244: '=' : conversion from 'double' to 'irr::f32', possible loss of data
-     1>c:\users\vkraka\desktop\irrlicht 1.9 svn\examples\07.collision\main.cpp(80): warning C4244: '=' : conversion from 'double' to 'irr::f32', possible loss of data
-     1>c:\users\vkraka\desktop\irrlicht 1.9 svn\examples\07.collision\main.cpp(91): warning C4244: '=' : conversion from 'double' to 'irr::f32', possible loss of data
-     1>c:\users\vkraka\desktop\irrlicht 1.9 svn\examples\07.collision\main.cpp(92): warning C4244: '=' : conversion from 'double' to 'irr::f32', possible loss of data
-     1>c:\users\vkraka\desktop\irrlicht 1.9 svn\examples\07.collision\main.cpp(103): warning C4244: '=' : conversion from 'double' to 'irr::f32', possible loss of data
-     1>c:\users\vkraka\desktop\irrlicht 1.9 svn\examples\07.collision\main.cpp(104): warning C4244: '=' : conversion from 'double' to 'irr::f32', possible loss of data
-     1>c:\users\vkraka\desktop\irrlicht 1.9 svn\examples\07.collision\main.cpp(113): warning C4244: '=' : conversion from 'double' to 'irr::f32', possible loss of data
-     1>c:\users\vkraka\desktop\irrlicht 1.9 svn\examples\07.collision\main.cpp(114): warning C4244: '=' : conversion from 'double' to 'irr::f32', possible loss of data
-     1>c:\users\vkraka\desktop\irrlicht 1.9 svn\examples\07.collision\main.cpp(178): warning C4244: '=' : conversion from 'int' to 'irr::f32', possible loss of data
-     1>c:\users\vkraka\desktop\irrlicht 1.9 svn\examples\07.collision\main.cpp(524): warning C4244: 'argument' : conversion from 'double' to 'irr::u32', possible loss of data
+     1>c:\users\véna\desktop\irrlicht 1.9 svn\examples\07.collision\main.cpp(28): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\véna\desktop\irrlicht 1.9 svn\examples\07.collision\main.cpp(29): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\véna\desktop\irrlicht 1.9 svn\examples\07.collision\main.cpp(67): warning C4244: '=' : conversion from 'double' to 'irr::f32', possible loss of data
+     1>c:\users\véna\desktop\irrlicht 1.9 svn\examples\07.collision\main.cpp(68): warning C4244: '=' : conversion from 'double' to 'irr::f32', possible loss of data
+     1>c:\users\véna\desktop\irrlicht 1.9 svn\examples\07.collision\main.cpp(79): warning C4244: '=' : conversion from 'double' to 'irr::f32', possible loss of data
+     1>c:\users\véna\desktop\irrlicht 1.9 svn\examples\07.collision\main.cpp(80): warning C4244: '=' : conversion from 'double' to 'irr::f32', possible loss of data
+     1>c:\users\véna\desktop\irrlicht 1.9 svn\examples\07.collision\main.cpp(91): warning C4244: '=' : conversion from 'double' to 'irr::f32', possible loss of data
+     1>c:\users\véna\desktop\irrlicht 1.9 svn\examples\07.collision\main.cpp(92): warning C4244: '=' : conversion from 'double' to 'irr::f32', possible loss of data
+     1>c:\users\véna\desktop\irrlicht 1.9 svn\examples\07.collision\main.cpp(101): warning C4244: '=' : conversion from 'double' to 'irr::f32', possible loss of data
+     1>c:\users\véna\desktop\irrlicht 1.9 svn\examples\07.collision\main.cpp(102): warning C4244: '=' : conversion from 'double' to 'irr::f32', possible loss of data
+     1>c:\users\véna\desktop\irrlicht 1.9 svn\examples\07.collision\main.cpp(166): warning C4244: '=' : conversion from 'int' to 'irr::f32', possible loss of data
+     1>c:\users\véna\desktop\irrlicht 1.9 svn\examples\07.collision\main.cpp(516): warning C4244: 'argument' : conversion from 'double' to 'irr::u32', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\..\bin\Win32-VisualStudio\07.Collision.exe" /NOLOGO /LIBPATH:"..\..\lib\Win32-visualstudio" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"..\..\bin\Win32-VisualStudio\07.Collision.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /IMPLIB:"..\..\bin\Win32-VisualStudio\07.Collision.lib" /MACHINE:X86 /SAFESEH Debug\CColManager.obj
          Debug\CWoWCollisionAnimator.obj
          Debug\main.obj
-         Collision_vc12.vcxproj -> C:\Users\vkraka\Desktop\Irrlicht 1.9 svn\examples\07.Collision\..\..\bin\Win32-VisualStudio\07.Collision.exe
-     1>Done Building Project "C:\Users\vkraka\Desktop\Irrlicht 1.9 svn\examples\07.Collision\Collision_vc12.vcxproj" (Build target(s)).
+     1>CColManager.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+         Collision_vc12.vcxproj -> C:\Users\Véna\Desktop\Irrlicht 1.9 svn\examples\07.Collision\..\..\bin\Win32-VisualStudio\07.Collision.exe
+     1>Done Building Project "C:\Users\Véna\Desktop\Irrlicht 1.9 svn\examples\07.Collision\Collision_vc12.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:02.16
+Time Elapsed 00:00:04.00
