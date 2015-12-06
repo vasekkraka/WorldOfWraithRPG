@@ -13,7 +13,8 @@ int main()
 	WoWGameKlient * localGame = new WoWGameKlient();
 	localGame->initialize();
 	//localGame->playIntro();
-	localGame->gameRun();
+	//localGame->gameRun();
+	localGame->runTestScene();
 
 	return 0;
 }

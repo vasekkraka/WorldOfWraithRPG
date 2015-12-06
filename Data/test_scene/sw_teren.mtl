@@ -1,0 +1,90 @@
+# Blender MTL File: 'sw_teren_extend.blend'
+# Material Count: 8
+
+newmtl Material
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.252574 0.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 0
+map_Kd .
+
+newmtl Material.001
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.289273 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 0
+
+newmtl Material_NONE
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.252574 0.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 0
+map_Kd .
+
+newmtl World_Expansion04_doodads_valleyoffourwinds_pinetree_vfw_pi.000
+Ns 0.000000
+Ka 0.250000 0.250000 0.250000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 0
+map_Kd jedle_VFW_PINETREEDARK_TRUNK.png
+
+newmtl World_Expansion04_doodads_valleyoffourwinds_pinetree_vfw_pinetr
+Ns 0.000000
+Ka 0.250000 0.250000 0.250000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 0
+map_Kd jedle_VFW_PINETREEDARK_CANOPY.png
+
+newmtl World_Expansion05_doodads_tanaanjungle_doodads_6tj_tree_big.000
+Ns 0.000000
+Ka 0.250000 0.250000 0.250000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 0
+map_Kd test_tree_6TJ_TreeLeaves_03.png
+
+newmtl World_Expansion05_doodads_tanaanjungle_doodads_6tj_tree_big.001
+Ns 0.000000
+Ka 0.250000 0.250000 0.250000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.000000
+illum 0
+map_Kd test_tree_6TJ_climbingvine.png
+map_d test_tree_6TJ_climbingvine.png
+
+newmtl World_Expansion05_doodads_tanaanjungle_doodads_6tj_tree_bigcano
+Ns 0.000000
+Ka 0.250000 0.250000 0.250000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 0
+map_Kd test_tree_6TJ_CanopyTree.png

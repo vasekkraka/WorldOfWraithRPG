@@ -29,6 +29,7 @@ namespace WowKlient
 			bool initialize();
 			void gameRun();
 			void playIntro();
+			void runTestScene();
 
 		private:
 			Core::GameState gState;

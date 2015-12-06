@@ -29,6 +29,10 @@ namespace WowKlient
 		irr::video::IVideoDriver * driver = gState->irrDevice->getVideoDriver();
 		irr::scene::ISceneManager * smgr = gState->irrDevice->getSceneManager();
 
+		smgr->clear();
+		guienv->clear();
+
+
 		LoginManagerEvent * LoginManagerEventReciever = new LoginManagerEvent();
 
 		gState->irrDevice->setEventReceiver(LoginManagerEventReciever);
