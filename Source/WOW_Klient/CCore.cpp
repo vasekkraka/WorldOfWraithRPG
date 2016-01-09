@@ -7,7 +7,7 @@ namespace WowKlient
 
 		irr::IrrlichtDevice * initializeGraphicEngine(Configuration::graphicConfiguration * gConf)
 		{
-			return createDevice(gConf->driverType, gConf->resolution, gConf->bits, gConf->fullScreen, gConf->stencilBuffer, gConf->vSync);
+			return createDevice(EDT_DIRECT3D9, gConf->resolution, gConf->bits, gConf->fullScreen, gConf->stencilBuffer, gConf->vSync);
 		}
 
 		irrklang::ISoundEngine * initializeSoundEngine()

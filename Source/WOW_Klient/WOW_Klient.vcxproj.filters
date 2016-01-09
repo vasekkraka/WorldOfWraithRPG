@@ -33,6 +33,9 @@
     <ClInclude Include="HLoginManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RealisticWater.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CIntro.cpp">
@@ -51,6 +54,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CLoginManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RealisticWater.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

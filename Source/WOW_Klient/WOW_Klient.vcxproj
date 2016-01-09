@@ -94,6 +94,7 @@
     <ClInclude Include="HIntro.h" />
     <ClInclude Include="HLoginManager.h" />
     <ClInclude Include="HWOWKlient.h" />
+    <ClInclude Include="RealisticWater.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CConfigLoader.cpp" />
@@ -102,6 +103,7 @@
     <ClCompile Include="CLoginManager.cpp" />
     <ClCompile Include="CMain.cpp" />
     <ClCompile Include="CWOWKlient.cpp" />
+    <ClCompile Include="RealisticWater.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

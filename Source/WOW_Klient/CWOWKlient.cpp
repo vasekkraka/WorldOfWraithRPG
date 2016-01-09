@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "HWOWKlient.h"
+#include "RealisticWater.h"
 
 using namespace WowKlient;
 using namespace WowKlient::Core;
@@ -73,7 +74,7 @@ namespace WowKlient
 		teren->setMaterialFlag(E_MATERIAL_FLAG::EMF_ANISOTROPIC_FILTER, true);
 		teren->setMaterialFlag(E_MATERIAL_FLAG::EMF_USE_MIP_MAPS, true);
 
-		teren->setMaterialFlag(E_MATERIAL_FLAG::EMF_WIREFRAME, true);
+		//teren->setMaterialFlag(E_MATERIAL_FLAG::EMF_WIREFRAME, true);
 
 		teren->setMaterialType(E_MATERIAL_TYPE::EMT_SOLID);
 		teren->setMaterialFlag(E_MATERIAL_FLAG::EMF_NORMALIZE_NORMALS, true);
@@ -92,8 +93,42 @@ namespace WowKlient
 			
 		}
 
-		
-		
+		scene::ISceneNode* skybox = smgr->addSkyBoxSceneNode(
+			driver->getTexture("../../../media/irrlicht2_up.jpg"),
+			driver->getTexture("../../../media/irrlicht2_dn.jpg"),
+			driver->getTexture("../../../media/irrlicht2_lf.jpg"),
+			driver->getTexture("../../../media/irrlicht2_rt.jpg"),
+			driver->getTexture("../../../media/irrlicht2_ft.jpg"),
+			driver->getTexture("../../../media/irrlicht2_bk.jpg"));
+
+		//RealisticWaterSceneNode * water = new RealisticWaterSceneNode(smgr, 1024, 1024, "../../../Data");
+
+		//water->setPosition(vector3df(0, 20, 0));
+
+		//water->setParent(smgr->getRootSceneNode());
+
+		//smgr->addCubeSceneNode(10.0F, NULL, NULL, vector3df(0, 10, 0));
+
+		IAnimatedMeshSceneNode * qeen_node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("..\\..\\..\\Data\\test_scene\\bloodqueen.obj"), 0, 0, vector3df(0, 30, 0));
+
+		IAnimatedMesh * qeen_mesh = qeen_node->getMesh();
+
+		for (int i = 0; i < qeen_mesh->getMeshBufferCount(); i++)
+		{
+			printf("Vertexu v %i-tem bufferu: %i\n", i, qeen_mesh->getMeshBuffer(i)->getVertexCount());
+		}
+
+		SAnimatedMesh * minimal_mesh = new SAnimatedMesh(0, E_ANIMATED_MESH_TYPE::EAMT_SKINNED);
+
+		SMesh * minimal_static_mesh = new SMesh();
+
+		minimal_static_mesh->addMeshBuffer(qeen_mesh->getMeshBuffer(1));
+
+		minimal_mesh->addMesh(minimal_static_mesh);
+
+		printf("Buffer count: %i", minimal_mesh->getMeshBufferCount());
+
+		IMeshSceneNode * minimal_node = smgr->addMeshSceneNode(minimal_static_mesh, 0, 0, vector3df(30, 30, 0));
 
 
 		while (gState.irrDevice->run())
