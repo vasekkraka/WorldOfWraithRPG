@@ -101,35 +101,102 @@ namespace WowKlient
 			driver->getTexture("../../../media/irrlicht2_ft.jpg"),
 			driver->getTexture("../../../media/irrlicht2_bk.jpg"));
 
-		//RealisticWaterSceneNode * water = new RealisticWaterSceneNode(smgr, 1024, 1024, "../../../Data");
+		RealisticWaterSceneNode * water = new RealisticWaterSceneNode(smgr, 1024, 1024, "../../../Data");
 
-		//water->setPosition(vector3df(0, 20, 0));
+		water->setPosition(vector3df(0, 20, 0));
 
-		//water->setParent(smgr->getRootSceneNode());
+		water->setParent(smgr->getRootSceneNode());
 
-		//smgr->addCubeSceneNode(10.0F, NULL, NULL, vector3df(0, 10, 0));
+		
+		IAnimatedMesh * dwarf_mesh = smgr->getMesh("..\\..\\..\\Data\\test_scene\\dwarf.x");
+		ISkinnedMesh * skinned = (ISkinnedMesh *)dwarf_mesh;
 
-		IAnimatedMeshSceneNode * qeen_node = smgr->addAnimatedMeshSceneNode(smgr->getMesh("..\\..\\..\\Data\\test_scene\\bloodqueen.obj"), 0, 0, vector3df(0, 30, 0));
-
-		IAnimatedMesh * qeen_mesh = qeen_node->getMesh();
-
-		for (int i = 0; i < qeen_mesh->getMeshBufferCount(); i++)
+		for (int i = 0; i < skinned->getJointCount(); i++)
 		{
-			printf("Vertexu v %i-tem bufferu: %i\n", i, qeen_mesh->getMeshBuffer(i)->getVertexCount());
+			printf("Joint %i name: %s\n", i, skinned->getAllJoints()[i]->Name);
 		}
 
-		SAnimatedMesh * minimal_mesh = new SAnimatedMesh(0, E_ANIMATED_MESH_TYPE::EAMT_SKINNED);
+		IAnimatedMeshSceneNode * dwarf_node = smgr->addAnimatedMeshSceneNode(dwarf_mesh, 0, 0, vector3df(0, 30, 0));
 
-		SMesh * minimal_static_mesh = new SMesh();
+		ISkinnedMesh * clone = smgr->createSkinnedMesh();
 
-		minimal_static_mesh->addMeshBuffer(qeen_mesh->getMeshBuffer(1));
+		//IMeshSceneNode * static_node = smgr->addMeshSceneNode(dwarf_mesh, 0, 0, vector3df(60, 30, 0));
 
-		minimal_mesh->addMesh(minimal_static_mesh);
+		SSkinMeshBuffer * buf = clone->addMeshBuffer();
 
-		printf("Buffer count: %i", minimal_mesh->getMeshBufferCount());
+		printf("V novem meshi je %i bufferu\n", clone->getMeshBufferCount());
 
-		IMeshSceneNode * minimal_node = smgr->addMeshSceneNode(minimal_static_mesh, 0, 0, vector3df(30, 30, 0));
+		for (int i = 0; i < ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertexCount(); i++)
+		{
+			//printf("X:%i Y:%i Z:%i U:%i V:%i\n", ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Pos.X, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Pos.Y, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Pos.Z, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->TCoords.X, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->TCoords.Y);
+			S3DVertex * v = new S3DVertex(((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Pos.X, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Pos.Y, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Pos.Z, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Normal.X, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Normal.Y, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Normal.Z, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Color, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->TCoords.X, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->TCoords.Y);
+			buf->Vertices_Standard.push_back(*v);
+		}
 
+		for (int i = 0; i < ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getIndexCount(); i++)
+		{
+			buf->Indices.push_back(u16(((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getIndices()[i]));
+		}
+
+		
+
+		//ISkinnedMesh::SJoint * p = clone->addJoint();
+		//*p = *skinned->getAllJoints()[0];
+		//p->Weights.clear();
+		//p->Children.clear();
+
+		//for (int i = 1; i < skinned->getJointCount(); i++)
+		//{
+		//	ISkinnedMesh::SJoint * j = clone->addJoint(p);
+		//	*j = *skinned->getAllJoints()[i];
+		//	j->Weights.clear();
+		//	j->Children.clear();
+		//}
+
+		for (int i = 0; i < skinned->getJointCount(); i++)
+		{
+			ISkinnedMesh::SJoint * joint = clone->addJoint();
+			*joint = *skinned->getAllJoints()[i];
+			joint->Weights.clear();
+			joint->Children.clear();
+
+			if (skinned->getAllJoints()[i]->Children.size() > 0)
+			{
+				for (int j = 0; j < skinned->getAllJoints()[i]->Children.size(); j++)
+				{
+					ISkinnedMesh::SJoint * child_joint = clone->addJoint(joint);
+					*child_joint = *skinned->getAllJoints()[i]->Children[j];
+					child_joint->Children.clear();
+					child_joint->Weights.clear();
+				}
+			}
+		}
+
+		printf("Jointu ve starem: %i\n", skinned->getJointCount());
+		printf("Jointu v novem: %i\n", clone->getJointCount());
+		
+
+		
+		dwarf_node->setDebugDataVisible(irr::scene::E_DEBUG_SCENE_TYPE::EDS_SKELETON);
+		
+		dwarf_node->setAnimationSpeed(5);
+
+		//clone->useAnimationFrom(skinned);
+		
+		//buf->Material.setTexture(0, (((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getMaterial().getTexture(0)));
+		//buf->Material.Lighting = false;
+
+		buf->Material = ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getMaterial();
+
+		clone->finalize();
+
+		printf("Trianglu v novem meshi : %i\n", buf->getVertexCount());
+
+		printf("Indicii v novem meshi : %i V puvodnim: %i\n", buf->getIndexCount(), dwarf_mesh->getMeshBuffer(0)->getIndexCount());
+
+		IAnimatedMeshSceneNode * clone_node = smgr->addAnimatedMeshSceneNode(clone, 0, 0, vector3df(45, 30, 0));
+
+		clone_node->setDebugDataVisible(irr::scene::E_DEBUG_SCENE_TYPE::EDS_SKELETON);
 
 		while (gState.irrDevice->run())
 		{
