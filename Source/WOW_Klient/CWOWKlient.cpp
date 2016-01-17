@@ -53,6 +53,35 @@ namespace WowKlient
 		return true;
 	}
 
+	void writeChilds(ISkinnedMesh::SJoint * joint, int hloubka)
+	{
+		for (int i = 0; i < joint->Children.size(); i++)
+		{
+			for (int j = 0; j < hloubka; j++)
+			{
+				printf(" -> ");
+			}
+			printf(" %s\n", joint->Name);
+			if (joint->Children[i]->Children.size() > 0)
+			{
+				writeChilds(joint->Children[i], hloubka + 1);
+			}
+		}
+	}
+
+	void parseJointParents(ISkinnedMesh * mesh, ISkinnedMesh::SJoint * Sjoint, ISkinnedMesh::SJoint * Pjoint)
+	{
+		ISkinnedMesh::SJoint * Njoint = mesh->addJoint(Pjoint);
+		*Njoint = *Sjoint;
+		//mesh->addJoint(Njoint);
+		Njoint->Weights.clear();
+		Njoint->Children.clear();
+		for (int i = 0; i < Sjoint->Children.size(); i++)
+		{
+			parseJointParents(mesh, Sjoint->Children[i], Njoint);
+		}
+	}
+
 	void WoWGameKlient::runTestScene()
 	{
 		irr::gui::IGUIEnvironment* guienv = gState.irrDevice->getGUIEnvironment();
@@ -128,7 +157,6 @@ namespace WowKlient
 
 		for (int i = 0; i < ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertexCount(); i++)
 		{
-			//printf("X:%i Y:%i Z:%i U:%i V:%i\n", ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Pos.X, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Pos.Y, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Pos.Z, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->TCoords.X, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->TCoords.Y);
 			S3DVertex * v = new S3DVertex(((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Pos.X, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Pos.Y, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Pos.Z, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Normal.X, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Normal.Y, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Normal.Z, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Color, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->TCoords.X, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->TCoords.Y);
 			buf->Vertices_Standard.push_back(*v);
 		}
@@ -138,39 +166,9 @@ namespace WowKlient
 			buf->Indices.push_back(u16(((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getIndices()[i]));
 		}
 
-		
+		printf("Copying joints... \n");
 
-		//ISkinnedMesh::SJoint * p = clone->addJoint();
-		//*p = *skinned->getAllJoints()[0];
-		//p->Weights.clear();
-		//p->Children.clear();
-
-		//for (int i = 1; i < skinned->getJointCount(); i++)
-		//{
-		//	ISkinnedMesh::SJoint * j = clone->addJoint(p);
-		//	*j = *skinned->getAllJoints()[i];
-		//	j->Weights.clear();
-		//	j->Children.clear();
-		//}
-
-		for (int i = 0; i < skinned->getJointCount(); i++)
-		{
-			ISkinnedMesh::SJoint * joint = clone->addJoint();
-			*joint = *skinned->getAllJoints()[i];
-			joint->Weights.clear();
-			joint->Children.clear();
-
-			if (skinned->getAllJoints()[i]->Children.size() > 0)
-			{
-				for (int j = 0; j < skinned->getAllJoints()[i]->Children.size(); j++)
-				{
-					ISkinnedMesh::SJoint * child_joint = clone->addJoint(joint);
-					*child_joint = *skinned->getAllJoints()[i]->Children[j];
-					child_joint->Children.clear();
-					child_joint->Weights.clear();
-				}
-			}
-		}
+		parseJointParents(clone, skinned->getAllJoints()[0], 0);
 
 		printf("Jointu ve starem: %i\n", skinned->getJointCount());
 		printf("Jointu v novem: %i\n", clone->getJointCount());
@@ -197,6 +195,69 @@ namespace WowKlient
 		IAnimatedMeshSceneNode * clone_node = smgr->addAnimatedMeshSceneNode(clone, 0, 0, vector3df(45, 30, 0));
 
 		clone_node->setDebugDataVisible(irr::scene::E_DEBUG_SCENE_TYPE::EDS_SKELETON);
+
+		//for (int i = 0; i < skinned->getJointCount(); i++)
+		//{
+		//	if (skinned->getAllJoints()[i]->Children.size() != 0)
+		//	{
+		//		writeChilds(skinned->getAllJoints()[i], 1);
+		//	}
+		//}
+
+		printf("First Bone: %s\n\n------------------------------------------\n", skinned->getAllJoints()[0]->Name);
+
+		writeChilds(skinned->getAllJoints()[0], 1);
+
+
+		printf("\n\nFirst NEW Bone: %s\n\n------------------------------------------\n", clone->getAllJoints()[0]->Name);
+
+		writeChilds(clone->getAllJoints()[0], 1);
+
+		printf("Copying weights... \n");
+
+		for (int i = 0; i < skinned->getJointCount(); i++)
+		{
+			ISkinnedMesh::SJoint * joint;
+
+			joint = clone->getAllJoints()[clone->getJointNumber(skinned->getAllJoints()[i]->Name.c_str())];
+
+			for (int j = 0; j < skinned->getAllJoints()[i]->Weights.size(); j++)
+			{
+				if (skinned->getAllJoints()[i]->Weights[j].buffer_id == 0)
+				{
+					ISkinnedMesh::SWeight * w = clone->addWeight(joint);
+					w->buffer_id = 0;
+					w->strength = skinned->getAllJoints()[i]->Weights[j].strength;
+					w->vertex_id = skinned->getAllJoints()[i]->Weights[j].vertex_id;
+				}
+			}
+
+		}
+
+		for (int i = 0; i < skinned->getJointCount(); i++)
+		{
+			ISkinnedMesh::SJoint * joint;
+			joint = clone->getAllJoints()[clone->getJointNumber(skinned->getAllJoints()[i]->Name.c_str())];
+			printf("Joint orig name: %s, Joint clone name: %s\n", skinned->getAllJoints()[i]->Name.c_str(), joint->Name.c_str());
+			printf("\t Weights count %i\n", skinned->getAllJoints()[i]->Weights.size());
+			for (int j = 0; j < skinned->getAllJoints()[i]->Weights.size(); j++)
+			{
+				printf("Ind: %i, buffer_id: %i, vertex_id: %i, strength: %f\n", j, skinned->getAllJoints()[i]->Weights[j].buffer_id, skinned->getAllJoints()[i]->Weights[j].vertex_id, skinned->getAllJoints()[i]->Weights[j].strength);
+			}
+		}
+
+		skinned->animateMesh(2, 1);
+
+		skinned->skinMesh();
+
+		printf("Copy done... \n");
+
+		
+
+		clone->finalize();
+
+
+		getchar();
 
 		while (gState.irrDevice->run())
 		{
