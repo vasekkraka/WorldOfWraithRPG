@@ -140,6 +140,8 @@ namespace WowKlient
 		IAnimatedMesh * dwarf_mesh = smgr->getMesh("..\\..\\..\\Data\\test_scene\\dwarf.x");
 		ISkinnedMesh * skinned = (ISkinnedMesh *)dwarf_mesh;
 
+
+
 		for (int i = 0; i < skinned->getJointCount(); i++)
 		{
 			printf("Joint %i name: %s\n", i, skinned->getAllJoints()[i]->Name);
@@ -152,6 +154,9 @@ namespace WowKlient
 		//IMeshSceneNode * static_node = smgr->addMeshSceneNode(dwarf_mesh, 0, 0, vector3df(60, 30, 0));
 
 		SSkinMeshBuffer * buf = clone->addMeshBuffer();
+
+		buf->recalculateBoundingBox();
+		buf->setDirty();
 
 		printf("V novem meshi je %i bufferu\n", clone->getMeshBufferCount());
 
@@ -166,6 +171,8 @@ namespace WowKlient
 			buf->Indices.push_back(u16(((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getIndices()[i]));
 		}
 
+		buf->Material = ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getMaterial();
+
 		printf("Copying joints... \n");
 
 		parseJointParents(clone, skinned->getAllJoints()[0], 0);
@@ -173,58 +180,48 @@ namespace WowKlient
 		printf("Jointu ve starem: %i\n", skinned->getJointCount());
 		printf("Jointu v novem: %i\n", clone->getJointCount());
 		
-
+		clone->setDirty();
 		
 		dwarf_node->setDebugDataVisible(irr::scene::E_DEBUG_SCENE_TYPE::EDS_SKELETON);
 		
-		dwarf_node->setAnimationSpeed(5);
+		dwarf_node->setAnimationSpeed(0);
 
-		//clone->useAnimationFrom(skinned);
 		
-		//buf->Material.setTexture(0, (((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getMaterial().getTexture(0)));
-		//buf->Material.Lighting = false;
 
-		buf->Material = ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getMaterial();
-
-		clone->finalize();
-
-		printf("Trianglu v novem meshi : %i\n", buf->getVertexCount());
-
-		printf("Indicii v novem meshi : %i V puvodnim: %i\n", buf->getIndexCount(), dwarf_mesh->getMeshBuffer(0)->getIndexCount());
-
-		IAnimatedMeshSceneNode * clone_node = smgr->addAnimatedMeshSceneNode(clone, 0, 0, vector3df(45, 30, 0));
-
-		clone_node->setDebugDataVisible(irr::scene::E_DEBUG_SCENE_TYPE::EDS_SKELETON);
-
-		//for (int i = 0; i < skinned->getJointCount(); i++)
-		//{
-		//	if (skinned->getAllJoints()[i]->Children.size() != 0)
-		//	{
-		//		writeChilds(skinned->getAllJoints()[i], 1);
-		//	}
-		//}
-
-		printf("First Bone: %s\n\n------------------------------------------\n", skinned->getAllJoints()[0]->Name);
-
-		writeChilds(skinned->getAllJoints()[0], 1);
+		
 
 
-		printf("\n\nFirst NEW Bone: %s\n\n------------------------------------------\n", clone->getAllJoints()[0]->Name);
+		//printf("Trianglu v novem meshi : %i\n", buf->getVertexCount());
 
-		writeChilds(clone->getAllJoints()[0], 1);
+		//printf("Indicii v novem meshi : %i V puvodnim: %i\n", buf->getIndexCount(), dwarf_mesh->getMeshBuffer(0)->getIndexCount());
 
-		printf("Copying weights... \n");
+		
+
+		//printf("First Bone: %s\n\n------------------------------------------\n", skinned->getAllJoints()[0]->Name);
+
+		//writeChilds(skinned->getAllJoints()[0], 1);
+
+
+		//printf("\n\nFirst NEW Bone: %s\n\n------------------------------------------\n", clone->getAllJoints()[0]->Name);
+
+		//writeChilds(clone->getAllJoints()[0], 1);
+
+		//printf("Copying weights... \n");
 
 		for (int i = 0; i < skinned->getJointCount(); i++)
 		{
+			printf("Cycle %i:\n", i);
 			ISkinnedMesh::SJoint * joint;
 
 			joint = clone->getAllJoints()[clone->getJointNumber(skinned->getAllJoints()[i]->Name.c_str())];
+
+			printf("Joint name: %s\n", joint->Name.c_str());
 
 			for (int j = 0; j < skinned->getAllJoints()[i]->Weights.size(); j++)
 			{
 				if (skinned->getAllJoints()[i]->Weights[j].buffer_id == 0)
 				{
+					//printf("Ind: %i, buffer_id: %i, vertex_id: %i, strength: %f\n", j, skinned->getAllJoints()[i]->Weights[j].buffer_id, skinned->getAllJoints()[i]->Weights[j].vertex_id, skinned->getAllJoints()[i]->Weights[j].strength);
 					ISkinnedMesh::SWeight * w = clone->addWeight(joint);
 					w->buffer_id = 0;
 					w->strength = skinned->getAllJoints()[i]->Weights[j].strength;
@@ -234,33 +231,40 @@ namespace WowKlient
 
 		}
 
-		for (int i = 0; i < skinned->getJointCount(); i++)
-		{
-			ISkinnedMesh::SJoint * joint;
-			joint = clone->getAllJoints()[clone->getJointNumber(skinned->getAllJoints()[i]->Name.c_str())];
-			printf("Joint orig name: %s, Joint clone name: %s\n", skinned->getAllJoints()[i]->Name.c_str(), joint->Name.c_str());
-			printf("\t Weights count %i\n", skinned->getAllJoints()[i]->Weights.size());
-			for (int j = 0; j < skinned->getAllJoints()[i]->Weights.size(); j++)
-			{
-				printf("Ind: %i, buffer_id: %i, vertex_id: %i, strength: %f\n", j, skinned->getAllJoints()[i]->Weights[j].buffer_id, skinned->getAllJoints()[i]->Weights[j].vertex_id, skinned->getAllJoints()[i]->Weights[j].strength);
-			}
-		}
+		
 
-		skinned->animateMesh(2, 1);
+		//for (int i = 0; i < skinned->getJointCount(); i++)
+		//{
+		//	ISkinnedMesh::SJoint * joint;
+		//	joint = clone->getAllJoints()[clone->getJointNumber(skinned->getAllJoints()[i]->Name.c_str())];
+		//	printf("Joint orig name: %s, Joint clone name: %s\n", skinned->getAllJoints()[i]->Name.c_str(), joint->Name.c_str());
+		//	printf("\t Weights count %i\n", skinned->getAllJoints()[i]->Weights.size());
+		//	for (int j = 0; j < skinned->getAllJoints()[i]->Weights.size(); j++)
+		//	{
+		//		printf("Ind: %i, buffer_id: %i, vertex_id: %i, strength: %f\n", j, skinned->getAllJoints()[i]->Weights[j].buffer_id, skinned->getAllJoints()[i]->Weights[j].vertex_id, skinned->getAllJoints()[i]->Weights[j].strength);
+		//	}
+		//}
 
-		skinned->skinMesh();
 
 		printf("Copy done... \n");
 
-		
 
 		clone->finalize();
 
+		clone->setDirty();
+		//getchar();
+		IAnimatedMeshSceneNode * clone_node = smgr->addAnimatedMeshSceneNode(clone, 0, 0, vector3df(1, 30, 0));
 
-		getchar();
+		clone_node->setAnimationSpeed(15);
 
+		clone_node->setMaterialFlag(E_MATERIAL_FLAG::EMF_LIGHTING, false);
+
+		clone_node->setDebugDataVisible(irr::scene::E_DEBUG_SCENE_TYPE::EDS_SKELETON);
+
+	
 		while (gState.irrDevice->run())
 		{
+
 			u32 oldtime = gState.irrDevice->getTimer()->getTime();
 			int fps = driver->getFPS();
 
@@ -283,6 +287,7 @@ namespace WowKlient
 				gState.irrDevice->sleep((1000 / 60) - (newtime - oldtime));
 			}
 		}
+
 	};
 
 	void WoWGameKlient::gameRun()
