@@ -105,9 +105,9 @@ int main()
 	//alfa.join();
 	//beta.join();
 
-	//ServerInstance * localServer = new ServerInstance();
+	ServerInstance * localServer = new ServerInstance();
 
-	//localServer->initializeInstance();
+	localServer->initializeInstance();
 
 	boost::asio::io_service io_service;
 

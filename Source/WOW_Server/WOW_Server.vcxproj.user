@@ -4,5 +4,6 @@
     <LocalDebuggerSQLDebugging>true</LocalDebuggerSQLDebugging>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     <LocalDebuggerWorkingDirectory>..\..\Bin\MSVC32\Debug\</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerCommand>..\Bin\MSVC32\Debug\$(TargetName)$(TargetExt)</LocalDebuggerCommand>
   </PropertyGroup>
 </Project>

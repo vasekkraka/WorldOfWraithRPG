@@ -147,11 +147,9 @@ namespace WowKlient
 			printf("Joint %i name: %s\n", i, skinned->getAllJoints()[i]->Name);
 		}
 
-		IAnimatedMeshSceneNode * dwarf_node = smgr->addAnimatedMeshSceneNode(dwarf_mesh, 0, 0, vector3df(0, 30, 0));
+		
 
 		ISkinnedMesh * clone = smgr->createSkinnedMesh();
-
-		//IMeshSceneNode * static_node = smgr->addMeshSceneNode(dwarf_mesh, 0, 0, vector3df(60, 30, 0));
 
 		SSkinMeshBuffer * buf = clone->addMeshBuffer();
 
@@ -164,7 +162,12 @@ namespace WowKlient
 		{
 			S3DVertex * v = new S3DVertex(((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Pos.X, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Pos.Y, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Pos.Z, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Normal.X, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Normal.Y, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Normal.Z, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Color, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->TCoords.X, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->TCoords.Y);
 			buf->Vertices_Standard.push_back(*v);
+
 		}
+
+		skinned->finalize();
+
+		IAnimatedMeshSceneNode * dwarf_node = smgr->addAnimatedMeshSceneNode(dwarf_mesh, 0, 0, vector3df(0, 30, 0));
 
 		for (int i = 0; i < ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getIndexCount(); i++)
 		{
@@ -184,29 +187,9 @@ namespace WowKlient
 		
 		dwarf_node->setDebugDataVisible(irr::scene::E_DEBUG_SCENE_TYPE::EDS_SKELETON);
 		
-		dwarf_node->setAnimationSpeed(0);
-
-		
-
-		
+		dwarf_node->setAnimationSpeed(10);
 
 
-		//printf("Trianglu v novem meshi : %i\n", buf->getVertexCount());
-
-		//printf("Indicii v novem meshi : %i V puvodnim: %i\n", buf->getIndexCount(), dwarf_mesh->getMeshBuffer(0)->getIndexCount());
-
-		
-
-		//printf("First Bone: %s\n\n------------------------------------------\n", skinned->getAllJoints()[0]->Name);
-
-		//writeChilds(skinned->getAllJoints()[0], 1);
-
-
-		//printf("\n\nFirst NEW Bone: %s\n\n------------------------------------------\n", clone->getAllJoints()[0]->Name);
-
-		//writeChilds(clone->getAllJoints()[0], 1);
-
-		//printf("Copying weights... \n");
 
 		for (int i = 0; i < skinned->getJointCount(); i++)
 		{
@@ -221,7 +204,6 @@ namespace WowKlient
 			{
 				if (skinned->getAllJoints()[i]->Weights[j].buffer_id == 0)
 				{
-					//printf("Ind: %i, buffer_id: %i, vertex_id: %i, strength: %f\n", j, skinned->getAllJoints()[i]->Weights[j].buffer_id, skinned->getAllJoints()[i]->Weights[j].vertex_id, skinned->getAllJoints()[i]->Weights[j].strength);
 					ISkinnedMesh::SWeight * w = clone->addWeight(joint);
 					w->buffer_id = 0;
 					w->strength = skinned->getAllJoints()[i]->Weights[j].strength;
@@ -231,20 +213,6 @@ namespace WowKlient
 
 		}
 
-		
-
-		//for (int i = 0; i < skinned->getJointCount(); i++)
-		//{
-		//	ISkinnedMesh::SJoint * joint;
-		//	joint = clone->getAllJoints()[clone->getJointNumber(skinned->getAllJoints()[i]->Name.c_str())];
-		//	printf("Joint orig name: %s, Joint clone name: %s\n", skinned->getAllJoints()[i]->Name.c_str(), joint->Name.c_str());
-		//	printf("\t Weights count %i\n", skinned->getAllJoints()[i]->Weights.size());
-		//	for (int j = 0; j < skinned->getAllJoints()[i]->Weights.size(); j++)
-		//	{
-		//		printf("Ind: %i, buffer_id: %i, vertex_id: %i, strength: %f\n", j, skinned->getAllJoints()[i]->Weights[j].buffer_id, skinned->getAllJoints()[i]->Weights[j].vertex_id, skinned->getAllJoints()[i]->Weights[j].strength);
-		//	}
-		//}
-
 
 		printf("Copy done... \n");
 
@@ -253,9 +221,11 @@ namespace WowKlient
 
 		clone->setDirty();
 		//getchar();
-		IAnimatedMeshSceneNode * clone_node = smgr->addAnimatedMeshSceneNode(clone, 0, 0, vector3df(1, 30, 0));
+		IAnimatedMeshSceneNode * clone_node = smgr->addAnimatedMeshSceneNode(clone, 0, 0, vector3df(30, 30, 0));
 
-		clone_node->setAnimationSpeed(15);
+		
+
+		clone_node->setAnimationSpeed(5);
 
 		clone_node->setMaterialFlag(E_MATERIAL_FLAG::EMF_LIGHTING, false);
 

@@ -4,9 +4,12 @@ c:\users\vkraka\documents\worldofwraithrpg\source\wow_server\debug\cbasicfunctio
 c:\users\vkraka\documents\worldofwraithrpg\source\wow_server\debug\cserverinit.obj
 c:\users\vkraka\documents\worldofwraithrpg\source\wow_server\debug\cserverinstance.obj
 c:\users\vkraka\documents\worldofwraithrpg\source\wow_server\debug\cwowserver.obj
-c:\users\vkraka\documents\worldofwraithrpg\visual studio\debug\wow_server.ilk
-c:\users\vkraka\documents\worldofwraithrpg\visual studio\debug\wow_server.exe
-c:\users\vkraka\documents\worldofwraithrpg\visual studio\debug\wow_server.pdb
+c:\users\vkraka\documents\worldofwraithrpg\bin\msvc32\debug\wow_server.ilk
+c:\users\vkraka\documents\worldofwraithrpg\bin\msvc32\debug\wow_server.exe
+c:\users\vkraka\documents\worldofwraithrpg\bin\msvc32\debug\wow_server.pdb
+c:\users\vkraka\documents\worldofwraithrpg\visual studio\\..\bin\msvc32\debug\wow_server.pdb
+c:\users\vkraka\documents\worldofwraithrpg\visual studio\\..\bin\msvc32\debug\wow_server.exe
+c:\users\vkraka\documents\worldofwraithrpg\visual studio\\..\bin\msvc32\debug\wow_server.ilk
 c:\users\vkraka\documents\worldofwraithrpg\source\wow_server\debug\wow_server.tlog\cl.command.1.tlog
 c:\users\vkraka\documents\worldofwraithrpg\source\wow_server\debug\wow_server.tlog\cl.read.1.tlog
 c:\users\vkraka\documents\worldofwraithrpg\source\wow_server\debug\wow_server.tlog\cl.write.1.tlog
