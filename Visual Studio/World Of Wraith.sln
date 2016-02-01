@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Setup", "..\Source\Setup\Se
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WOW_Klient", "..\Source\WOW_Klient\WOW_Klient.vcxproj", "{CD2A89CC-C47B-4600-8BA9-F3C708E6BBB6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MtlConverter", "..\Source\MtlConverter\MtlConverter.vcxproj", "{4F44FD30-F6E4-4D0F-9AE0-E1945B8B36C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -31,6 +33,10 @@ Global
 		{CD2A89CC-C47B-4600-8BA9-F3C708E6BBB6}.Debug|Win32.Build.0 = Debug|Win32
 		{CD2A89CC-C47B-4600-8BA9-F3C708E6BBB6}.Release|Win32.ActiveCfg = Release|Win32
 		{CD2A89CC-C47B-4600-8BA9-F3C708E6BBB6}.Release|Win32.Build.0 = Release|Win32
+		{4F44FD30-F6E4-4D0F-9AE0-E1945B8B36C5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4F44FD30-F6E4-4D0F-9AE0-E1945B8B36C5}.Debug|Win32.Build.0 = Debug|Win32
+		{4F44FD30-F6E4-4D0F-9AE0-E1945B8B36C5}.Release|Win32.ActiveCfg = Release|Win32
+		{4F44FD30-F6E4-4D0F-9AE0-E1945B8B36C5}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
