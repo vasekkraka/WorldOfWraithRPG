@@ -30,6 +30,7 @@ namespace WowKlient
 			void gameRun();
 			void playIntro();
 			void runTestScene();
+			void WaterRealisticScene();
 
 		private:
 			Core::GameState gState;

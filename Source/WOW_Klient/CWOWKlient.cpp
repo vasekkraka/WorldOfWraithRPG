@@ -82,7 +82,7 @@ namespace WowKlient
 		}
 	}
 
-	void WoWGameKlient::runTestScene()
+	void WoWGameKlient::WaterRealisticScene()
 	{
 		irr::gui::IGUIEnvironment* guienv = gState.irrDevice->getGUIEnvironment();
 		irr::video::IVideoDriver * driver = gState.irrDevice->getVideoDriver();
@@ -92,7 +92,7 @@ namespace WowKlient
 		guienv->clear();
 
 		ICameraSceneNode * usercamera = smgr->addCameraSceneNodeFPS();
-		usercamera->setPosition(vector3df(0,0,0));
+		usercamera->setPosition(vector3df(0, 0, 0));
 
 
 		IMeshSceneNode * teren = smgr->addMeshSceneNode(smgr->getMesh("..\\..\\..\\Data\\test_scene\\sw_teren.obj"), 0, 0, vector3df(0, 0, 0), vector3df(0, 0, 0), vector3df(1, 1, 1));
@@ -119,7 +119,7 @@ namespace WowKlient
 				teren->getMaterial(i).MaterialType = E_MATERIAL_TYPE::EMT_TRANSPARENT_ALPHA_CHANNEL_REF;
 				teren->getMaterial(i).setFlag(E_MATERIAL_FLAG::EMF_BACK_FACE_CULLING, false);
 			}
-			
+
 		}
 
 		scene::ISceneNode* skybox = smgr->addSkyBoxSceneNode(
@@ -136,7 +136,7 @@ namespace WowKlient
 
 		water->setParent(smgr->getRootSceneNode());
 
-		
+
 		IAnimatedMesh * dwarf_mesh = smgr->getMesh("..\\..\\..\\Data\\test_scene\\dwarf.x");
 		ISkinnedMesh * skinned = (ISkinnedMesh *)dwarf_mesh;
 
@@ -147,7 +147,7 @@ namespace WowKlient
 			printf("Joint %i name: %s\n", i, skinned->getAllJoints()[i]->Name);
 		}
 
-		
+
 
 		ISkinnedMesh * clone = smgr->createSkinnedMesh();
 
@@ -182,11 +182,11 @@ namespace WowKlient
 
 		printf("Jointu ve starem: %i\n", skinned->getJointCount());
 		printf("Jointu v novem: %i\n", clone->getJointCount());
-		
+
 		clone->setDirty();
-		
+
 		dwarf_node->setDebugDataVisible(irr::scene::E_DEBUG_SCENE_TYPE::EDS_SKELETON);
-		
+
 		dwarf_node->setAnimationSpeed(10);
 
 
@@ -223,7 +223,7 @@ namespace WowKlient
 		//getchar();
 		IAnimatedMeshSceneNode * clone_node = smgr->addAnimatedMeshSceneNode(clone, 0, 0, vector3df(30, 30, 0));
 
-		
+
 
 		clone_node->setAnimationSpeed(5);
 
@@ -231,7 +231,7 @@ namespace WowKlient
 
 		clone_node->setDebugDataVisible(irr::scene::E_DEBUG_SCENE_TYPE::EDS_SKELETON);
 
-	
+
 		while (gState.irrDevice->run())
 		{
 
@@ -256,6 +256,32 @@ namespace WowKlient
 			{
 				gState.irrDevice->sleep((1000 / 60) - (newtime - oldtime));
 			}
+		}
+	};
+
+	void WoWGameKlient::runTestScene()
+	{
+		printf("Which test scene execute?\n\n");
+
+		printf
+			(
+			"a: realistic water scene node\n"
+			"b: skinned mesh copy part\n"
+			"c: terrain with colision\n"
+			);
+		char chose = getchar();
+
+		switch (chose)
+		{
+		case 'a':
+			WaterRealisticScene();
+			break;
+		case 'b':
+			break;
+		case 'c':
+			break;
+		default:
+			break;
 		}
 
 	};
