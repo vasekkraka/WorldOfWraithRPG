@@ -262,3 +262,56 @@ void WaterRealisticScene(WowKlient::Core::GameState gState)
 		}
 	}
 };
+
+void TerrainCopyScene(WowKlient::Core::GameState gState)
+{
+	irr::gui::IGUIEnvironment* guienv = gState.irrDevice->getGUIEnvironment();
+	irr::video::IVideoDriver * driver = gState.irrDevice->getVideoDriver();
+	irr::scene::ISceneManager * smgr = gState.irrDevice->getSceneManager();
+
+	smgr->clear();
+	guienv->clear();
+
+	ICameraSceneNode * usercamera = smgr->addCameraSceneNodeFPS();
+	usercamera->setPosition(vector3df(0, 0, 0));
+
+
+	IMeshSceneNode * teren = smgr->addMeshSceneNode(smgr->getMesh("..\\..\\..\\Data\\test_scene\\sw_teren.obj"), 0, 0, vector3df(0, 0, 0), vector3df(0, 0, 0), vector3df(1, 1, 1));
+
+	teren->setMaterialFlag(E_MATERIAL_FLAG::EMF_LIGHTING, false);
+
+	teren->setMaterialFlag(E_MATERIAL_FLAG::EMF_ANTI_ALIASING, true);
+	teren->setMaterialFlag(E_MATERIAL_FLAG::EMF_ANISOTROPIC_FILTER, true);
+	teren->setMaterialFlag(E_MATERIAL_FLAG::EMF_USE_MIP_MAPS, true);
+
+	//teren->setMaterialFlag(E_MATERIAL_FLAG::EMF_WIREFRAME, true);
+
+	teren->setMaterialType(E_MATERIAL_TYPE::EMT_SOLID);
+	teren->setMaterialFlag(E_MATERIAL_FLAG::EMF_NORMALIZE_NORMALS, true);
+
+	while (gState.irrDevice->run())
+	{
+
+		u32 oldtime = gState.irrDevice->getTimer()->getTime();
+		int fps = driver->getFPS();
+
+		core::stringw str = L"World of Wraith - Story Begin TEST SCENE[";
+		str += driver->getName();
+		str += "] FPS:";
+		str += fps;
+
+		gState.irrDevice->setWindowCaption(str.c_str());
+
+		driver->beginScene(true, true, SColor(255, 128, 128, 128)); // zacnu, s cernym pozadim
+
+		guienv->drawAll();
+		smgr->drawAll();
+
+		driver->endScene();
+		u32 newtime = gState.irrDevice->getTimer()->getTime();
+		if ((newtime - oldtime) < 1000 / 60)
+		{
+			gState.irrDevice->sleep((1000 / 60) - (newtime - oldtime));
+		}
+	}
+};

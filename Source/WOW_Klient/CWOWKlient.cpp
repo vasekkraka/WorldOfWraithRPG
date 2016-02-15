@@ -74,6 +74,7 @@ namespace WowKlient
 			SkinnedMeshCopyScene(gState);
 			break;
 		case 'c':
+			TerrainCopyScene(gState);
 			break;
 		default:
 			break;
