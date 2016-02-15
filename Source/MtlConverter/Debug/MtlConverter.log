@@ -1,13 +1,13 @@
-﻿Build started 1. 2. 2016 20:44:00.
-     1>Project "C:\Users\m1tnick\Documents\WorldOfWraithRPG\Source\MtlConverter\MtlConverter.vcxproj" on node 2 (Build target(s)).
+﻿Build started 15.02.2016 13:38:34.
+     1>Project "C:\Users\vkraka\Documents\WorldOfWraithRPG\Source\MtlConverter\MtlConverter.vcxproj" on node 2 (Rebuild target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\m1tnick\Documents\WorldOfWraithRPG\boost_1_59_0 /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\vkraka\Documents\WorldOfWraithRPG\Visual Studio\\..\boost_1_59_0" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source.cpp
          Source.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\m1tnick\Documents\WorldOfWraithRPG\Visual Studio\Debug\MtlConverter.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\local\boost_1_59_0\lib32-msvc-12.0" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\m1tnick\Documents\WorldOfWraithRPG\Visual Studio\Debug\MtlConverter.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\m1tnick\Documents\WorldOfWraithRPG\Visual Studio\Debug\MtlConverter.lib" /MACHINE:X86 Debug\Source.obj
-         MtlConverter.vcxproj -> C:\Users\m1tnick\Documents\WorldOfWraithRPG\Visual Studio\Debug\MtlConverter.exe
-     1>Done Building Project "C:\Users\m1tnick\Documents\WorldOfWraithRPG\Source\MtlConverter\MtlConverter.vcxproj" (Build target(s)).
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\vkraka\Documents\WorldOfWraithRPG\Visual Studio\Debug\MtlConverter.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\vkraka\Documents\WorldOfWraithRPG\Visual Studio\\..\boost_1_59_0\stage\lib\\" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\vkraka\Documents\WorldOfWraithRPG\Visual Studio\Debug\MtlConverter.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\vkraka\Documents\WorldOfWraithRPG\Visual Studio\Debug\MtlConverter.lib" /MACHINE:X86 Debug\Source.obj
+         MtlConverter.vcxproj -> C:\Users\vkraka\Documents\WorldOfWraithRPG\Visual Studio\Debug\MtlConverter.exe
+     1>Done Building Project "C:\Users\vkraka\Documents\WorldOfWraithRPG\Source\MtlConverter\MtlConverter.vcxproj" (Rebuild target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.57
+Time Elapsed 00:00:05.55

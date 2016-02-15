@@ -8,6 +8,8 @@
 #include "HCore.h"
 #include "HIntro.h"
 #include "HLoginManager.h"
+#include "HTestScenes.h"
+
 
 
 using namespace irr;
@@ -30,7 +32,7 @@ namespace WowKlient
 			void gameRun();
 			void playIntro();
 			void runTestScene();
-			void WaterRealisticScene();
+			
 
 		private:
 			Core::GameState gState;
