@@ -12,9 +12,9 @@ using namespace io;
 using namespace gui;
 
 
-#define okruh 50
+#define okruh 500
 #define rotspeed 1
-#define krok 10
+#define krok 3
 
 class wwAnim : public ISceneNodeAnimator
 	{
@@ -120,7 +120,7 @@ class wwAnim : public ISceneNodeAnimator
 			{
 				rotating = false;
 			}
-			//printf("%f, %f, %f\n", metaNode->getAbsolutePosition().X, metaNode->getAbsolutePosition().Y, metaNode->getAbsolutePosition().Z);
+			printf("%f, %f, %f\n", metaNode->getAbsolutePosition().X, metaNode->getAbsolutePosition().Y, metaNode->getAbsolutePosition().Z);
 			novaPozice = caulculatePosition(metaNode->getAbsolutePosition(), rotX, rotY, okruh);
 			//printf("%f, %f, %f\n", novaPozice.X, novaPozice.Y, novaPozice.Z);
 			node->setPosition(novaPozice);
@@ -235,15 +235,25 @@ class wwAnim : public ISceneNodeAnimator
 
 int main()
 {
-	
 	IrrlichtDevice * dev = createDevice(EDT_DIRECT3D9, dimension2d<u32>(1366, 768), 16, false, false, false);
 	IVideoDriver* driver = dev->getVideoDriver();
     ISceneManager* smgr = dev->getSceneManager();
     IGUIEnvironment* guienv = dev->getGUIEnvironment();
 
-
 	driver->setTextureCreationFlag(E_TEXTURE_CREATION_FLAG::ETCF_ALWAYS_16_BIT);
 	
+	vector3df a = vector3df(0, 0, 0);
+	vector3df b = vector3df(1, 1, 0);
+
+	a.normalize();
+	b.normalize();
+
+	f32 c = a.dotProduct(b);
+
+	double uhel_cos = acos(c) * 180.0 / PI;
+	double uhel_sin = asin(c) * 180.0 / PI;
+
+
 	IAnimatedMesh* mesh = smgr->getMesh("../../media/sydney.md2");
     if (!mesh)
     {
@@ -253,42 +263,33 @@ int main()
 	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh);
 	if (node)
     {
-        node->setMaterialFlag(EMF_LIGHTING, false);
+        //node->setMaterialFlag(EMF_LIGHTING, false);
         node->setMaterialTexture( 0, driver->getTexture("../../media/sydney.bmp") );
-		node->setPosition(vector3df(1,1000,1));
+		node->setPosition(vector3df(100,1000,100));
 		node->setRotation(vector3df(0, 45, 0));
 	}
 
-	IMeshSceneNode* terrain = smgr->addMeshSceneNode(smgr->getMesh("test_ramp.obj"), 0, 0, core::vector3df(0.f, -3000.f, 140.f), core::vector3df(0.f, 0.f, 0.f), core::vector3df(100.0f, 100.0f, 100.0f));
+	IMeshSceneNode* terrain = smgr->addMeshSceneNode(smgr->getMesh("./drtt.obj"), 0, 0, core::vector3df(0.f, -1000.f, 0.f), core::vector3df(0.f, 0.f, 0.f), core::vector3df(10.0f, 5.0f, 10.0f));
 	ITriangleSelector * trg = smgr->createOctreeTriangleSelector(terrain->getMesh(), terrain);
 
-	//printf("Trg : %i\n ", trg->getTriangleCount());
+
+	printf("Trg : %i\n ", trg->getTriangleCount());
 
 	terrain->setTriangleSelector(trg);
 	trg->drop();
 
-	//ICameraSceneNode* cam = smgr->addCameraSceneNodeFPS();
-
-	
-	ICameraSceneNode* cam = smgr->addCameraSceneNode(0, vector3df(0, 100, 100), vector3df(0, 0, 0), 1, true);
-
-	//ISceneNodeAnimatorCollisionResponse * colAnim = new irr::scene::CSceneNodeAnimatorWoWCollisionAnimator(smgr, trg, cam, core::vector3df(60.0f, 20.0f, 60.0f), core::vector3df(0.0f, -100.0f, 0.0f), core::vector3df(0.0f, 0.0f, 0.0f), 0.000009f);
-
-
-	ISceneNodeAnimatorCollisionResponse * colAnim = smgr->createCollisionResponseAnimator(trg, node, core::vector3df(60.0f, 20.0f, 60.0f), core::vector3df(0.0f, -10.0f, 0.0f), core::vector3df(0.0f, 0.0f, 0.0f), 0.05f);
+	ISceneNodeAnimatorCollisionResponse * colAnim = new irr::scene::CSceneNodeAnimatorWoWCollisionAnimator(smgr, trg, node, core::vector3df(60.0f,20.0f,60.0f), core::vector3df(0.0f,-10.0f,0.0f), core::vector3df(0.0f,0.0f,0.0f));
 
 	node->addAnimator(colAnim);
 	colAnim->drop();
 	terrain->setMaterialFlag(video::EMF_LIGHTING, false);
-	//terrain->setMaterialType(video::EMT_SOLID);
-    terrain->setMaterialTexture(0,driver->getTexture("test_mapa.png"));
+    terrain->setMaterialTexture(0,driver->getTexture("./terrain-t.png"));
 	
-	cam->setPosition(vector3df(0, 100, 100));
+
+	ICameraSceneNode* cam = smgr->addCameraSceneNode(0, vector3df(0,100,100), vector3df(0,0,0), 1, true);
 	cam->setTarget(node->getPosition());
 	
 	ISceneNodeAnimator * animator = new wwAnim(node, 0.0f, 0.0f, dev->getCursorControl(), terrain);
-	
-		
 	cam->addAnimator(animator);
 
 	float time = dev->getTimer()->getTime();
@@ -303,11 +304,11 @@ int main()
 		driver->endScene();
 		float diff = dev->getTimer()->getTime() - time;
 		
-		if((1000 / 30) - diff > 0)
+		/*if((1000 / 30) - diff > 0)
 		{
 			wait = (1000 / 30) - diff;
 			dev->sleep(wait, false);
-		}
+		}*/
 
 
 		int lastFPS = driver->getFPS();

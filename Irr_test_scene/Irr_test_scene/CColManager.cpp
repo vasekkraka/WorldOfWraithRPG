@@ -23,6 +23,8 @@ inline bool getLowestRoot(f32 a, f32 b, f32 c, f32 maxR, f32* root)
 	if (determinant < 0.0f || a == 0.f )
 		return false;
 
+	// calculate two roots: (if det==0 then x1==x2
+	// but lets disregard that slight optimization)
 
 	const f32 sqrtD = sqrtf(determinant);
 	const f32 invDA = core::reciprocal(2*a);
@@ -301,6 +303,8 @@ core::vector3df collideWithWorld(s32 recursionDepth, SCollisionData &colData, co
 {
 	f32 veryCloseDistance = colData.slidingSpeed;
 
+	
+
 	/*SYSTEMTIME zacatek;
 	GetSystemTime(&zacatek);*/
 
@@ -337,8 +341,8 @@ core::vector3df collideWithWorld(s32 recursionDepth, SCollisionData &colData, co
 
 	s32 triangleCnt = 0;
 
-	SYSTEMTIME zacatek;
-	GetSystemTime(&zacatek);
+	//SYSTEMTIME zacatek;
+	//GetSystemTime(&zacatek);
 
 	colData.selector->getTriangles(Triangles.pointer(), totalTriangleCnt, triangleCnt, box, &scaleMatrix);
 
@@ -350,8 +354,8 @@ core::vector3df collideWithWorld(s32 recursionDepth, SCollisionData &colData, co
 		if(testTriangleIntersection(&colData, Triangles[i]))
 			colData.triangleIndex = i;
 
-	SYSTEMTIME konec;
-	GetSystemTime(&konec);
+	//SYSTEMTIME konec;
+	//GetSystemTime(&konec);
 	//printf("Cas: %f, %i, %i\n", (double)((konec.wMilliseconds - zacatek.wMilliseconds)), triangleCnt, recursionDepth);
 
 	//---------------- end collide with world
@@ -411,8 +415,6 @@ core::vector3df collideWithWorldNoSliding(s32 recursionDepth, SCollisionData &co
 {
 	f32 veryCloseDistance = colData.slidingSpeed;
 
-	printf("-> INFO collideWithWorldNoSliding\n");
-
 	/*SYSTEMTIME zacatek;
 	GetSystemTime(&zacatek);*/
 
@@ -464,7 +466,7 @@ core::vector3df collideWithWorldNoSliding(s32 recursionDepth, SCollisionData &co
 
 	colData.selector->getTriangles(Triangles.pointer(), totalTriangleCnt, triangleCnt, box, &scaleMatrix);
 
-	//printf("Box : %i\n", triangleCnt);
+	printf("Box : %i\n", triangleCnt);
 
 	/*SYSTEMTIME konec;
 	GetSystemTime(&konec);*/

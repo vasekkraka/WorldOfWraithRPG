@@ -196,7 +196,7 @@ void WaterRealisticScene(WowKlient::Core::GameState gState)
 	usercamera->setPosition(vector3df(0, 0, 0));
 
 
-	IMeshSceneNode * teren = smgr->addMeshSceneNode(smgr->getMesh("..\\..\\..\\Data\\test_scene\\sw_teren.obj"), 0, 0, vector3df(0, 0, 0), vector3df(0, 0, 0), vector3df(1, 1, 1));
+	IMeshSceneNode * teren = smgr->addMeshSceneNode(smgr->getMesh("../../../Data/test_scene/sw_teren.obj"), 0, 0, vector3df(0, 0, 0), vector3df(0, 0, 0), vector3df(1, 1, 1));
 
 	teren->setMaterialFlag(E_MATERIAL_FLAG::EMF_LIGHTING, false);
 
@@ -224,12 +224,12 @@ void WaterRealisticScene(WowKlient::Core::GameState gState)
 	}
 
 	scene::ISceneNode* skybox = smgr->addSkyBoxSceneNode(
-		driver->getTexture("../../../media/irrlicht2_up.jpg"),
-		driver->getTexture("../../../media/irrlicht2_dn.jpg"),
-		driver->getTexture("../../../media/irrlicht2_lf.jpg"),
-		driver->getTexture("../../../media/irrlicht2_rt.jpg"),
-		driver->getTexture("../../../media/irrlicht2_ft.jpg"),
-		driver->getTexture("../../../media/irrlicht2_bk.jpg"));
+		driver->getTexture("../../../Data/test_scene/skybox/irrlicht2_up.jpg"),
+		driver->getTexture("../../../Data/test_scene/skybox/irrlicht2_dn.jpg"),
+		driver->getTexture("../../../Data/test_scene/skybox/irrlicht2_lf.jpg"),
+		driver->getTexture("../../../Data/test_scene/skybox/irrlicht2_rt.jpg"),
+		driver->getTexture("../../../Data/test_scene/skybox/irrlicht2_ft.jpg"),
+		driver->getTexture("../../../Data/test_scene/skybox/irrlicht2_bk.jpg"));
 
 	RealisticWaterSceneNode * water = new RealisticWaterSceneNode(smgr, 1024, 1024, "../../../Data");
 
@@ -275,14 +275,19 @@ void TerrainCopyScene(WowKlient::Core::GameState gState)
 	ICameraSceneNode * usercamera = smgr->addCameraSceneNodeFPS();
 	usercamera->setPosition(vector3df(0, 0, 0));
 
+	scene::ISceneNode* skybox = smgr->addSkyBoxSceneNode(
+		driver->getTexture("../../../Data/test_scene/skybox/irrlicht2_up.jpg"),
+		driver->getTexture("../../../Data/test_scene/skybox/irrlicht2_dn.jpg"),
+		driver->getTexture("../../../Data/test_scene/skybox/irrlicht2_lf.jpg"),
+		driver->getTexture("../../../Data/test_scene/skybox/irrlicht2_rt.jpg"),
+		driver->getTexture("../../../Data/test_scene/skybox/irrlicht2_ft.jpg"),
+		driver->getTexture("../../../Data/test_scene/skybox/irrlicht2_bk.jpg"));
 
-	IMeshSceneNode * teren = smgr->addMeshSceneNode(smgr->getMesh("..\\..\\..\\Data\\test_scene\\sw_teren.obj"), 0, 0, vector3df(0, 0, 0), vector3df(0, 0, 0), vector3df(1, 1, 1));
+
+	IMeshSceneNode * teren = smgr->addMeshSceneNode(smgr->getMesh("..\\..\\..\\Data\\test_scene\\sloup.obj"), 0, 0, vector3df(0, 0, 0), vector3df(0, 0, 0), vector3df(100, 100, 100));
 
 	teren->setMaterialFlag(E_MATERIAL_FLAG::EMF_LIGHTING, false);
 
-	teren->setMaterialFlag(E_MATERIAL_FLAG::EMF_ANTI_ALIASING, true);
-	teren->setMaterialFlag(E_MATERIAL_FLAG::EMF_ANISOTROPIC_FILTER, true);
-	teren->setMaterialFlag(E_MATERIAL_FLAG::EMF_USE_MIP_MAPS, true);
 
 	//teren->setMaterialFlag(E_MATERIAL_FLAG::EMF_WIREFRAME, true);
 

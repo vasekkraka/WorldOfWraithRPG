@@ -102,7 +102,6 @@ namespace WowKlient
 			{
 				soundConfiguration * sConf = new soundConfiguration;
 				printf("%s", file);
-				getchar();
 				//naplneni konfigurace dle nacteni xml souboru
 				return sConf;
 			}
