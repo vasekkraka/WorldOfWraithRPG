@@ -12,22 +12,28 @@ using namespace io;
 using namespace gui;
 
 
-#define okruh 500
-#define rotspeed 1
-#define krok 3
+#define cam_circle 1000
+#define rotspeed 0.5f
+#define krok 300
+
+#define req_fps 50
 
 class wwAnim : public ISceneNodeAnimator
 	{
 	public:
 		
 		//! constructor
-		wwAnim(ISceneNode* MetaNode, float StartUhelY, float StartUhelX, gui::ICursorControl * CursorControl, IMeshSceneNode* terr)
+		wwAnim(ISceneNode* MetaNode, float StartUhelY, float StartUhelX, gui::ICursorControl * CursorControl)
 		{
 			metaNode = MetaNode;
 			rotX = StartUhelX;
 			rotY = StartUhelY;
+			wheel = 0;
+			okruh = cam_circle;
 			cursorControl = CursorControl;
-			terrain = terr;
+			last_anim_time = 0;
+			move_cycle = 0;
+			anim_cycle = 0;
 
 			rotating = false;
 			looking = false;
@@ -49,24 +55,52 @@ class wwAnim : public ISceneNodeAnimator
 		//! animates a scene node
 		virtual void animateNode(ISceneNode* node, u32 timeMs)
 		{
+			
 			vector3df novaPozice;
 			vector3df rotace;
 			rotace.set(0, 0, 0);
+			anim_cycle++;
 
 			if(isPresed(KEY_KEY_W))
 			{
-				vector3df soucasna, nova;
-				soucasna = metaNode->getPosition();
-				nova.X = soucasna.X + sinf((metaNode->getRotation().Y + 90) * (PI / 180)) * krok;
-				nova.Z = soucasna.Z + cosf((metaNode->getRotation().Y + 90) * (PI / 180)) * krok;
-				nova.Y = soucasna.Y;
-				metaNode->setPosition(nova);
+				move_cycle++;
 
-
-			}else
-			{
 				
+				f32 delta;
+				if ((timeMs - last_anim_time) == 0)
+				{
+					delta = 1000.0f;
+				}
+				else
+				{
+					delta = 1000.0f / (timeMs - last_anim_time);
+				}
+				//printf("Cas: %u, %f %f\n", (timeMs - last_anim_time), delta, sinf((metaNode->getRotation().Y + 90) * (PI / 180) * (krok / delta)));
+				last_anim_time = timeMs;
+
+
+				vector3df soucasna, nova, rozdil;
+				soucasna = metaNode->getPosition();
+				nova.X = soucasna.X + sinf((metaNode->getRotation().Y + 90) * (PI / 180)) * (krok / delta);
+				nova.Z = soucasna.Z + cosf((metaNode->getRotation().Y + 90) * (PI / 180)) * (krok / delta);
+				nova.Y = soucasna.Y;
+
+				rozdil.X = nova.X - soucasna.X;
+				rozdil.Y = nova.Y - soucasna.Y;
+				rozdil.Z = nova.Z - soucasna.Z;
+
+				//printf("Posun: %f, %f, %f \n", rozdil.X, rozdil.Y, rozdil.Z);
+
+				//printf("Posun: %f, %f, %f \n", nova.X, nova.Y, nova.Z);
+
+				//printf("Posun: %f, %f, %f, %f, Delta: %f\n", soucasna.X, sinf((metaNode->getRotation().Y + 90) * (PI / 180)) * (krok / delta), soucasna.Z, cosf((metaNode->getRotation().Y + 90) * (PI / 180)) * (krok / delta), delta);
+
+				metaNode->setPosition(nova);
 			}
+			last_anim_time = timeMs;
+			
+			
+
 
 			if(isClicked(1) && !isClicked(2) && !isClicked(3)) //rozhlizeni
 			{
@@ -120,18 +154,44 @@ class wwAnim : public ISceneNodeAnimator
 			{
 				rotating = false;
 			}
-			printf("%f, %f, %f\n", metaNode->getAbsolutePosition().X, metaNode->getAbsolutePosition().Y, metaNode->getAbsolutePosition().Z);
+			
+
+			if (isPresed(KEY_SPACE))
+			{
+				const ISceneNodeAnimatorList& animators = metaNode->getAnimators();
+				ISceneNodeAnimatorList::ConstIterator it = animators.begin();
+				while (it != animators.end())
+				{
+					if ((*it)->getType() == ESNAT_COLLISION_RESPONSE)
+					{
+						ISceneNodeAnimatorCollisionResponse * collResp = static_cast<ISceneNodeAnimatorCollisionResponse *>(*it);
+						if (!collResp->isFalling())
+						{
+							collResp->jump(25);
+						}
+					}
+					it++;
+				}
+			}
+
+			if (wheelPos() != 0)
+			{
+				okruh += wheelPos();
+				if (okruh < 20 || okruh > 1000)
+				{
+					okruh -= wheelPos();
+				}
+				printf("%i\n", wheelPos());
+			}
+
 			novaPozice = caulculatePosition(metaNode->getAbsolutePosition(), rotX, rotY, okruh);
-			//printf("%f, %f, %f\n", novaPozice.X, novaPozice.Y, novaPozice.Z);
 			node->setPosition(novaPozice);
 			node->setRotation(rotace);
+
 			ICameraSceneNode * camera = static_cast<ICameraSceneNode*>(node);
 			camera->updateAbsolutePosition();
 			camera->setTarget(metaNode->getAbsolutePosition());
-			//printf("X: %f, Y: %f,  Z:%f", novaPozice.X, novaPozice.Y, novaPozice.Z);
-			//printf("\n\tRotace : X: %f, Y: %f,  Z:%f", rotace.X, rotace.Y, rotace.Z);
-			//printf("UHEL: %i", rotY);
-			//printf("\n");
+
 		}
 
 		//! Writes attributes of the scene node animator.
@@ -173,6 +233,18 @@ class wwAnim : public ISceneNodeAnimator
 					buttonStat[0] = event.MouseInput.isLeftPressed();
 					buttonStat[1] = event.MouseInput.isMiddlePressed();
 					buttonStat[2] = event.MouseInput.isRightPressed();
+
+					wheel += event.MouseInput.Wheel;
+
+					if (wheel > 0 && event.MouseInput.Wheel < 0)
+					{
+						wheel = 0;
+					}
+
+					if (wheel < 0 && event.MouseInput.Wheel > 0)
+					{
+						wheel = 0;
+					}
 				break;
 				case EET_KEY_INPUT_EVENT:
 					if(event.KeyInput.PressedDown)
@@ -193,7 +265,7 @@ class wwAnim : public ISceneNodeAnimator
 		ISceneNode * metaNode;
 		core::vector3df Rotation;
 		core::vector3df Position;
-		int rotX, rotY;
+		int rotX, rotY, wheel, okruh;
 		bool buttonStat[3];
 		vector2d<s32> mousePos;
 		vector2d<s32> rotStart;
@@ -205,6 +277,8 @@ class wwAnim : public ISceneNodeAnimator
 		bool moving;
 		IMeshSceneNode* terrain;
 		int ci;
+		u32 last_anim_time;
+		int anim_cycle, move_cycle;
 
 		bool isClicked(int buttonNumber)
 		{
@@ -214,6 +288,11 @@ class wwAnim : public ISceneNodeAnimator
 		bool isPresed(int keyNumber)
 		{
 			return KeyIsDown[keyNumber];
+		}
+
+		int wheelPos()
+		{
+			return wheel;
 		}
 
 		vector3df caulculatePosition(vector3df centr, int xUhel, int yUhel, int radius)
@@ -235,15 +314,15 @@ class wwAnim : public ISceneNodeAnimator
 
 int main()
 {
-	IrrlichtDevice * dev = createDevice(EDT_DIRECT3D9, dimension2d<u32>(1366, 768), 16, false, false, false);
+	IrrlichtDevice * dev = createDevice(EDT_OPENGL, dimension2d<u32>(1366, 768), 16, false, false, false);
 	IVideoDriver* driver = dev->getVideoDriver();
     ISceneManager* smgr = dev->getSceneManager();
     IGUIEnvironment* guienv = dev->getGUIEnvironment();
 
 	driver->setTextureCreationFlag(E_TEXTURE_CREATION_FLAG::ETCF_ALWAYS_16_BIT);
 	
-	vector3df a = vector3df(0, 0, 0);
-	vector3df b = vector3df(1, 1, 0);
+	vector3df a = vector3df(1, 0, 1);
+	vector3df b = vector3df(1, 1, 1);
 
 	a.normalize();
 	b.normalize();
@@ -254,7 +333,7 @@ int main()
 	double uhel_sin = asin(c) * 180.0 / PI;
 
 
-	IAnimatedMesh* mesh = smgr->getMesh("../../media/sydney.md2");
+	IAnimatedMesh* mesh = smgr->getMesh("./media/sydney.md2");
     if (!mesh)
     {
         dev->drop();
@@ -264,58 +343,75 @@ int main()
 	if (node)
     {
         //node->setMaterialFlag(EMF_LIGHTING, false);
-        node->setMaterialTexture( 0, driver->getTexture("../../media/sydney.bmp") );
-		node->setPosition(vector3df(100,1000,100));
+        node->setMaterialTexture( 0, driver->getTexture("./media/sydney.bmp") );
+		node->setPosition(vector3df(0,1000,0));
 		node->setRotation(vector3df(0, 45, 0));
 	}
 
-	IMeshSceneNode* terrain = smgr->addMeshSceneNode(smgr->getMesh("./drtt.obj"), 0, 0, core::vector3df(0.f, -1000.f, 0.f), core::vector3df(0.f, 0.f, 0.f), core::vector3df(10.0f, 5.0f, 10.0f));
+	IMeshSceneNode* terrain = smgr->addMeshSceneNode(smgr->getMesh("./terrmod.obj"), 0, 0, core::vector3df(0.f, -1000.f, 0.f), core::vector3df(0.f, 0.f, 0.f), core::vector3df(10.0f, 5.0f, 10.0f));
 	ITriangleSelector * trg = smgr->createOctreeTriangleSelector(terrain->getMesh(), terrain);
 
 
-	printf("Trg : %i\n ", trg->getTriangleCount());
+	//printf("Trg : %i\n ", trg->getTriangleCount());
 
 	terrain->setTriangleSelector(trg);
 	trg->drop();
 
-	ISceneNodeAnimatorCollisionResponse * colAnim = new irr::scene::CSceneNodeAnimatorWoWCollisionAnimator(smgr, trg, node, core::vector3df(60.0f,20.0f,60.0f), core::vector3df(0.0f,-10.0f,0.0f), core::vector3df(0.0f,0.0f,0.0f));
+	ISceneNodeAnimatorCollisionResponse * colAnim = new irr::scene::CSceneNodeAnimatorWoWCollisionAnimator(smgr, trg, node, core::vector3df(60.0f,50.0f,60.0f), core::vector3df(0.0f,-75.0f,0.0f), core::vector3df(10.0f,10.0f,0.0f));
 
 	node->addAnimator(colAnim);
 	colAnim->drop();
 	terrain->setMaterialFlag(video::EMF_LIGHTING, false);
-    terrain->setMaterialTexture(0,driver->getTexture("./terrain-t.png"));
-	
+	//terrain->setMaterialFlag(video::EMF_WIREFRAME, true);
+    terrain->setMaterialTexture(0,driver->getTexture("./terrain-t.png"));	
 
 	ICameraSceneNode* cam = smgr->addCameraSceneNode(0, vector3df(0,100,100), vector3df(0,0,0), 1, true);
 	cam->setTarget(node->getPosition());
 	
-	ISceneNodeAnimator * animator = new wwAnim(node, 0.0f, 0.0f, dev->getCursorControl(), terrain);
+	ISceneNodeAnimator * animator = new wwAnim(node, 0.0f, 0.0f, dev->getCursorControl());
 	cam->addAnimator(animator);
 
-	float time = dev->getTimer()->getTime();
-	float wait = 0;
-	int i = 0;
+	float fps_time = dev->getTimer()->getTime();
+	int frames = 0,fps = 0;
 	while(dev->run())
 	{
-
-		driver->beginScene(true, true, SColor(255,0,0,0));
+		dev->getTimer()->tick();
+		u32 old_time = dev->getTimer()->getTime();
+		
+		driver->beginScene(true, true, SColor(255,120,120,120));
 		smgr->drawAll(); 
 		guienv->drawAll();
 		driver->endScene();
-		float diff = dev->getTimer()->getTime() - time;
 		
-		/*if((1000 / 30) - diff > 0)
-		{
-			wait = (1000 / 30) - diff;
-			dev->sleep(wait, false);
-		}*/
 
+		if (dev->getTimer()->getTime() - fps_time > 1000)
+		{
+			fps = frames;
+			frames = 0;
+			fps_time = dev->getTimer()->getTime();
+		}
+		else
+		{
+			frames++;
+		}
+
+		//dev->getTimer()->tick();
+
+		u32 diff = dev->getTimer()->getTime() - old_time;
+
+		
+			f32 wait = (1000 / req_fps) - diff;
+			//printf("%f \n", wait);
+			dev->sleep(wait);
+			//printf("%f, %u %u, %u, Wait: %f\n", (float)1000/req_fps, dev->getTimer()->getTime(), old_time, diff, wait);
+		
 
 		int lastFPS = driver->getFPS();
         core::stringw tmp = L"FPS: ";
         tmp += lastFPS;
+		tmp += L" Real FPS: ";
+		tmp += fps;
         dev->setWindowCaption(tmp.c_str());
-		time = dev->getTimer()->getTime();
 
 	}
 	return 0;

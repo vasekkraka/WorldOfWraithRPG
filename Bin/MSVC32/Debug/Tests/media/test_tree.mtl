@@ -1,0 +1,35 @@
+# Blender MTL File: 'None'
+# Material Count: 3
+
+newmtl World_Expansion05_doodads_tanaanjungle_doodads_6tj_patchtre.003
+Ns 0.000000
+Ka 0.250000 0.250000 0.250000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd tree17_6TJ_climbingvine.png
+
+newmtl World_Expansion05_doodads_tanaanjungle_doodads_6tj_patchtre.004
+Ns 0.000000
+Ka 0.250000 0.250000 0.250000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd tree17_6TJ_TreeLeaves_03.png
+
+newmtl World_Expansion05_doodads_tanaanjungle_doodads_6tj_patchtre.005
+Ns 0.000000
+Ka 0.250000 0.250000 0.250000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd tree17_6TJ_PatchCanopyTree01.png

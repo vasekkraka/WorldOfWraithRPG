@@ -61,9 +61,9 @@ CSceneNodeAnimatorWoWCollisionAnimator::~CSceneNodeAnimatorWoWCollisionAnimator(
 //! the gravity.
 bool CSceneNodeAnimatorWoWCollisionAnimator::isFalling() const
 {
-	
 	return Falling;
 }
+
 
 
 //! Sets the radius of the ellipsoid with which collision detection and
@@ -102,6 +102,7 @@ core::vector3df CSceneNodeAnimatorWoWCollisionAnimator::getGravity() const
 //! 'Jump' the animator, by adding a jump speed opposite to its gravity
 void CSceneNodeAnimatorWoWCollisionAnimator::jump(f32 jumpSpeed)
 {
+	printf("Hop\n");
 	FallingVelocity -= (core::vector3df(Gravity).normalize()) * jumpSpeed;
 	Falling = true;
 }
@@ -180,7 +181,11 @@ void CSceneNodeAnimatorWoWCollisionAnimator::animateNode(ISceneNode* node, u32 t
 	CollisionResultPosition = Object->getPosition();
 	core::vector3df vel = CollisionResultPosition - LastPosition;
 
+	vector3df old = FallingVelocity;
+
 	FallingVelocity += Gravity * (f32)diff * 0.001f;
+
+	//printf("Fall old: %f Fall New: %f, diff: %f, diff T: %f\n", old.Y, FallingVelocity.Y, FallingVelocity.Y - old.Y, (f32)diff);
 
 	CollisionTriangle = RefTriangle;
 	CollisionPoint = core::vector3df();

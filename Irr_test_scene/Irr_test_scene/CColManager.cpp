@@ -303,10 +303,14 @@ core::vector3df collideWithWorld(s32 recursionDepth, SCollisionData &colData, co
 {
 	f32 veryCloseDistance = colData.slidingSpeed;
 
-	
+	//printf("Depth: %i\n", recursionDepth);
 
 	/*SYSTEMTIME zacatek;
 	GetSystemTime(&zacatek);*/
+
+
+
+
 
 	if (recursionDepth > 5)
 		return pos;
@@ -317,6 +321,33 @@ core::vector3df collideWithWorld(s32 recursionDepth, SCollisionData &colData, co
 	colData.basePoint = pos;
 	colData.foundCollision = false;
 	colData.nearestDistance = FLT_MAX;
+
+	vector3df v1 = colData.normalizedVelocity;
+	//v1.X = abs(v1.X);
+	//v1.Y = abs(v1.Y);
+	//v1.Z = abs(v1.Z);
+	vector3df v2 = vector3df(0, -1, 0);
+
+	f32 c = v1.dotProduct(v2.normalize());
+	//f32 c = colData.normalizedVelocity.dotProduct(vector3df(0, 1, 0).normalize());
+
+	double uhel_cos = 90 - acos(c) * 180.0 / PI;
+
+	//printf("Uhel ^: %f\n", abs(uhel_cos));
+
+	if (recursionDepth > 0 && vel.getLength() > 0 && vel.Y < 0)
+	{
+		if (abs(uhel_cos) < 50)
+		{
+			return pos;
+		}
+		else
+		{
+			//printf("%f, %f, %f \n", v1.X, v1.Y, v1.Z);
+			//printf("Uhel ^: %f\n", abs(uhel_cos));
+		}
+	}
+
 
 	//------------------ collide with world
 
@@ -432,6 +463,15 @@ core::vector3df collideWithWorldNoSliding(s32 recursionDepth, SCollisionData &co
 	colData.foundCollision = false;
 	colData.nearestDistance = FLT_MAX;
 
+	if (vel.getLength() > 0 && vel.Y < 0)
+	{
+
+		f32 c = colData.normalizedVelocity.dotProduct(vector3df(1, 0, 0).normalize());
+
+		double uhel_cos = 90 - acos(c) * 180.0 / PI;
+		//printf("Uhel dolu: %f\n", uhel_cos);
+	}
+
 	//------------------ collide with world
 
 	// get all triangles with which we might collide
@@ -440,13 +480,6 @@ core::vector3df collideWithWorldNoSliding(s32 recursionDepth, SCollisionData &co
 	box.MinEdge -= colData.eRadius;
 	box.MaxEdge += colData.eRadius;
 
-	//printf("%f, %f, %f |", box.MinEdge.X, box.MinEdge.Y, box.MinEdge.Z);
-	//printf("%f, %f, %f |\n", box.MaxEdge.X, box.MaxEdge.Y, box.MaxEdge.Z);
-	//printf("%f, %f, %f |\n", colData.eRadius.X, colData.eRadius.Y, colData.eRadius.Z);
-
-	//printf("%f, %f, %f | ", colData.R3Position.X, colData.R3Position.Y, colData.R3Position.Z);
-
-	//printf("%f, %f, %f\n", colData.R3Velocity.X, colData.R3Velocity.Y, colData.R3Velocity.Z);
 
 	s32 totalTriangleCnt = colData.selector->getTriangleCount();
 	Triangles.set_used(totalTriangleCnt);
@@ -466,7 +499,7 @@ core::vector3df collideWithWorldNoSliding(s32 recursionDepth, SCollisionData &co
 
 	colData.selector->getTriangles(Triangles.pointer(), totalTriangleCnt, triangleCnt, box, &scaleMatrix);
 
-	printf("Box : %i\n", triangleCnt);
+	//printf("Box : %i\n", triangleCnt);
 
 	/*SYSTEMTIME konec;
 	GetSystemTime(&konec);*/
@@ -581,7 +614,7 @@ core::vector3df collideEllipsoidWithWorld(
 
 		eSpaceVelocity = gravity/colData.eRadius;
 
-		finalPos = collideWithWorldNoSliding(0, colData,
+		finalPos = collideWithWorld(0, colData,
 			finalPos, eSpaceVelocity);
 
 		outFalling = (colData.triangleHits == 0);
