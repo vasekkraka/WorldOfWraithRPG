@@ -43,6 +43,8 @@ namespace scene
 		virtual void setGravity(const core::vector3df& gravity);
 
 		//! 'Jump' the animator, by adding a jump speed opposite to its gravity
+		virtual void jump(f32 height, u32 time);
+
 		virtual void jump(f32 jumpSpeed);
 
 		//! Should the Target react on collision ( default = true )
@@ -139,6 +141,9 @@ namespace scene
 		bool AnimateCameraTarget;
 		bool CollisionOccurred;
 		bool FirstUpdate;
+		int jumping;
+		f32 up_height, jumped_height;
+		u32 up_time;
 	};
 
 } // end namespace scene

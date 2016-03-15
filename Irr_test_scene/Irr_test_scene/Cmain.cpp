@@ -14,9 +14,9 @@ using namespace gui;
 
 #define cam_circle 1000
 #define rotspeed 0.5f
-#define krok 300
+#define krok 500
 
-#define req_fps 50
+#define req_fps 15
 
 class wwAnim : public ISceneNodeAnimator
 	{
@@ -89,12 +89,6 @@ class wwAnim : public ISceneNodeAnimator
 				rozdil.Y = nova.Y - soucasna.Y;
 				rozdil.Z = nova.Z - soucasna.Z;
 
-				//printf("Posun: %f, %f, %f \n", rozdil.X, rozdil.Y, rozdil.Z);
-
-				//printf("Posun: %f, %f, %f \n", nova.X, nova.Y, nova.Z);
-
-				//printf("Posun: %f, %f, %f, %f, Delta: %f\n", soucasna.X, sinf((metaNode->getRotation().Y + 90) * (PI / 180)) * (krok / delta), soucasna.Z, cosf((metaNode->getRotation().Y + 90) * (PI / 180)) * (krok / delta), delta);
-
 				metaNode->setPosition(nova);
 			}
 			last_anim_time = timeMs;
@@ -164,10 +158,10 @@ class wwAnim : public ISceneNodeAnimator
 				{
 					if ((*it)->getType() == ESNAT_COLLISION_RESPONSE)
 					{
-						ISceneNodeAnimatorCollisionResponse * collResp = static_cast<ISceneNodeAnimatorCollisionResponse *>(*it);
+						CSceneNodeAnimatorWoWCollisionAnimator * collResp = static_cast<CSceneNodeAnimatorWoWCollisionAnimator *>(*it);
 						if (!collResp->isFalling())
 						{
-							collResp->jump(25);
+							collResp->jump(350, 700);
 						}
 					}
 					it++;
@@ -357,7 +351,7 @@ int main()
 	terrain->setTriangleSelector(trg);
 	trg->drop();
 
-	ISceneNodeAnimatorCollisionResponse * colAnim = new irr::scene::CSceneNodeAnimatorWoWCollisionAnimator(smgr, trg, node, core::vector3df(60.0f,50.0f,60.0f), core::vector3df(0.0f,-75.0f,0.0f), core::vector3df(10.0f,10.0f,0.0f));
+	ISceneNodeAnimatorCollisionResponse * colAnim = new irr::scene::CSceneNodeAnimatorWoWCollisionAnimator(smgr, trg, node, core::vector3df(60.0f,50.0f,60.0f), core::vector3df(0.0f,-75.0f,0.0f), core::vector3df(10.0f,-25.0f,0.0f));
 
 	node->addAnimator(colAnim);
 	colAnim->drop();
@@ -367,50 +361,38 @@ int main()
 
 	ICameraSceneNode* cam = smgr->addCameraSceneNode(0, vector3df(0,100,100), vector3df(0,0,0), 1, true);
 	cam->setTarget(node->getPosition());
+	cam->setFarValue(10000);
 	
 	ISceneNodeAnimator * animator = new wwAnim(node, 0.0f, 0.0f, dev->getCursorControl());
 	cam->addAnimator(animator);
 
 	float fps_time = dev->getTimer()->getTime();
 	int frames = 0,fps = 0;
+
+	dev->getTimer()->tick();
+	u32 old_time = dev->getTimer()->getTime();
+//	u32 old_time = GetTickCount();
+	f32 frame_time = 1000.0f / req_fps;
+	s32 wait = 0;
 	while(dev->run())
 	{
-		dev->getTimer()->tick();
-		u32 old_time = dev->getTimer()->getTime();
-		
 		driver->beginScene(true, true, SColor(255,120,120,120));
 		smgr->drawAll(); 
 		guienv->drawAll();
 		driver->endScene();
 		
+		old_time += frame_time;
+		wait = old_time - dev->getTimer()->getTime();
 
-		if (dev->getTimer()->getTime() - fps_time > 1000)
+		if (wait > 0)
 		{
-			fps = frames;
-			frames = 0;
-			fps_time = dev->getTimer()->getTime();
-		}
-		else
-		{
-			frames++;
-		}
-
-		//dev->getTimer()->tick();
-
-		u32 diff = dev->getTimer()->getTime() - old_time;
-
-		
-			f32 wait = (1000 / req_fps) - diff;
-			//printf("%f \n", wait);
 			dev->sleep(wait);
-			//printf("%f, %u %u, %u, Wait: %f\n", (float)1000/req_fps, dev->getTimer()->getTime(), old_time, diff, wait);
-		
+		}
 
 		int lastFPS = driver->getFPS();
         core::stringw tmp = L"FPS: ";
         tmp += lastFPS;
-		tmp += L" Real FPS: ";
-		tmp += fps;
+
         dev->setWindowCaption(tmp.c_str());
 
 	}

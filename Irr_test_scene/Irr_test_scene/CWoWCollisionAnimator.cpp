@@ -41,6 +41,10 @@ CSceneNodeAnimatorWoWCollisionAnimator::CSceneNodeAnimatorWoWCollisionAnimator(
 	if (World)
 		World->grab();
 
+	jumping = -1;
+	up_time = 0;
+	up_height = 0;
+
 	setNode(Object);
 }
 
@@ -98,13 +102,26 @@ core::vector3df CSceneNodeAnimatorWoWCollisionAnimator::getGravity() const
 	return Gravity;
 }
 
-
-//! 'Jump' the animator, by adding a jump speed opposite to its gravity
 void CSceneNodeAnimatorWoWCollisionAnimator::jump(f32 jumpSpeed)
 {
-	printf("Hop\n");
-	FallingVelocity -= (core::vector3df(Gravity).normalize()) * jumpSpeed;
+
+}
+
+//! 'Jump' the animator, by adding a jump speed opposite to its gravity
+void CSceneNodeAnimatorWoWCollisionAnimator::jump(f32 height, u32 time)
+{
+	
+	/*FallingVelocity -= (core::vector3df(Gravity).normalize()) * jumpSpeed;
+	printf("Hop, initial jump velocity: %f\n", FallingVelocity.Y);
+	Falling = true;*/
+	
 	Falling = true;
+	jumping = 1;
+	
+	up_height = height;
+	up_time = time;
+	jumped_height = 0;
+
 }
 
 
@@ -181,10 +198,34 @@ void CSceneNodeAnimatorWoWCollisionAnimator::animateNode(ISceneNode* node, u32 t
 	CollisionResultPosition = Object->getPosition();
 	core::vector3df vel = CollisionResultPosition - LastPosition;
 
-	vector3df old = FallingVelocity;
 
-	FallingVelocity += Gravity * (f32)diff * 0.001f;
-
+	f32 jump_move = 0;
+	switch (jumping)
+	{
+	case 1:
+		jump_move = ((f32)diff / up_time) * up_height;
+		if (jumped_height + jump_move >= up_height)
+		{
+			FallingVelocity.Y = up_height - jumped_height;
+			printf("Zbytecek: %f, %f\n", FallingVelocity.Y, node->getPosition().Y);
+			jumped_height = 0;
+			jumping = -1;
+		}
+		else
+		{
+			FallingVelocity.Y = jump_move;
+			jumped_height += jump_move;
+		}
+		break;
+	case -1:
+		FallingVelocity = (Gravity * 0.01f) * (f32)diff;
+		if (FallingVelocity.Y > 50)
+		{
+			FallingVelocity.Y = 50;
+		}
+		break;
+	}
+	
 	//printf("Fall old: %f Fall New: %f, diff: %f, diff T: %f\n", old.Y, FallingVelocity.Y, FallingVelocity.Y - old.Y, (f32)diff);
 
 	CollisionTriangle = RefTriangle;
@@ -215,6 +256,7 @@ void CSceneNodeAnimatorWoWCollisionAnimator::animateNode(ISceneNode* node, u32 t
 		}
 		else
 		{
+			jumped_height = 0;
 			Falling = false;
 			FallingVelocity.set(0, 0, 0);
 		}
@@ -250,8 +292,7 @@ void CSceneNodeAnimatorWoWCollisionAnimator::setNode(ISceneNode* node)
 		IsCamera = (Object->getType() == ESNT_CAMERA);
 	}
 
-	ITimer* Timer;
-	LastTime = 0;//Timer->getTime();
+	LastTime = 0;
 }
 
 
