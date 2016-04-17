@@ -1,0 +1,29 @@
+# Blender MTL File: 'textured_pandarien.blend'
+# Material Count: 3
+
+newmtl None
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd HAIR00_00.png
+
+newmtl None_Cape_ArgentCrusade_D_01red.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd Cape_ArgentCrusade_D_01red.png
+
+newmtl None_PandaMaleSkin00_04.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd PandaMaleSkin00_04.png

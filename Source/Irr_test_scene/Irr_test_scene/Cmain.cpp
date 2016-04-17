@@ -308,7 +308,7 @@ class wwAnim : public ISceneNodeAnimator
 
 int main()
 {
-	IrrlichtDevice * dev = createDevice(EDT_OPENGL, dimension2d<u32>(1366, 768), 16, false, false, false);
+	IrrlichtDevice * dev = createDevice(EDT_OPENGL, dimension2d<u32>(800, 600), 16, false, false, false);
 	IVideoDriver* driver = dev->getVideoDriver();
     ISceneManager* smgr = dev->getSceneManager();
     IGUIEnvironment* guienv = dev->getGUIEnvironment();
@@ -327,7 +327,7 @@ int main()
 	double uhel_sin = asin(c) * 180.0 / PI;
 
 
-	IAnimatedMesh* mesh = smgr->getMesh("../../../data/IrrTestScene/sydney.md2");
+	IAnimatedMesh* mesh = smgr->getMesh("../../../data/IrrTestScene/panda.obj");
     if (!mesh)
     {
         dev->drop();
@@ -336,17 +336,16 @@ int main()
 	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh);
 	if (node)
     {
-        //node->setMaterialFlag(EMF_LIGHTING, false);
-        node->setMaterialTexture( 0, driver->getTexture("../../../data/IrrTestScene/sydney.bmp") );
+        node->setMaterialFlag(EMF_LIGHTING, false);
+        // node->setMaterialTexture( 0, driver->getTexture("../../../data/IrrTestScene/sydney.bmp") );
 		node->setPosition(vector3df(0,1000,0));
 		node->setRotation(vector3df(0, 45, 0));
+		node->setScale(vector3df(10.0f, 10.0f, 10.0f));
 	}
 
-	IMeshSceneNode* terrain = smgr->addMeshSceneNode(smgr->getMesh("../../../data/IrrTestScene/kopecek.obj"), 0, 0, core::vector3df(0.f, -1000.f, 0.f), core::vector3df(0.f, 0.f, 0.f), core::vector3df(100.0f, 100.0f, 100.0f));
+	IMeshSceneNode* terrain = smgr->addMeshSceneNode(smgr->getMesh("../../../data/IrrTestScene/chram.obj"), 0, 0, core::vector3df(0.f, -1000.f, 0.f), core::vector3df(0.f, 0.f, 0.f), core::vector3df(10.0f, 10.0f, 10.0f));
 	ITriangleSelector * trg = smgr->createOctreeTriangleSelector(terrain->getMesh(), terrain);
 
-
-	//printf("Trg : %i\n ", trg->getTriangleCount());
 
 	terrain->setTriangleSelector(trg);
 	trg->drop();
@@ -356,9 +355,6 @@ int main()
 	node->addAnimator(colAnim);
 	colAnim->drop();
 	terrain->setMaterialFlag(video::EMF_LIGHTING, false);
-	//terrain->setMaterialFlag(video::EMF_WIREFRAME, true);
-    terrain->setMaterialTexture(0,driver->getTexture("../../../data/IrrTestScene/uv_textura.png"));	
-	terrain->setMaterialTexture(1, driver->getTexture("../../../data/IrrTestScene/detailmap3.jpg"));
 
 
 	ICameraSceneNode* cam = smgr->addCameraSceneNode(0, vector3df(0,100,100), vector3df(0,0,0), 1, true);
