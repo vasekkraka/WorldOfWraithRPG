@@ -377,17 +377,11 @@ core::vector3df collideWithWorld(s32 recursionDepth, SCollisionData &colData, co
 
 	colData.selector->getTriangles(Triangles.pointer(), totalTriangleCnt, triangleCnt, box, &scaleMatrix);
 
-	/*SYSTEMTIME konec;
-	GetSystemTime(&konec);
-	printf("Cas: %f, %i", (double)((konec.wMilliseconds - zacatek.wMilliseconds)), triangleCnt);*/
 
 	for (s32 i=0; i<triangleCnt; ++i)
 		if(testTriangleIntersection(&colData, Triangles[i]))
 			colData.triangleIndex = i;
 
-	//SYSTEMTIME konec;
-	//GetSystemTime(&konec);
-	//printf("Cas: %f, %i, %i\n", (double)((konec.wMilliseconds - zacatek.wMilliseconds)), triangleCnt, recursionDepth);
 
 	//---------------- end collide with world
 
@@ -492,27 +486,12 @@ core::vector3df collideWithWorldNoSliding(s32 recursionDepth, SCollisionData &co
 
 	s32 triangleCnt = 0;
 
-	/*SYSTEMTIME zacatek;
-	GetSystemTime(&zacatek);*/
-
-	//printf("Max : %i\n", totalTriangleCnt);
 
 	colData.selector->getTriangles(Triangles.pointer(), totalTriangleCnt, triangleCnt, box, &scaleMatrix);
 
-	//printf("Box : %i\n", triangleCnt);
-
-	/*SYSTEMTIME konec;
-	GetSystemTime(&konec);*/
-	//printf("Cas: %f, %i\n", (double)((konec.wMilliseconds - zacatek.wMilliseconds)), triangleCnt);
-	//SYSTEMTIME zacatek;
-	//GetSystemTime(&zacatek);
 	for (s32 i=0; i<triangleCnt; ++i)
 		if(testTriangleIntersection(&colData, Triangles[i]))
 			colData.triangleIndex = i;
-
-	//SYSTEMTIME konec;
-	//GetSystemTime(&konec);
-	//printf("Cas: %f, %i, %i\n", (double)((konec.wMilliseconds - zacatek.wMilliseconds)), triangleCnt, recursionDepth);
 
 	//---------------- end collide with world
 
@@ -631,6 +610,11 @@ core::vector3df collideEllipsoidWithWorld(
 
 	finalPos *= colData.eRadius;
 	hitPosition = colData.intersectionPoint * colData.eRadius;
+
+	if (finalPos.Y - position.Y > 0.0)
+	{
+		printf("Y rozdil: %f \n", finalPos.Y - position.Y);
+	}
 	return finalPos;
 }
 

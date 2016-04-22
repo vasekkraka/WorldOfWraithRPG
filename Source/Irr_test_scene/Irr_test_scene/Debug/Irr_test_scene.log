@@ -1,25 +1,15 @@
-﻿Build started 17. 4. 2016 20:22:10.
-     1>Project "C:\Users\m1tnick\Documents\WorldOfWraithRPG\Source\Irr_test_scene\Irr_test_scene\Irr_test_scene.vcxproj" on node 2 (Build target(s)).
+﻿Build started 22.04.2016 15:48:37.
+     1>Project "C:\Users\vkraka\Documents\WorldOfWraithRPG\Source\Irr_test_scene\Irr_test_scene\Irr_test_scene.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\m1tnick\Documents\WorldOfWraithRPG\Source\Irr_test_scene\\..\..\Irrlicht\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Cmain.cpp
-         Cmain.cpp
-     1>c:\users\m1tnick\documents\worldofwraithrpg\source\irr_test_scene\irr_test_scene\cmain.cpp(29): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\m1tnick\documents\worldofwraithrpg\source\irr_test_scene\irr_test_scene\cmain.cpp(30): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\m1tnick\documents\worldofwraithrpg\source\irr_test_scene\irr_test_scene\cmain.cpp(103): warning C4244: '+=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\m1tnick\documents\worldofwraithrpg\source\irr_test_scene\irr_test_scene\cmain.cpp(104): warning C4244: '+=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\m1tnick\documents\worldofwraithrpg\source\irr_test_scene\irr_test_scene\cmain.cpp(129): warning C4244: '+=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\m1tnick\documents\worldofwraithrpg\source\irr_test_scene\irr_test_scene\cmain.cpp(130): warning C4244: '+=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\m1tnick\documents\worldofwraithrpg\source\irr_test_scene\irr_test_scene\cmain.cpp(140): warning C4244: '=' : conversion from 'int' to 'irr::f32', possible loss of data
-     1>c:\users\m1tnick\documents\worldofwraithrpg\source\irr_test_scene\irr_test_scene\cmain.cpp(231): warning C4244: '+=' : conversion from 'const irr::f32' to 'int', possible loss of data
-     1>c:\users\m1tnick\documents\worldofwraithrpg\source\irr_test_scene\irr_test_scene\cmain.cpp(367): warning C4244: 'initializing' : conversion from 'irr::u32' to 'float', possible loss of data
-     1>c:\users\m1tnick\documents\worldofwraithrpg\source\irr_test_scene\irr_test_scene\cmain.cpp(382): warning C4244: '+=' : conversion from 'irr::f32' to 'irr::u32', possible loss of data
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\vkraka\Documents\WorldOfWraithRPG\Source\Irr_test_scene\\..\..\Irrlicht\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt CColManager.cpp
+         CColManager.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\m1tnick\Documents\WorldOfWraithRPG\Source\Irr_test_scene\\..\..\Bin\MSVC32\Debug\Irr_test_scene.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\Users\m1tnick\Documents\WorldOfWraithRPG\Source\Irr_test_scene\\..\..\Irrlicht\lib\MSVC32 irrlicht.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\m1tnick\Documents\WorldOfWraithRPG\Source\Irr_test_scene\\..\..\Bin\MSVC32\Debug\Irr_test_scene.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\m1tnick\Documents\WorldOfWraithRPG\Source\Irr_test_scene\\..\..\Bin\MSVC32\Debug\Irr_test_scene.lib" /MACHINE:X86 Debug\CColManager.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\vkraka\Documents\WorldOfWraithRPG\Source\Irr_test_scene\\..\..\Bin\MSVC32\Debug\Irr_test_scene.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\Users\vkraka\Documents\WorldOfWraithRPG\Source\Irr_test_scene\\..\..\Irrlicht\lib\MSVC32 irrlicht.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\vkraka\Documents\WorldOfWraithRPG\Source\Irr_test_scene\\..\..\Bin\MSVC32\Debug\Irr_test_scene.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\vkraka\Documents\WorldOfWraithRPG\Source\Irr_test_scene\\..\..\Bin\MSVC32\Debug\Irr_test_scene.lib" /MACHINE:X86 Debug\CColManager.obj
          Debug\Cmain.obj
          Debug\CWoWCollisionAnimator.obj
-         Irr_test_scene.vcxproj -> C:\Users\m1tnick\Documents\WorldOfWraithRPG\Source\Irr_test_scene\\..\..\Bin\MSVC32\Debug\Irr_test_scene.exe
-     1>Done Building Project "C:\Users\m1tnick\Documents\WorldOfWraithRPG\Source\Irr_test_scene\Irr_test_scene\Irr_test_scene.vcxproj" (Build target(s)).
+         Irr_test_scene.vcxproj -> C:\Users\vkraka\Documents\WorldOfWraithRPG\Source\Irr_test_scene\\..\..\Bin\MSVC32\Debug\Irr_test_scene.exe
+     1>Done Building Project "C:\Users\vkraka\Documents\WorldOfWraithRPG\Source\Irr_test_scene\Irr_test_scene\Irr_test_scene.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:02.15
+Time Elapsed 00:00:01.68

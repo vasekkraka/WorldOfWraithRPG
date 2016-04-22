@@ -175,7 +175,7 @@ class wwAnim : public ISceneNodeAnimator
 				{
 					okruh -= wheelPos();
 				}
-				printf("%i\n", wheelPos());
+				//printf("%i\n", wheelPos());
 			}
 
 			novaPozice = caulculatePosition(metaNode->getAbsolutePosition(), rotX, rotY, okruh);
@@ -313,7 +313,9 @@ int main()
     ISceneManager* smgr = dev->getSceneManager();
     IGUIEnvironment* guienv = dev->getGUIEnvironment();
 
-	driver->setTextureCreationFlag(E_TEXTURE_CREATION_FLAG::ETCF_ALWAYS_16_BIT);
+	//smgr->setAmbientLight(video::SColorf(1.0f, 1.0f, 1.0f));
+
+	driver->setTextureCreationFlag(E_TEXTURE_CREATION_FLAG::ETCF_ALWAYS_32_BIT);
 	
 	vector3df a = vector3df(1, 0, 1);
 	vector3df b = vector3df(1, 1, 1);
@@ -334,6 +336,11 @@ int main()
         return 1;
     }
 	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh);
+
+	node->setDebugDataVisible(E_DEBUG_SCENE_TYPE::EDS_MESH_WIRE_OVERLAY);
+
+	printf("Primaka: %f", node->getBoundingBox().MaxEdge);
+
 	if (node)
     {
         node->setMaterialFlag(EMF_LIGHTING, false);
@@ -350,11 +357,19 @@ int main()
 	terrain->setTriangleSelector(trg);
 	trg->drop();
 
-	ISceneNodeAnimatorCollisionResponse * colAnim = new irr::scene::CSceneNodeAnimatorWoWCollisionAnimator(smgr, trg, node, core::vector3df(60.0f,50.0f,60.0f), core::vector3df(0.0f,-75.0f,0.0f), core::vector3df(10.0f,-25.0f,0.0f));
+	ISceneNodeAnimatorCollisionResponse * colAnim = new irr::scene::CSceneNodeAnimatorWoWCollisionAnimator(smgr, trg, node, core::vector3df(8.0f,8.0f,8.0f), core::vector3df(0.0f,-75.0f,0.0f), core::vector3df(0.0f,-7.9f,0.0f));
 
 	node->addAnimator(colAnim);
 	colAnim->drop();
 	terrain->setMaterialFlag(video::EMF_LIGHTING, false);
+	terrain->setMaterialFlag(video::EMF_NORMALIZE_NORMALS, true);
+	terrain->setMaterialFlag(E_MATERIAL_FLAG::EMF_BACK_FACE_CULLING, false);
+
+	terrain->setDebugDataVisible(E_DEBUG_SCENE_TYPE::EDS_MESH_WIRE_OVERLAY);
+	
+	
+	terrain->setMaterialType(E_MATERIAL_TYPE::EMT_SOLID);
+
 
 
 	ICameraSceneNode* cam = smgr->addCameraSceneNode(0, vector3df(0,100,100), vector3df(0,0,0), 1, true);
