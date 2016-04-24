@@ -392,6 +392,33 @@ int main()
 		driver->beginScene(true, true, SColor(255,120,120,120));
 		smgr->drawAll(); 
 		guienv->drawAll();
+
+		line3df col_line, draw_line;
+
+		node->updateAbsolutePosition();
+
+		col_line.start = node->getAbsolutePosition();
+
+		col_line.end = node->getAbsolutePosition();
+
+		col_line.end.Y -= 200;
+		col_line.start.Y += 200;
+
+		vector3df col_point;
+		triangle3df col_trian;
+
+		smgr->getSceneCollisionManager()->getSceneNodeAndCollisionPointFromRay(col_line, col_point, col_trian);
+
+		printf("%f, %f, %f\n",  col_point.X, col_point.Y, col_point.Z);
+
+		draw_line.start = col_point;
+		draw_line.end = col_point;
+
+		draw_line.start.Y += 100;
+		driver->setTransform(video::ETS_WORLD, core::matrix4());
+		driver->draw3DLine(col_line.start, col_line.end, SColor(255, 255,0,0));
+		driver->draw3DTriangle(col_trian, SColor(255, 255, 0, 0));
+
 		driver->endScene();
 		
 		old_time += frame_time;

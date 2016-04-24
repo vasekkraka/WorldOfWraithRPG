@@ -372,8 +372,6 @@ core::vector3df collideWithWorld(s32 recursionDepth, SCollisionData &colData, co
 
 	s32 triangleCnt = 0;
 
-	//SYSTEMTIME zacatek;
-	//GetSystemTime(&zacatek);
 
 	colData.selector->getTriangles(Triangles.pointer(), totalTriangleCnt, triangleCnt, box, &scaleMatrix);
 
@@ -392,9 +390,6 @@ core::vector3df collideWithWorld(s32 recursionDepth, SCollisionData &colData, co
 	const core::vector3df destinationPoint = pos + vel;
 	core::vector3df newBasePoint = pos;
 
-	// only update if we are not already very close
-	// and if so only move very close to intersection, not to the
-	// exact point
 	if (colData.nearestDistance >= veryCloseDistance)
 	{
 		core::vector3df v = vel;
@@ -420,13 +415,6 @@ core::vector3df collideWithWorld(s32 recursionDepth, SCollisionData &colData, co
 	const core::vector3df newVelocityVector = newDestinationPoint -
 		colData.intersectionPoint;
 	
-	/*SYSTEMTIME konec;
-	GetSystemTime(&konec);
-	printf("Cas: %f\n", (double)((konec.wMilliseconds - zacatek.wMilliseconds)));*/
-
-	
-
-	//printf("Recurs Depth : %i | %i\n", recursionDepth, Triangles.size());
 	
 
 	if (newVelocityVector.getLength() < veryCloseDistance)
@@ -613,7 +601,7 @@ core::vector3df collideEllipsoidWithWorld(
 
 	if (finalPos.Y - position.Y > 0.0)
 	{
-		printf("Y rozdil: %f \n", finalPos.Y - position.Y);
+		//printf("Y rozdil: %f \n", finalPos.Y - position.Y);
 	}
 	return finalPos;
 }
