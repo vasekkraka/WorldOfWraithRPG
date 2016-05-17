@@ -303,13 +303,10 @@ core::vector3df collideWithWorld(s32 recursionDepth, SCollisionData &colData, co
 {
 	f32 veryCloseDistance = colData.slidingSpeed;
 
-	//printf("Depth: %i\n", recursionDepth);
-
-	/*SYSTEMTIME zacatek;
-	GetSystemTime(&zacatek);*/
-
-
-
+	if (recursionDepth > 0 && (vel.X != 0 || vel.Z != 0))
+	{
+		printf("Depth: %i\n", recursionDepth);
+	}
 
 
 	if (recursionDepth > 5)

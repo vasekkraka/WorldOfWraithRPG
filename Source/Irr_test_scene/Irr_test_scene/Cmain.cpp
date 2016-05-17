@@ -308,7 +308,7 @@ class wwAnim : public ISceneNodeAnimator
 
 int main()
 {
-	IrrlichtDevice * dev = createDevice(EDT_OPENGL, dimension2d<u32>(800, 600), 16, false, false, false);
+	IrrlichtDevice * dev = createDevice(EDT_OPENGL, dimension2d<u32>(1024, 768), 32, false, false, false);
 	IVideoDriver* driver = dev->getVideoDriver();
     ISceneManager* smgr = dev->getSceneManager();
     IGUIEnvironment* guienv = dev->getGUIEnvironment();
@@ -339,7 +339,7 @@ int main()
 
 	node->setDebugDataVisible(E_DEBUG_SCENE_TYPE::EDS_MESH_WIRE_OVERLAY);
 
-	printf("Primaka: %f", node->getBoundingBox().MaxEdge);
+	
 
 	if (node)
     {
@@ -347,17 +347,17 @@ int main()
         // node->setMaterialTexture( 0, driver->getTexture("../../../data/IrrTestScene/sydney.bmp") );
 		node->setPosition(vector3df(0,1000,0));
 		node->setRotation(vector3df(0, 45, 0));
-		node->setScale(vector3df(10.0f, 10.0f, 10.0f));
+		node->setScale(vector3df(20.0f, 20.0f, 20.0f));
 	}
 
-	IMeshSceneNode* terrain = smgr->addMeshSceneNode(smgr->getMesh("../../../data/IrrTestScene/chram.obj"), 0, 0, core::vector3df(0.f, -1000.f, 0.f), core::vector3df(0.f, 0.f, 0.f), core::vector3df(10.0f, 10.0f, 10.0f));
+	IMeshSceneNode* terrain = smgr->addMeshSceneNode(smgr->getMesh("../../../data/IrrTestScene/chram.obj"), 0, 0, core::vector3df(0.f, -1000.f, 0.f), core::vector3df(0.f, 0.f, 0.f), core::vector3df(20.0f, 20.0f, 20.0f));
 	ITriangleSelector * trg = smgr->createOctreeTriangleSelector(terrain->getMesh(), terrain);
 
 
 	terrain->setTriangleSelector(trg);
 	trg->drop();
 
-	ISceneNodeAnimatorCollisionResponse * colAnim = new irr::scene::CSceneNodeAnimatorWoWCollisionAnimator(smgr, trg, node, core::vector3df(8.0f,8.0f,8.0f), core::vector3df(0.0f,-75.0f,0.0f), core::vector3df(0.0f,-7.9f,0.0f));
+	ISceneNodeAnimatorCollisionResponse * colAnim = new irr::scene::CSceneNodeAnimatorWoWCollisionAnimator(smgr, trg, node, core::vector3df(8.0f,8.0f,8.0f), core::vector3df(0.0f,-75.0f,0.0f), core::vector3df(0.0f,-7.9f,0.0f), 0.05f);
 
 	node->addAnimator(colAnim);
 	colAnim->drop();
@@ -365,7 +365,7 @@ int main()
 	terrain->setMaterialFlag(video::EMF_NORMALIZE_NORMALS, true);
 	terrain->setMaterialFlag(E_MATERIAL_FLAG::EMF_BACK_FACE_CULLING, false);
 
-	terrain->setDebugDataVisible(E_DEBUG_SCENE_TYPE::EDS_MESH_WIRE_OVERLAY);
+	//terrain->setDebugDataVisible(E_DEBUG_SCENE_TYPE::EDS_MESH_WIRE_OVERLAY);
 	
 	
 	terrain->setMaterialType(E_MATERIAL_TYPE::EMT_SOLID);
@@ -374,7 +374,8 @@ int main()
 
 	ICameraSceneNode* cam = smgr->addCameraSceneNode(0, vector3df(0,100,100), vector3df(0,0,0), 1, true);
 	cam->setTarget(node->getPosition());
-	cam->setFarValue(10000);
+	cam->setNearValue(10);
+	cam->setFarValue(100000);
 	
 	ISceneNodeAnimator * animator = new wwAnim(node, 0.0f, 0.0f, dev->getCursorControl());
 	cam->addAnimator(animator);
@@ -409,7 +410,7 @@ int main()
 
 		smgr->getSceneCollisionManager()->getSceneNodeAndCollisionPointFromRay(col_line, col_point, col_trian);
 
-		printf("%f, %f, %f\n",  col_point.X, col_point.Y, col_point.Z);
+		//printf("%f, %f, %f\n",  col_point.X, col_point.Y, col_point.Z);
 
 		draw_line.start = col_point;
 		draw_line.end = col_point;
