@@ -171,14 +171,16 @@ class wwAnim : public ISceneNodeAnimator
 			if (wheelPos() != 0)
 			{
 				okruh += wheelPos();
-				if (okruh < 20 || okruh > 1000)
+				if (okruh < 20 || okruh > cam_circle)
 				{
 					okruh -= wheelPos();
 				}
 				//printf("%i\n", wheelPos());
 			}
 
-			novaPozice = caulculatePosition(metaNode->getAbsolutePosition(), rotX, rotY, okruh);
+			metaNode->updateAbsolutePosition();
+
+			novaPozice = caulculatePosition(metaNode->getSceneManager()->getSceneCollisionManager(),metaNode->getAbsolutePosition(), rotX, rotY, okruh);
 			node->setPosition(novaPozice);
 			node->setRotation(rotace);
 
@@ -289,7 +291,7 @@ class wwAnim : public ISceneNodeAnimator
 			return wheel;
 		}
 
-		vector3df caulculatePosition(vector3df centr, int xUhel, int yUhel, int radius)
+		vector3df caulculatePosition(ISceneCollisionManager * col, vector3df centr, int xUhel, int yUhel, int radius)
 		{
 			vector3df Cposition;
 			ci++;
@@ -297,6 +299,29 @@ class wwAnim : public ISceneNodeAnimator
 			float Zy = sinf(xUhel * PI / 180);
 			float Zx = sinf(yUhel * PI / 180);
 			float Zz = cosf(yUhel * PI / 180);
+
+			vector3df poz_kamery = vector3df(Zx, Zy, Zz);
+
+			poz_kamery.setLength(radius);
+			
+			printf("%f \n", poz_kamery.getDistanceFrom(centr));
+
+			triangle3df colTriangle;
+			vector3df colPoint;
+			
+
+			ISceneNode * nd = col->getSceneNodeAndCollisionPointFromRay(line3df(centr, poz_kamery), colPoint, colTriangle);
+
+			if (nd != NULL)
+			{
+				printf("Zasah\n");
+				return colPoint;
+			}
+			else
+			{
+				//return poz_kamery;
+			}
+
 			Cposition.X = centr.X + ( radius * Zx);
 			Cposition.Y = centr.Y + ( radius * Zy);
 			Cposition.Z = centr.Z + ( radius * Zz);
@@ -308,7 +333,7 @@ class wwAnim : public ISceneNodeAnimator
 
 int main()
 {
-	IrrlichtDevice * dev = createDevice(EDT_OPENGL, dimension2d<u32>(1024, 768), 32, false, false, false);
+	IrrlichtDevice * dev = createDevice(EDT_OPENGL, dimension2d<u32>(1366, 768), 32, false, false, false);
 	IVideoDriver* driver = dev->getVideoDriver();
     ISceneManager* smgr = dev->getSceneManager();
     IGUIEnvironment* guienv = dev->getGUIEnvironment();
@@ -319,7 +344,7 @@ int main()
 	
 	vector3df a = vector3df(1, 0, 1);
 	vector3df b = vector3df(1, 1, 1);
-
+	
 	a.normalize();
 	b.normalize();
 
@@ -329,7 +354,7 @@ int main()
 	double uhel_sin = asin(c) * 180.0 / PI;
 
 
-	IAnimatedMesh* mesh = smgr->getMesh("../../../data/IrrTestScene/panda.obj");
+	IAnimatedMesh* mesh = smgr->getMesh("../../../data/IrrTestScene/panda_rot.obj");
     if (!mesh)
     {
         dev->drop();
@@ -337,7 +362,7 @@ int main()
     }
 	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh);
 
-	node->setDebugDataVisible(E_DEBUG_SCENE_TYPE::EDS_MESH_WIRE_OVERLAY);
+	//node->setDebugDataVisible(E_DEBUG_SCENE_TYPE::EDS_MESH_WIRE_OVERLAY);
 
 	
 
@@ -418,7 +443,6 @@ int main()
 		draw_line.start.Y += 100;
 		driver->setTransform(video::ETS_WORLD, core::matrix4());
 		driver->draw3DLine(col_line.start, col_line.end, SColor(255, 255,0,0));
-		driver->draw3DTriangle(col_trian, SColor(255, 255, 0, 0));
 
 		driver->endScene();
 		
