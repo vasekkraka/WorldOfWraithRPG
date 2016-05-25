@@ -79,17 +79,78 @@ class wwAnim : public ISceneNodeAnimator
 				last_anim_time = timeMs;
 
 
-				vector3df soucasna, nova, rozdil;
+				vector3df soucasna, nova;
 				soucasna = metaNode->getPosition();
 				nova.X = soucasna.X + sinf((metaNode->getRotation().Y + 90) * (PI / 180)) * (krok / delta);
 				nova.Z = soucasna.Z + cosf((metaNode->getRotation().Y + 90) * (PI / 180)) * (krok / delta);
 				nova.Y = soucasna.Y;
 
-				rozdil.X = nova.X - soucasna.X;
-				rozdil.Y = nova.Y - soucasna.Y;
-				rozdil.Z = nova.Z - soucasna.Z;
 
 				metaNode->setPosition(nova);
+			}
+			if (isPresed(KEY_KEY_S))
+			{
+				move_cycle++;
+
+
+				f32 delta;
+				if ((timeMs - last_anim_time) == 0)
+				{
+					delta = 1000.0f;
+				}
+				else
+				{
+					delta = 1000.0f / (timeMs - last_anim_time);
+				}
+				//printf("Cas: %u, %f %f\n", (timeMs - last_anim_time), delta, sinf((metaNode->getRotation().Y + 90) * (PI / 180) * (krok / delta)));
+				last_anim_time = timeMs;
+
+
+				vector3df soucasna, nova;
+				soucasna = metaNode->getPosition();
+				nova.X = soucasna.X - sinf((metaNode->getRotation().Y + 90) * (PI / 180)) * (krok / delta);
+				nova.Z = soucasna.Z - cosf((metaNode->getRotation().Y + 90) * (PI / 180)) * (krok / delta);
+				nova.Y = soucasna.Y;
+
+
+				metaNode->setPosition(nova);
+			}
+			if (isPresed(KEY_KEY_A))
+			{
+				f32 delta;
+				if ((timeMs - last_anim_time) == 0)
+				{
+					delta = 1000.0f;
+				}
+				else
+				{
+					delta = 1000.0f / (timeMs - last_anim_time);
+				}
+
+				last_anim_time = timeMs;
+
+				if (!isClicked(1) && !isClicked(2) && isClicked(3))
+				{
+					move_cycle++;
+
+					vector3df soucasna, nova;
+					soucasna = metaNode->getPosition();
+					nova.X = soucasna.X + sinf((metaNode->getRotation().Y) * (PI / 180)) * (krok / delta);
+					nova.Z = soucasna.Z + cosf((metaNode->getRotation().Y) * (PI / 180)) * (krok / delta);
+					nova.Y = soucasna.Y;
+
+
+					metaNode->setPosition(nova);
+				}
+				else
+				{
+					vector3df rot = metaNode->getRotation();
+
+					f32 rotY;
+					rotY = metaNode->getRotation().Y;
+					rotY += 1 * (krok / delta);
+					metaNode->setRotation(vector3df(metaNode->getRotation().X, rotY, metaNode->getRotation().Z));
+				}
 			}
 			last_anim_time = timeMs;
 			
@@ -103,12 +164,9 @@ class wwAnim : public ISceneNodeAnimator
 					rotY += (mousePos.X - lookStart.X) * rotspeed;
 					rotX += (mousePos.Y - lookStart.Y) * rotspeed;
 					//korekce hodnoty
-					if(rotX > 90)
+					if(rotX > 85)
 					{
-						rotX = 90;
-					}else if(rotX < -90)
-					{
-						rotX = -90;
+						rotX = 85;
 					}
 					cursorControl->setPosition(lookStart);
 				}else
@@ -129,12 +187,9 @@ class wwAnim : public ISceneNodeAnimator
 					rotY += (mousePos.X - rotStart.X) * rotspeed;
 					rotX += (mousePos.Y - rotStart.Y) * rotspeed;
 					//korekce hodnoty
-					if(rotX > 90)
+					if(rotX > 85)
 					{
-						rotX = 90;
-					}else if(rotX < -90)
-					{
-						rotX = -90;
+						rotX = 85;
 					}
 					cursorControl->setPosition(rotStart);
 					rotace.Y = rotY + 90;
@@ -180,7 +235,7 @@ class wwAnim : public ISceneNodeAnimator
 
 			metaNode->updateAbsolutePosition();
 
-			novaPozice = caulculatePosition(metaNode->getSceneManager()->getSceneCollisionManager(),metaNode->getAbsolutePosition(), rotX, rotY, okruh);
+			novaPozice = caulculatePosition(metaNode->getSceneManager()->getSceneCollisionManager(),metaNode->getTransformedBoundingBox().getCenter(), rotX, rotY, okruh);
 			node->setPosition(novaPozice);
 			node->setRotation(rotace);
 
@@ -296,19 +351,27 @@ class wwAnim : public ISceneNodeAnimator
 			vector3df Cposition;
 			ci++;
 
+			if (yUhel > 360)
+				yUhel = yUhel - 360;
+
 			float Zy = sinf(xUhel * PI / 180);
-			float Zx = sinf(yUhel * PI / 180);
-			float Zz = cosf(yUhel * PI / 180);
+			float Zx = sinf(yUhel * PI / 180) - (sinf(yUhel * PI / 180) * sinf(xUhel * PI / 180));
+			float Zz = cosf(yUhel * PI / 180) - (cosf(yUhel * PI / 180) * sinf(xUhel * PI / 180));
 
 			vector3df poz_kamery = vector3df(Zx, Zy, Zz);
 
 			poz_kamery.setLength(radius);
-			
-			printf("%f \n", poz_kamery.getDistanceFrom(centr));
+
+			poz_kamery += centr;
 
 			triangle3df colTriangle;
 			vector3df colPoint;
 			
+
+			if (poz_kamery.Y < centr.Y)
+			{
+				poz_kamery.Y = centr.Y;
+			}
 
 			ISceneNode * nd = col->getSceneNodeAndCollisionPointFromRay(line3df(centr, poz_kamery), colPoint, colTriangle);
 
@@ -319,14 +382,10 @@ class wwAnim : public ISceneNodeAnimator
 			}
 			else
 			{
-				//return poz_kamery;
+				return poz_kamery;
 			}
 
-			Cposition.X = centr.X + ( radius * Zx);
-			Cposition.Y = centr.Y + ( radius * Zy);
-			Cposition.Z = centr.Z + ( radius * Zz);
 
-			return Cposition;
 		}
 	};
 
@@ -362,7 +421,9 @@ int main()
     }
 	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh);
 
-	//node->setDebugDataVisible(E_DEBUG_SCENE_TYPE::EDS_MESH_WIRE_OVERLAY);
+	//IMeshSceneNode* node = smgr->addSphereSceneNode(20.0F, 16);
+
+	//node->setDebugDataVisible(E_DEBUG_SCENE_TYPE::EDS_BBOX_ALL);
 
 	
 
@@ -382,7 +443,7 @@ int main()
 	terrain->setTriangleSelector(trg);
 	trg->drop();
 
-	ISceneNodeAnimatorCollisionResponse * colAnim = new irr::scene::CSceneNodeAnimatorWoWCollisionAnimator(smgr, trg, node, core::vector3df(8.0f,8.0f,8.0f), core::vector3df(0.0f,-75.0f,0.0f), core::vector3df(0.0f,-7.9f,0.0f), 0.05f);
+	ISceneNodeAnimatorCollisionResponse * colAnim = new irr::scene::CSceneNodeAnimatorWoWCollisionAnimator(smgr, trg, node, core::vector3df(20.0f,30.0f,20.0f), core::vector3df(0.0f,-75.0f,0.0f), core::vector3df(0.0f,-20.0f,0.0f), 0.05f);
 
 	node->addAnimator(colAnim);
 	colAnim->drop();
