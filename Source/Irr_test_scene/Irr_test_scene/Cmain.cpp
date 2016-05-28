@@ -13,8 +13,8 @@ using namespace gui;
 
 
 #define cam_circle 1000
-#define rotspeed 0.5f
-#define krok 150
+#define rotspeed 0.3f
+#define krok 125
 
 #define req_fps 50
 
@@ -138,8 +138,42 @@ class wwAnim : public ISceneNodeAnimator
 					nova.X = soucasna.X + sinf((metaNode->getRotation().Y) * (PI / 180)) * (krok / delta);
 					nova.Z = soucasna.Z + cosf((metaNode->getRotation().Y) * (PI / 180)) * (krok / delta);
 					nova.Y = soucasna.Y;
+					metaNode->setPosition(nova);
+				}
+				else
+				{
+					vector3df rot = metaNode->getRotation();
 
+					f32 rotY;
+					rotY = metaNode->getRotation().Y;
+					rotY -= 1 * (krok / delta);
+					metaNode->setRotation(vector3df(metaNode->getRotation().X, rotY, metaNode->getRotation().Z));
+				}
+			}
 
+			if (isPresed(KEY_KEY_D))
+			{
+				f32 delta;
+				if ((timeMs - last_anim_time) == 0)
+				{
+					delta = 1000.0f;
+				}
+				else
+				{
+					delta = 1000.0f / (timeMs - last_anim_time);
+				}
+
+				last_anim_time = timeMs;
+
+				if (!isClicked(1) && !isClicked(2) && isClicked(3))
+				{
+					move_cycle++;
+
+					vector3df soucasna, nova;
+					soucasna = metaNode->getPosition();
+					nova.X = soucasna.X - sinf((metaNode->getRotation().Y) * (PI / 180)) * (krok / delta);
+					nova.Z = soucasna.Z - cosf((metaNode->getRotation().Y) * (PI / 180)) * (krok / delta);
+					nova.Y = soucasna.Y;
 					metaNode->setPosition(nova);
 				}
 				else
@@ -168,6 +202,10 @@ class wwAnim : public ISceneNodeAnimator
 					{
 						rotX = 85;
 					}
+					else if (rotX < -45)
+					{
+						rotX = -45;
+					}
 					cursorControl->setPosition(lookStart);
 				}else
 				{
@@ -190,6 +228,10 @@ class wwAnim : public ISceneNodeAnimator
 					if(rotX > 85)
 					{
 						rotX = 85;
+					}
+					else if (rotX < -45)
+					{
+						rotX = -45;
 					}
 					cursorControl->setPosition(rotStart);
 					rotace.Y = rotY + 90;
@@ -216,7 +258,7 @@ class wwAnim : public ISceneNodeAnimator
 						CSceneNodeAnimatorWoWCollisionAnimator * collResp = static_cast<CSceneNodeAnimatorWoWCollisionAnimator *>(*it);
 						if (!collResp->isFalling())
 						{
-							collResp->jump(350, 700);
+							collResp->jump(125, 500);
 						}
 					}
 					it++;
@@ -235,7 +277,7 @@ class wwAnim : public ISceneNodeAnimator
 
 			metaNode->updateAbsolutePosition();
 
-			novaPozice = caulculatePosition(metaNode->getSceneManager()->getSceneCollisionManager(),metaNode->getTransformedBoundingBox().getCenter(), rotX, rotY, okruh);
+			novaPozice = caulculatePosition(metaNode->getSceneManager()->getSceneCollisionManager(),metaNode->getBoundingBox().getCenter() + metaNode->getAbsolutePosition(), rotX, rotY, okruh);
 			node->setPosition(novaPozice);
 			node->setRotation(rotace);
 
@@ -443,7 +485,7 @@ int main()
 	terrain->setTriangleSelector(trg);
 	trg->drop();
 
-	ISceneNodeAnimatorCollisionResponse * colAnim = new irr::scene::CSceneNodeAnimatorWoWCollisionAnimator(smgr, trg, node, core::vector3df(20.0f,30.0f,20.0f), core::vector3df(0.0f,-75.0f,0.0f), core::vector3df(0.0f,-20.0f,0.0f), 0.05f);
+	ISceneNodeAnimatorCollisionResponse * colAnim = new irr::scene::CSceneNodeAnimatorWoWCollisionAnimator(smgr, trg, node, core::vector3df(20.0f,30.0f,20.0f), core::vector3df(0.0f,-75.0f,0.0f), core::vector3df(0.0f,-30.0f,0.0f), 0.05f);
 
 	node->addAnimator(colAnim);
 	colAnim->drop();
@@ -480,30 +522,6 @@ int main()
 		smgr->drawAll(); 
 		guienv->drawAll();
 
-		line3df col_line, draw_line;
-
-		node->updateAbsolutePosition();
-
-		col_line.start = node->getAbsolutePosition();
-
-		col_line.end = node->getAbsolutePosition();
-
-		col_line.end.Y -= 200;
-		col_line.start.Y += 200;
-
-		vector3df col_point;
-		triangle3df col_trian;
-
-		smgr->getSceneCollisionManager()->getSceneNodeAndCollisionPointFromRay(col_line, col_point, col_trian);
-
-		//printf("%f, %f, %f\n",  col_point.X, col_point.Y, col_point.Z);
-
-		draw_line.start = col_point;
-		draw_line.end = col_point;
-
-		draw_line.start.Y += 100;
-		driver->setTransform(video::ETS_WORLD, core::matrix4());
-		driver->draw3DLine(col_line.start, col_line.end, SColor(255, 255,0,0));
 
 		driver->endScene();
 		
