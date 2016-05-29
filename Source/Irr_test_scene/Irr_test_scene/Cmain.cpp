@@ -478,7 +478,7 @@ int main()
 		node->setScale(vector3df(20.0f, 20.0f, 20.0f));
 	}
 
-	IMeshSceneNode* terrain = smgr->addMeshSceneNode(smgr->getMesh("../../../data/IrrTestScene/chram.obj"), 0, 0, core::vector3df(0.f, -1000.f, 0.f), core::vector3df(0.f, 0.f, 0.f), core::vector3df(20.0f, 20.0f, 20.0f));
+	IMeshSceneNode* terrain = smgr->addMeshSceneNode(smgr->getMesh("../../../data/IrrTestScene/gilneas.obj"), 0, 0, core::vector3df(0.f, -1000.f, 0.f), core::vector3df(0.f, 0.f, 0.f), core::vector3df(20.0f, 20.0f, 20.0f));
 	ITriangleSelector * trg = smgr->createOctreeTriangleSelector(terrain->getMesh(), terrain);
 
 
@@ -495,8 +495,9 @@ int main()
 
 	//terrain->setDebugDataVisible(E_DEBUG_SCENE_TYPE::EDS_MESH_WIRE_OVERLAY);
 	
-	
+
 	terrain->setMaterialType(E_MATERIAL_TYPE::EMT_SOLID);
+
 
 
 
