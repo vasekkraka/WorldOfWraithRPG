@@ -24,12 +24,18 @@
     <ClCompile Include="CColManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CWoWLikeCameraAnimator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CWoWCollisionAnimator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CColManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HWowLikeCameraAnimator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

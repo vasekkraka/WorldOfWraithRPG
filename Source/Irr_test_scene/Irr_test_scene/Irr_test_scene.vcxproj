@@ -88,10 +88,12 @@
     <ClCompile Include="CColManager.cpp" />
     <ClCompile Include="Cmain.cpp" />
     <ClCompile Include="CWoWCollisionAnimator.cpp" />
+    <ClCompile Include="CWoWLikeCameraAnimator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CColManager.h" />
     <ClInclude Include="CWoWCollisionAnimator.h" />
+    <ClInclude Include="HWowLikeCameraAnimator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

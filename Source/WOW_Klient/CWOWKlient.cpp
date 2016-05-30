@@ -29,12 +29,16 @@ namespace WowKlient
 
 	void WoWGameKlient::playIntro()
 	{
+		irrlichtDevice->getCursorControl()->setVisible(false);
+
 		//irrklangDevice->play2D("..\\..\\..\\Data\\music\\intro\\intro.ogg", false);
 
 		playIntroImage(irrlichtDevice, "..\\..\\..\\Data\\img\\intro\\gapilogo.png", 7);
 		playIntroImage(irrlichtDevice, "..\\..\\..\\Data\\img\\intro\\irrlogo.png", 7);
 		playIntroImage(irrlichtDevice, "..\\..\\..\\Data\\img\\intro\\present.png", 10);
 		playIntroImage(irrlichtDevice, "..\\..\\..\\Data\\img\\intro\\wowlogo.png", 15);
+
+		irrlichtDevice->getCursorControl()->setVisible(false);
 	}
 
 	bool WoWGameKlient::initialize()
