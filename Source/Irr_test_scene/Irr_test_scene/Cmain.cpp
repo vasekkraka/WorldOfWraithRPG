@@ -44,13 +44,15 @@ int main()
 	double uhel_sin = asin(c) * 180.0 / PI;
 
 
-	IAnimatedMesh* mesh = smgr->getMesh("../../../data/IrrTestScene/panda_rot.obj");
+	IAnimatedMesh* mesh = smgr->getMesh("../../../data/IrrTestScene/human_stand.b3d");
     if (!mesh)
     {
         dev->drop();
         return 1;
     }
 	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh);
+
+	node->setAnimationSpeed(30);
 
 	//IMeshSceneNode* node = smgr->addSphereSceneNode(20.0F, 16);
 
@@ -61,10 +63,12 @@ int main()
 	if (node)
     {
         node->setMaterialFlag(EMF_LIGHTING, false);
+		node->setMaterialFlag(EMF_NORMALIZE_NORMALS, false);
         // node->setMaterialTexture( 0, driver->getTexture("../../../data/IrrTestScene/sydney.bmp") );
 		node->setPosition(vector3df(0,1000,0));
 		node->setRotation(vector3df(0, 45, 0));
-		node->setScale(vector3df(20.0f, 20.0f, 20.0f));
+		node->setScale(vector3df(60.0f, 60.0f, 60.0f));
+		//node->setMaterialType(E_MATERIAL_TYPE::EMT_SOLID);
 	}
 
 	IMeshSceneNode* terrain = smgr->addMeshSceneNode(smgr->getMesh("../../../data/IrrTestScene/gilneas_2.obj"), 0, 0, core::vector3df(0.f, -1000.f, 0.f), core::vector3df(0.f, 0.f, 0.f), core::vector3df(20.0f, 20.0f, 20.0f));
