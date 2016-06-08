@@ -44,7 +44,7 @@ int main()
 	double uhel_sin = asin(c) * 180.0 / PI;
 
 
-	IAnimatedMesh* mesh = smgr->getMesh("../../../data/IrrTestScene/human_stand.b3d");
+	IAnimatedMesh* mesh = smgr->getMesh("../../../data/IrrTestScene/human_stand.x");
     if (!mesh)
     {
         dev->drop();
@@ -67,7 +67,7 @@ int main()
         // node->setMaterialTexture( 0, driver->getTexture("../../../data/IrrTestScene/sydney.bmp") );
 		node->setPosition(vector3df(0,1000,0));
 		node->setRotation(vector3df(0, 45, 0));
-		node->setScale(vector3df(60.0f, 60.0f, 60.0f));
+		node->setScale(vector3df(90.0f, 90.0f, 90.0f));
 		//node->setMaterialType(E_MATERIAL_TYPE::EMT_SOLID);
 	}
 

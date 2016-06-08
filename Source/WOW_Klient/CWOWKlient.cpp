@@ -38,7 +38,7 @@ namespace WowKlient
 		playIntroImage(irrlichtDevice, "..\\..\\..\\Data\\img\\intro\\present.png", 10);
 		playIntroImage(irrlichtDevice, "..\\..\\..\\Data\\img\\intro\\wowlogo.png", 15);
 
-		irrlichtDevice->getCursorControl()->setVisible(false);
+		irrlichtDevice->getCursorControl()->setVisible(true);
 	}
 
 	bool WoWGameKlient::initialize()
@@ -65,7 +65,7 @@ namespace WowKlient
 			(
 			"a: realistic water scene node\n"
 			"b: skinned mesh copy part\n"
-			"c: terrain with colision\n"
+			"c: Gilneas city scene\n"
 			);
 		char chose = getchar();
 
@@ -78,7 +78,7 @@ namespace WowKlient
 			SkinnedMeshCopyScene(gState);
 			break;
 		case 'c':
-			TerrainCopyScene(gState);
+			GilneasCityScene(gState);
 			break;
 		default:
 			break;

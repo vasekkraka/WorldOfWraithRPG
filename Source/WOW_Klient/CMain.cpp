@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 	}
 	else
 	{
-		localGame->playIntro();
+		//localGame->playIntro();
 		localGame->gameRun();
 	}
 	

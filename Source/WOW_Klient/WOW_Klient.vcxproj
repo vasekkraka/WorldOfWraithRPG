@@ -45,7 +45,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)\..\Bin\MSVC32\</OutDir>
+    <OutDir>$(SolutionDir)\..\Bin\MSVC32\Release\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -73,7 +73,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\Irrlicht\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\Irrlicht\include\;$(SolutionDir)\..\irrKlang\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CallingConvention>Cdecl</CallingConvention>
     </ClCompile>
     <Link>
@@ -81,13 +81,15 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)\..\Irrlicht\lib\MSVC32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Irrlicht.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(SolutionDir)\..\Bin\MSVC32\$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>$(SolutionDir)\..\Irrlicht\lib\MSVC32;$(SolutionDir)\..\Bin\MSVC32\Debug\;$(SolutionDir)\..\irrKlang\lib\MSVC32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>irrlicht.lib;irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(SolutionDir)\..\Bin\MSVC32\Release\$(TargetName)$(TargetExt)</OutputFile>
       <AssemblyDebug>true</AssemblyDebug>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="HColManager.h" />
+    <ClInclude Include="HWoWCollisionAnimator.h" />
     <ClInclude Include="HBuildConfig.h" />
     <ClInclude Include="HConfigLoader.h" />
     <ClInclude Include="HCore.h" />
@@ -95,15 +97,19 @@
     <ClInclude Include="HLoginManager.h" />
     <ClInclude Include="HTestScenes.h" />
     <ClInclude Include="HWOWKlient.h" />
+    <ClInclude Include="HWowLikeCameraAnimator.h" />
     <ClInclude Include="RealisticWater.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CColManager.cpp" />
     <ClCompile Include="CConfigLoader.cpp" />
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CIntro.cpp" />
     <ClCompile Include="CLoginManager.cpp" />
     <ClCompile Include="CMain.cpp" />
+    <ClCompile Include="CWoWCollisionAnimator.cpp" />
     <ClCompile Include="CWOWKlient.cpp" />
+    <ClCompile Include="CWoWLikeCameraAnimator.cpp" />
     <ClCompile Include="RealisticWater.cpp" />
     <ClCompile Include="CTestScenes.cpp" />
   </ItemGroup>

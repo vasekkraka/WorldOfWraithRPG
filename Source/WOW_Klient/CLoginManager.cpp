@@ -9,8 +9,15 @@ namespace WowKlient
 	bool LoginManagerEvent::OnEvent(const irr::SEvent& event)
 	{
 		printf("Event :\n");
+
+		switch (event.EventType)
+		{
+		case EET_GUI_EVENT:
+
+			break;
+		}
 		
-		return true;
+		return false;
 	};
 
 	// ---- Login Manager
@@ -76,7 +83,7 @@ namespace WowKlient
 		irr::gui::IGUIImage * cloud3 = guienv->addImage(core::rect<s32>(700, 50, 1312, 306));
 		cloud3->setImage(driver->getTexture(L"..\\..\\..\\Data\\img\\login_screen\\cloud.png"));
 
-		gui::IGUIEditBox * editboxUserName = guienv->addEditBox(L"Jméno", core::rect<s32>(loginNameLeft, loginNameTop, loginNameLeft + loginNameWidth, loginNameTop + loginNameHeight ), true, loginBorder); // vycentrovano 
+		gui::IGUIEditBox * editboxUserName = guienv->addEditBox(L"Jméno", core::rect<s32>(loginNameLeft, loginNameTop, loginNameLeft + loginNameWidth, loginNameTop + loginNameHeight), true, loginBorder); // vycentrovano 
 		gui::IGUIEditBox * editboxUserPass = guienv->addEditBox(L"Heslo", core::rect<s32>(loginPassLeft, loginPassTop, loginPassLeft + loginPassWidth, loginPassTop + loginPassHeight), true, loginBorder); // vycentrovano 
 		editboxUserPass->setPasswordBox(true, L'*');
 
@@ -131,19 +138,19 @@ namespace WowKlient
 		{
 			u32 oldtime = gState->irrDevice->getTimer()->getTime();
 			f++;
-			if ((f % 3) == 0)
-			{
-				cloud->move(core::vector2d<s32>(1, 0));
-				cloud2->move(core::vector2d<s32>(1, 0));
-				cloud3->move(core::vector2d<s32>(1, 0));
-			}
+			//if ((f % 3) == 0)
+			//{
+			//	cloud->move(core::vector2d<s32>(1, 0));
+			//	cloud2->move(core::vector2d<s32>(1, 0));
+			//	cloud3->move(core::vector2d<s32>(1, 0));
+			//}
 
-			if (cloud3->getAbsolutePosition().UpperLeftCorner.X > (s32)gState->gConf->resolution.Width)
-			{
-				cloud3->setRelativePosition(core::rect<s32>(0 - 512, 0 , 0, 256));
-				core::rect<s32> poloha = cloud3->getAbsolutePosition();
-				printf("%i, %i\n", poloha.UpperLeftCorner.X, poloha.UpperLeftCorner.Y);
-			}
+			//if (cloud3->getAbsolutePosition().UpperLeftCorner.X > (s32)gState->gConf->resolution.Width)
+			//{
+			//	cloud3->setRelativePosition(core::rect<s32>(0 - 512, 0 , 0, 256));
+			//	core::rect<s32> poloha = cloud3->getAbsolutePosition();
+			//	printf("%i, %i\n", poloha.UpperLeftCorner.X, poloha.UpperLeftCorner.Y);
+			//}
 
 			
 			int fps = driver->getFPS();

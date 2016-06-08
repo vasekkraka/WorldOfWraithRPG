@@ -39,6 +39,15 @@
     <ClInclude Include="HTestScenes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HWowLikeCameraAnimator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HWoWCollisionAnimator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HColManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CIntro.cpp">
@@ -63,6 +72,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CTestScenes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CColManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CWoWCollisionAnimator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CWoWLikeCameraAnimator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
