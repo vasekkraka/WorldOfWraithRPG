@@ -33,9 +33,6 @@
     <ClInclude Include="HLoginManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RealisticWater.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="HTestScenes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -46,6 +43,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="HColManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HRealisticWater.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HServerConnector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -68,9 +71,6 @@
     <ClCompile Include="CLoginManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RealisticWater.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CTestScenes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -81,6 +81,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CWoWLikeCameraAnimator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CRealisticWater.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CServerConnector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

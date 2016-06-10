@@ -365,7 +365,7 @@ int wwAnim::wheelPos()
 	return wheel;
 }
 
-vector3df wwAnim::caulculatePosition(ISceneCollisionManager * col, vector3df centr, int xUhel, int yUhel, int radius)
+vector3df wwAnim::caulculatePosition(ISceneCollisionManager * col, vector3df centr, f32 xUhel, f32 yUhel, int radius)
 {
 	vector3df Cposition;
 	ci++;

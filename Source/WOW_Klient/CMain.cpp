@@ -11,7 +11,6 @@ int main(int argc, char *argv[])
 {
 
 	WoWGameKlient * localGame = new WoWGameKlient();
-	localGame->initialize();
 	if (argc > 1)
 	{
 		if (!strcmp(argv[1], "test"))
@@ -21,6 +20,7 @@ int main(int argc, char *argv[])
 	}
 	else
 	{
+		localGame->initialize();
 		//localGame->playIntro();
 		localGame->gameRun();
 	}

@@ -89,6 +89,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="HColManager.h" />
+    <ClInclude Include="HServerConnector.h" />
     <ClInclude Include="HWoWCollisionAnimator.h" />
     <ClInclude Include="HBuildConfig.h" />
     <ClInclude Include="HConfigLoader.h" />
@@ -98,7 +99,7 @@
     <ClInclude Include="HTestScenes.h" />
     <ClInclude Include="HWOWKlient.h" />
     <ClInclude Include="HWowLikeCameraAnimator.h" />
-    <ClInclude Include="RealisticWater.h" />
+    <ClInclude Include="HRealisticWater.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CColManager.cpp" />
@@ -107,10 +108,11 @@
     <ClCompile Include="CIntro.cpp" />
     <ClCompile Include="CLoginManager.cpp" />
     <ClCompile Include="CMain.cpp" />
+    <ClCompile Include="CServerConnector.cpp" />
     <ClCompile Include="CWoWCollisionAnimator.cpp" />
     <ClCompile Include="CWOWKlient.cpp" />
     <ClCompile Include="CWoWLikeCameraAnimator.cpp" />
-    <ClCompile Include="RealisticWater.cpp" />
+    <ClCompile Include="CRealisticWater.cpp" />
     <ClCompile Include="CTestScenes.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

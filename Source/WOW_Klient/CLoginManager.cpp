@@ -8,12 +8,24 @@ namespace WowKlient
 
 	bool LoginManagerEvent::OnEvent(const irr::SEvent& event)
 	{
-		printf("Event :\n");
-
 		switch (event.EventType)
 		{
 		case EET_GUI_EVENT:
-
+			switch (event.GUIEvent.Caller->getID())
+			{
+			case IDLOGINBUTTON:
+				if (event.GUIEvent.EventType == EGUI_EVENT_TYPE::EGET_BUTTON_CLICKED)
+				{
+					printf("Clicked login :\n");
+				}
+				break;
+			default:
+				if (event.GUIEvent.EventType == EGUI_EVENT_TYPE::EGET_EDITBOX_ENTER)
+				{
+					printf("Clicked login :\n");
+				}
+				break;
+			}
 			break;
 		}
 		
@@ -38,7 +50,6 @@ namespace WowKlient
 
 		smgr->clear();
 		guienv->clear();
-
 
 		LoginManagerEvent * LoginManagerEventReciever = new LoginManagerEvent();
 
@@ -91,7 +102,7 @@ namespace WowKlient
 
 		guienv->getSkin()->setColor(gui::EGUI_DEFAULT_COLOR::EGDC_3D_FACE, video::SColor(255, 0, 0, 0));
 
-		gui::IGUIButton * loginButton = guienv->addButton(core::rect<s32>(loginButtonLeft, loginButtonTop, loginButtonLeft + loginButtonWidth, loginButtonTop + loginButtonHeight), loginBorder, 0, L"", L"Prihlasi vas do hry");
+		gui::IGUIButton * loginButton = guienv->addButton(core::rect<s32>(loginButtonLeft, loginButtonTop, loginButtonLeft + loginButtonWidth, loginButtonTop + loginButtonHeight), loginBorder, IDLOGINBUTTON, L"", L"Prihlasi vas do hry");
 		loginButton->setImage(driver->getTexture(L"..\\..\\..\\Data\\img\\login_screen\\login.png"));
 		loginButton->setScaleImage(true);
 		loginButton->setUseAlphaChannel(true);
@@ -138,19 +149,19 @@ namespace WowKlient
 		{
 			u32 oldtime = gState->irrDevice->getTimer()->getTime();
 			f++;
-			//if ((f % 3) == 0)
-			//{
-			//	cloud->move(core::vector2d<s32>(1, 0));
-			//	cloud2->move(core::vector2d<s32>(1, 0));
-			//	cloud3->move(core::vector2d<s32>(1, 0));
-			//}
+			if ((f % 3) == 0)
+			{
+				cloud->move(core::vector2d<s32>(1, 0));
+				cloud2->move(core::vector2d<s32>(1, 0));
+				cloud3->move(core::vector2d<s32>(1, 0));
+			}
 
-			//if (cloud3->getAbsolutePosition().UpperLeftCorner.X > (s32)gState->gConf->resolution.Width)
-			//{
-			//	cloud3->setRelativePosition(core::rect<s32>(0 - 512, 0 , 0, 256));
-			//	core::rect<s32> poloha = cloud3->getAbsolutePosition();
-			//	printf("%i, %i\n", poloha.UpperLeftCorner.X, poloha.UpperLeftCorner.Y);
-			//}
+			if (cloud3->getAbsolutePosition().UpperLeftCorner.X > (s32)gState->gConf->resolution.Width)
+			{
+				cloud3->setRelativePosition(core::rect<s32>(0 - 512, 0 , 0, 256));
+				core::rect<s32> poloha = cloud3->getAbsolutePosition();
+				printf("%i, %i\n", poloha.UpperLeftCorner.X, poloha.UpperLeftCorner.Y);
+			}
 
 			
 			int fps = driver->getFPS();

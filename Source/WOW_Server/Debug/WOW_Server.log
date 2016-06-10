@@ -1,9 +1,9 @@
-﻿Build started 4. 6. 2016 7:12:01.
-     1>Project "C:\Users\m1tnick\Documents\WorldOfWraithRPG\Source\WOW_Server\WOW_Server.vcxproj" on node 2 (Build target(s)).
+﻿Build started 10.06.2016 8:20:35.
+     1>Project "C:\Users\vkraka\Documents\WorldOfWraithRPG\Source\WOW_Server\WOW_Server.vcxproj" on node 2 (Build target(s)).
      1>Link:
-         WOW_Server.vcxproj -> C:\Users\m1tnick\Documents\WorldOfWraithRPG\Visual Studio\\..\Bin\MSVC32\Debug\WOW_Server.exe
-     1>Done Building Project "C:\Users\m1tnick\Documents\WorldOfWraithRPG\Source\WOW_Server\WOW_Server.vcxproj" (Build target(s)).
+         WOW_Server.vcxproj -> C:\Users\vkraka\Documents\WorldOfWraithRPG\Visual Studio\\..\Bin\MSVC32\Debug\WOW_Server.exe
+     1>Done Building Project "C:\Users\vkraka\Documents\WorldOfWraithRPG\Source\WOW_Server\WOW_Server.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.42
+Time Elapsed 00:00:00.20

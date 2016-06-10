@@ -7,6 +7,7 @@
 #include "HConfigLoader.h"
 #include "HCore.h"
 #include "HIntro.h"
+#include "HServerConnector.h"
 #include "HLoginManager.h"
 #include "HTestScenes.h"
 

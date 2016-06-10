@@ -15,11 +15,11 @@ using namespace gui;
 #define req_fps 50
 
 
-void writeChilds(ISkinnedMesh::SJoint * joint, int hloubka)
+void writeChilds(ISkinnedMesh::SJoint * joint, u32 hloubka)
 {
-	for (int i = 0; i < joint->Children.size(); i++)
+	for (u32 i = 0; i < joint->Children.size(); i++)
 	{
-		for (int j = 0; j < hloubka; j++)
+		for (u32 j = 0; j < hloubka; j++)
 		{
 			printf(" -> ");
 		}
@@ -38,7 +38,7 @@ void parseJointParents(ISkinnedMesh * mesh, ISkinnedMesh::SJoint * Sjoint, ISkin
 	//mesh->addJoint(Njoint);
 	Njoint->Weights.clear();
 	Njoint->Children.clear();
-	for (int i = 0; i < Sjoint->Children.size(); i++)
+	for (u32 i = 0; i < Sjoint->Children.size(); i++)
 	{
 		parseJointParents(mesh, Sjoint->Children[i], Njoint);
 	}
@@ -56,7 +56,6 @@ void SkinnedMeshCopyScene(WowKlient::Core::GameState gState)
 	ICameraSceneNode * usercamera = smgr->addCameraSceneNodeFPS();
 	usercamera->setPosition(vector3df(0, 0, 0));
 
-
 	scene::ISceneNode* skybox = smgr->addSkyBoxSceneNode(
 		driver->getTexture("../../../media/irrlicht2_up.jpg"),
 		driver->getTexture("../../../media/irrlicht2_dn.jpg"),
@@ -65,18 +64,13 @@ void SkinnedMeshCopyScene(WowKlient::Core::GameState gState)
 		driver->getTexture("../../../media/irrlicht2_ft.jpg"),
 		driver->getTexture("../../../media/irrlicht2_bk.jpg"));
 
-
 	IAnimatedMesh * dwarf_mesh = smgr->getMesh("..\\..\\..\\Data\\test_scene\\dwarf.x");
 	ISkinnedMesh * skinned = (ISkinnedMesh *)dwarf_mesh;
 
-
-
-	for (int i = 0; i < skinned->getJointCount(); i++)
+	for (u32 i = 0; i < skinned->getJointCount(); i++)
 	{
 		printf("Joint %i name: %s\n", i, skinned->getAllJoints()[i]->Name);
 	}
-
-
 
 	ISkinnedMesh * clone = smgr->createSkinnedMesh();
 
@@ -87,7 +81,7 @@ void SkinnedMeshCopyScene(WowKlient::Core::GameState gState)
 
 	printf("V novem meshi je %i bufferu\n", clone->getMeshBufferCount());
 
-	for (int i = 0; i < ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertexCount(); i++)
+	for (u32 i = 0; i < ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertexCount(); i++)
 	{
 		S3DVertex * v = new S3DVertex(((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Pos.X, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Pos.Y, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Pos.Z, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Normal.X, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Normal.Y, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Normal.Z, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Color, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->TCoords.X, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->TCoords.Y);
 		buf->Vertices_Standard.push_back(*v);
@@ -98,7 +92,7 @@ void SkinnedMeshCopyScene(WowKlient::Core::GameState gState)
 
 	IAnimatedMeshSceneNode * dwarf_node = smgr->addAnimatedMeshSceneNode(dwarf_mesh, 0, 0, vector3df(0, 30, 0));
 
-	for (int i = 0; i < ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getIndexCount(); i++)
+	for (u32 i = 0; i < ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getIndexCount(); i++)
 	{
 		buf->Indices.push_back(u16(((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getIndices()[i]));
 	}
@@ -120,7 +114,7 @@ void SkinnedMeshCopyScene(WowKlient::Core::GameState gState)
 
 
 
-	for (int i = 0; i < skinned->getJointCount(); i++)
+	for (u32 i = 0; i < skinned->getJointCount(); i++)
 	{
 		printf("Cycle %i:\n", i);
 		ISkinnedMesh::SJoint * joint;
@@ -129,7 +123,7 @@ void SkinnedMeshCopyScene(WowKlient::Core::GameState gState)
 
 		printf("Joint name: %s\n", joint->Name.c_str());
 
-		for (int j = 0; j < skinned->getAllJoints()[i]->Weights.size(); j++)
+		for (u32 j = 0; j < skinned->getAllJoints()[i]->Weights.size(); j++)
 		{
 			if (skinned->getAllJoints()[i]->Weights[j].buffer_id == 0)
 			{
@@ -148,11 +142,9 @@ void SkinnedMeshCopyScene(WowKlient::Core::GameState gState)
 
 	clone->finalize();
 
-	clone->setDirty();
+	//clone->setDirty();
 	//getchar();
 	IAnimatedMeshSceneNode * clone_node = smgr->addAnimatedMeshSceneNode(clone, 0, 0, vector3df(30, 30, 0));
-
-
 
 	clone_node->setAnimationSpeed(5);
 
@@ -214,7 +206,7 @@ void WaterRealisticScene(WowKlient::Core::GameState gState)
 	teren->setMaterialType(E_MATERIAL_TYPE::EMT_SOLID);
 	teren->setMaterialFlag(E_MATERIAL_FLAG::EMF_NORMALIZE_NORMALS, true);
 
-	for (int i = 0; i < teren->getMaterialCount(); i++)
+	for (u32 i = 0; i < teren->getMaterialCount(); i++)
 	{
 		if (teren->getMaterial(i).getTexture(0))
 		{
@@ -290,6 +282,8 @@ void GilneasCityScene(WowKlient::Core::GameState gState)
 
 
 	IAnimatedMesh* mesh = smgr->getMesh("../../../data/IrrTestScene/human_stand.x");
+	((ISkinnedMesh *)mesh)->finalize();
+	
 	if (!mesh)
 	{
 		dev->drop();
@@ -298,9 +292,7 @@ void GilneasCityScene(WowKlient::Core::GameState gState)
 	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh);
 
 	node->setAnimationSpeed(30);
-
-
-
+	
 
 	if (node)
 	{

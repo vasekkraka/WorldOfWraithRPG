@@ -3,6 +3,8 @@
 
 #include "HWOWKlient.h"
 
+#define IDLOGINBUTTON 1
+
 #define loginBoxHeight 333
 #define loginBoxWidth 254
 

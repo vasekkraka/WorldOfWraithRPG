@@ -69,6 +69,8 @@ namespace WowKlient
 			);
 		char chose = getchar();
 
+		initialize();
+
 		switch (chose)
 		{
 		case 'a':
@@ -98,11 +100,9 @@ namespace WowKlient
 
 		irrlichtDevice->getCursorControl()->changeIcon(ECURSOR_ICON::ECI_NORMAL, *cursorSprite);
 
-		while (1)
-		{
-			loginScreen->loginPrompt();
-			exit(0);
-		}
+		loginScreen->loginPrompt();
+		exit(0);
+
 	};
 }
 

@@ -2,7 +2,7 @@
 #define HTestScenes
 
 #include "HWOWKlient.h"
-#include "RealisticWater.h"
+#include "HRealisticWater.h"
 
 void WaterRealisticScene(WowKlient::Core::GameState gState);
 
