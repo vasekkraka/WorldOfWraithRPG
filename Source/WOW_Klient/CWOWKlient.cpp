@@ -33,10 +33,10 @@ namespace WowKlient
 
 		//irrklangDevice->play2D("..\\..\\..\\Data\\music\\intro\\intro.ogg", false);
 
-		playIntroImage(irrlichtDevice, "..\\..\\..\\Data\\img\\intro\\gapilogo.png", 7);
-		playIntroImage(irrlichtDevice, "..\\..\\..\\Data\\img\\intro\\irrlogo.png", 7);
-		playIntroImage(irrlichtDevice, "..\\..\\..\\Data\\img\\intro\\present.png", 10);
-		playIntroImage(irrlichtDevice, "..\\..\\..\\Data\\img\\intro\\wowlogo.png", 15);
+		playIntroImage(irrlichtDevice, PATH_PREFIX "/img/intro/gapilogo.png", 7);
+		playIntroImage(irrlichtDevice, PATH_PREFIX "/img/intro/irrlogo.png", 7);
+		playIntroImage(irrlichtDevice, PATH_PREFIX "/img/intro/present.png", 10);
+		playIntroImage(irrlichtDevice, PATH_PREFIX "/img/intro/wowlogo.png", 15);
 
 		irrlichtDevice->getCursorControl()->setVisible(true);
 	}
@@ -100,7 +100,14 @@ namespace WowKlient
 
 		irrlichtDevice->getCursorControl()->changeIcon(ECURSOR_ICON::ECI_NORMAL, *cursorSprite);
 
-		loginScreen->loginPrompt();
+		while (1)
+		{
+			loginScreen->loginPrompt();
+			irrlichtDevice->getSceneManager()->clear();
+
+			loginScreen->getUserName();
+		}
+		
 		exit(0);
 
 	};

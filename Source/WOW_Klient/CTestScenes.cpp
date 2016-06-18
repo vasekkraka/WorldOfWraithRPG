@@ -12,37 +12,9 @@ using namespace video;
 using namespace io;
 using namespace gui;
 
+using namespace WowKlient::MeshFunctions;
+
 #define req_fps 50
-
-
-void writeChilds(ISkinnedMesh::SJoint * joint, u32 hloubka)
-{
-	for (u32 i = 0; i < joint->Children.size(); i++)
-	{
-		for (u32 j = 0; j < hloubka; j++)
-		{
-			printf(" -> ");
-		}
-		printf(" %s\n", joint->Name);
-		if (joint->Children[i]->Children.size() > 0)
-		{
-			writeChilds(joint->Children[i], hloubka + 1);
-		}
-	}
-}
-
-void parseJointParents(ISkinnedMesh * mesh, ISkinnedMesh::SJoint * Sjoint, ISkinnedMesh::SJoint * Pjoint)
-{
-	ISkinnedMesh::SJoint * Njoint = mesh->addJoint(Pjoint);
-	*Njoint = *Sjoint;
-	//mesh->addJoint(Njoint);
-	Njoint->Weights.clear();
-	Njoint->Children.clear();
-	for (u32 i = 0; i < Sjoint->Children.size(); i++)
-	{
-		parseJointParents(mesh, Sjoint->Children[i], Njoint);
-	}
-}
 
 void SkinnedMeshCopyScene(WowKlient::Core::GameState gState)
 {
@@ -57,94 +29,20 @@ void SkinnedMeshCopyScene(WowKlient::Core::GameState gState)
 	usercamera->setPosition(vector3df(0, 0, 0));
 
 	scene::ISceneNode* skybox = smgr->addSkyBoxSceneNode(
-		driver->getTexture("../../../media/irrlicht2_up.jpg"),
-		driver->getTexture("../../../media/irrlicht2_dn.jpg"),
-		driver->getTexture("../../../media/irrlicht2_lf.jpg"),
-		driver->getTexture("../../../media/irrlicht2_rt.jpg"),
-		driver->getTexture("../../../media/irrlicht2_ft.jpg"),
-		driver->getTexture("../../../media/irrlicht2_bk.jpg"));
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/irrlicht2_up.jpg"),
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/irrlicht2_dn.jpg"),
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/irrlicht2_lf.jpg"),
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/irrlicht2_rt.jpg"),
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/irrlicht2_ft.jpg"),
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/irrlicht2_bk.jpg"));
 
-	IAnimatedMesh * dwarf_mesh = smgr->getMesh("..\\..\\..\\Data\\test_scene\\dwarf.x");
-	ISkinnedMesh * skinned = (ISkinnedMesh *)dwarf_mesh;
+	IAnimatedMesh * dwarf_mesh = smgr->getMesh(PATH_PREFIX "/IrrTestScene/dwarf.x");
 
-	for (u32 i = 0; i < skinned->getJointCount(); i++)
-	{
-		printf("Joint %i name: %s\n", i, skinned->getAllJoints()[i]->Name);
-	}
+	int casti[] = {0};
 
-	ISkinnedMesh * clone = smgr->createSkinnedMesh();
+	ISkinnedMesh * skinned = makeMeshFromParts(&gState, dwarf_mesh, 1, casti);
 
-	SSkinMeshBuffer * buf = clone->addMeshBuffer();
-
-	buf->recalculateBoundingBox();
-	buf->setDirty();
-
-	printf("V novem meshi je %i bufferu\n", clone->getMeshBufferCount());
-
-	for (u32 i = 0; i < ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertexCount(); i++)
-	{
-		S3DVertex * v = new S3DVertex(((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Pos.X, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Pos.Y, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Pos.Z, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Normal.X, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Normal.Y, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Normal.Z, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->Color, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->TCoords.X, ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getVertex(i)->TCoords.Y);
-		buf->Vertices_Standard.push_back(*v);
-
-	}
-
-	skinned->finalize();
-
-	IAnimatedMeshSceneNode * dwarf_node = smgr->addAnimatedMeshSceneNode(dwarf_mesh, 0, 0, vector3df(0, 30, 0));
-
-	for (u32 i = 0; i < ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getIndexCount(); i++)
-	{
-		buf->Indices.push_back(u16(((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getIndices()[i]));
-	}
-
-	buf->Material = ((SSkinMeshBuffer*)dwarf_mesh->getMeshBuffer(0))->getMaterial();
-
-	printf("Copying joints... \n");
-
-	parseJointParents(clone, skinned->getAllJoints()[0], 0);
-
-	printf("Jointu ve starem: %i\n", skinned->getJointCount());
-	printf("Jointu v novem: %i\n", clone->getJointCount());
-
-	clone->setDirty();
-
-	dwarf_node->setDebugDataVisible(irr::scene::E_DEBUG_SCENE_TYPE::EDS_SKELETON);
-
-	dwarf_node->setAnimationSpeed(10);
-
-
-
-	for (u32 i = 0; i < skinned->getJointCount(); i++)
-	{
-		printf("Cycle %i:\n", i);
-		ISkinnedMesh::SJoint * joint;
-
-		joint = clone->getAllJoints()[clone->getJointNumber(skinned->getAllJoints()[i]->Name.c_str())];
-
-		printf("Joint name: %s\n", joint->Name.c_str());
-
-		for (u32 j = 0; j < skinned->getAllJoints()[i]->Weights.size(); j++)
-		{
-			if (skinned->getAllJoints()[i]->Weights[j].buffer_id == 0)
-			{
-				ISkinnedMesh::SWeight * w = clone->addWeight(joint);
-				w->buffer_id = 0;
-				w->strength = skinned->getAllJoints()[i]->Weights[j].strength;
-				w->vertex_id = skinned->getAllJoints()[i]->Weights[j].vertex_id;
-			}
-		}
-
-	}
-
-
-	printf("Copy done... \n");
-
-
-	clone->finalize();
-
-	//clone->setDirty();
-	//getchar();
-	IAnimatedMeshSceneNode * clone_node = smgr->addAnimatedMeshSceneNode(clone, 0, 0, vector3df(30, 30, 0));
+	IAnimatedMeshSceneNode * clone_node = smgr->addAnimatedMeshSceneNode(skinned, 0, 0, vector3df(30, 30, 0));
 
 	clone_node->setAnimationSpeed(5);
 
@@ -221,12 +119,12 @@ void WaterRealisticScene(WowKlient::Core::GameState gState)
 	}
 
 	scene::ISceneNode* skybox = smgr->addSkyBoxSceneNode(
-		driver->getTexture("../../../Data/test_scene/skybox/irrlicht2_up.jpg"),
-		driver->getTexture("../../../Data/test_scene/skybox/irrlicht2_dn.jpg"),
-		driver->getTexture("../../../Data/test_scene/skybox/irrlicht2_lf.jpg"),
-		driver->getTexture("../../../Data/test_scene/skybox/irrlicht2_rt.jpg"),
-		driver->getTexture("../../../Data/test_scene/skybox/irrlicht2_ft.jpg"),
-		driver->getTexture("../../../Data/test_scene/skybox/irrlicht2_bk.jpg"));
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/irrlicht2_up.jpg"),
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/irrlicht2_dn.jpg"),
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/irrlicht2_lf.jpg"),
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/irrlicht2_rt.jpg"),
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/irrlicht2_ft.jpg"),
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/irrlicht2_bk.jpg"));
 
 	RealisticWaterSceneNode * water = new RealisticWaterSceneNode(smgr, 1024, 1024, "../../../Data");
 

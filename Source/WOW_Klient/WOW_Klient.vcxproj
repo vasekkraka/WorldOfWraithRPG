@@ -89,6 +89,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="HColManager.h" />
+    <ClInclude Include="HMeshFunctions.h" />
     <ClInclude Include="HServerConnector.h" />
     <ClInclude Include="HWoWCollisionAnimator.h" />
     <ClInclude Include="HBuildConfig.h" />
@@ -108,6 +109,7 @@
     <ClCompile Include="CIntro.cpp" />
     <ClCompile Include="CLoginManager.cpp" />
     <ClCompile Include="CMain.cpp" />
+    <ClCompile Include="CMeshFunctions.cpp" />
     <ClCompile Include="CServerConnector.cpp" />
     <ClCompile Include="CWoWCollisionAnimator.cpp" />
     <ClCompile Include="CWOWKlient.cpp" />

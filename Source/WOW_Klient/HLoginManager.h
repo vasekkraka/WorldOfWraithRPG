@@ -4,6 +4,8 @@
 #include "HWOWKlient.h"
 
 #define IDLOGINBUTTON 1
+#define IDUSERNAMEBOX 2
+#define IDPASSWORDBOX 3
 
 #define loginBoxHeight 333
 #define loginBoxWidth 254
@@ -35,9 +37,14 @@ namespace WowKlient
 	{
 	public:
 		LoginManagerEvent() 
-		{ }
+		{ 
+			login_click = false;
+		}
 
 		virtual bool OnEvent(const irr::SEvent& event);
+		virtual bool isLoginClicked();
+	private:
+		bool login_click;
 	};
 
 

@@ -6,6 +6,7 @@
 #include <irrKlang.h>
 #include "HConfigLoader.h"
 #include "HCore.h"
+#include "HMeshFunctions.h"
 #include "HIntro.h"
 #include "HServerConnector.h"
 #include "HLoginManager.h"
@@ -21,6 +22,8 @@ using namespace io;
 using namespace gui;
 
 using namespace irrklang;
+
+#define PATH_PREFIX "..\\..\\..\\Data"
 
 namespace WowKlient
 {

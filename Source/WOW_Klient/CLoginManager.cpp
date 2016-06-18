@@ -6,6 +6,11 @@ namespace WowKlient
 {
 	// ---- Event Reciever
 
+	bool LoginManagerEvent::isLoginClicked()
+	{
+		return login_click;
+	}
+
 	bool LoginManagerEvent::OnEvent(const irr::SEvent& event)
 	{
 		switch (event.EventType)
@@ -17,12 +22,14 @@ namespace WowKlient
 				if (event.GUIEvent.EventType == EGUI_EVENT_TYPE::EGET_BUTTON_CLICKED)
 				{
 					printf("Clicked login :\n");
+					login_click = true;
 				}
 				break;
 			default:
 				if (event.GUIEvent.EventType == EGUI_EVENT_TYPE::EGET_EDITBOX_ENTER)
 				{
 					printf("Clicked login :\n");
+					login_click = true;
 				}
 				break;
 			}
@@ -40,6 +47,18 @@ namespace WowKlient
 	LoginManager::LoginManager(WowKlient::Core::GameState * gameS)
 	{
 		gState = gameS;
+	}
+
+	irr::core::string<char> LoginManager::getUserName()
+	{
+		IGUIEditBox * box = (IGUIEditBox * )gState->irrDevice->getGUIEnvironment()->getRootGUIElement()->getElementFromId(IDUSERNAMEBOX, true);
+
+		ILogger * log = gState->irrDevice->getLogger();
+
+		log->log(box->getText(), ELOG_LEVEL::ELL_INFORMATION);
+
+		return "";
+
 	}
 
 	void LoginManager::loginPrompt()
@@ -94,8 +113,8 @@ namespace WowKlient
 		irr::gui::IGUIImage * cloud3 = guienv->addImage(core::rect<s32>(700, 50, 1312, 306));
 		cloud3->setImage(driver->getTexture(L"..\\..\\..\\Data\\img\\login_screen\\cloud.png"));
 
-		gui::IGUIEditBox * editboxUserName = guienv->addEditBox(L"Jméno", core::rect<s32>(loginNameLeft, loginNameTop, loginNameLeft + loginNameWidth, loginNameTop + loginNameHeight), true, loginBorder); // vycentrovano 
-		gui::IGUIEditBox * editboxUserPass = guienv->addEditBox(L"Heslo", core::rect<s32>(loginPassLeft, loginPassTop, loginPassLeft + loginPassWidth, loginPassTop + loginPassHeight), true, loginBorder); // vycentrovano 
+		gui::IGUIEditBox * editboxUserName = guienv->addEditBox(L"Jméno", core::rect<s32>(loginNameLeft, loginNameTop, loginNameLeft + loginNameWidth, loginNameTop + loginNameHeight), true, loginBorder, IDUSERNAMEBOX); // vycentrovano 
+		gui::IGUIEditBox * editboxUserPass = guienv->addEditBox(L"Heslo", core::rect<s32>(loginPassLeft, loginPassTop, loginPassLeft + loginPassWidth, loginPassTop + loginPassHeight), true, loginBorder, IDPASSWORDBOX); // vycentrovano 
 		editboxUserPass->setPasswordBox(true, L'*');
 
 		editboxUserName->setOverrideFont(font);
@@ -145,7 +164,10 @@ namespace WowKlient
 
 
 		int f = 0;
-		while (gState->irrDevice->run())
+
+		LoginManagerEvent * logEvent = (LoginManagerEvent *)gState->irrDevice->getEventReceiver();
+
+		while (gState->irrDevice->run() && !logEvent->isLoginClicked())
 		{
 			u32 oldtime = gState->irrDevice->getTimer()->getTime();
 			f++;
