@@ -16,6 +16,8 @@
 
 #include <boost\asio.hpp>
 #include <boost\thread.hpp>
+#include <boost\thread\locks.hpp> 
+
 #include <cstdio>
 #include <Windows.h> 
 

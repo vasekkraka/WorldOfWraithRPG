@@ -1,15 +1,30 @@
-﻿Build started 10.06.2016 8:13:26.
-     1>Project "C:\Users\vkraka\Documents\WorldOfWraithRPG\Source\WOW_Klient\WOW_Klient.vcxproj" on node 2 (Build target(s)).
+﻿Build started 18. 6. 2016 22:33:33.
+     1>Project "C:\Users\m1tnick\Documents\WorldOfWraithRPG\Source\WOW_Klient\WOW_Klient.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\vkraka\Documents\WorldOfWraithRPG\Visual Studio\\..\Irrlicht\include\\" /I"C:\Users\vkraka\Documents\WorldOfWraithRPG\Visual Studio\\..\irrKlang\include\\" /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt CTestScenes.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\m1tnick\Documents\WorldOfWraithRPG\Visual Studio\\..\Irrlicht\include\\" /I"C:\Users\m1tnick\Documents\WorldOfWraithRPG\Visual Studio\\..\irrKlang\include\\" /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt CColManager.cpp CConfigLoader.cpp CCore.cpp CIntro.cpp CLoginManager.cpp CMain.cpp CMeshFunctions.cpp CServerConnector.cpp CWoWCollisionAnimator.cpp CWOWKlient.cpp CWoWLikeCameraAnimator.cpp CRealisticWater.cpp CTestScenes.cpp
+         CColManager.cpp
+         CConfigLoader.cpp
+         CCore.cpp
+         CIntro.cpp
+         CLoginManager.cpp
+         CMain.cpp
+         CMeshFunctions.cpp
+         CServerConnector.cpp
+         CWoWCollisionAnimator.cpp
+         CWOWKlient.cpp
+         CWoWLikeCameraAnimator.cpp
+     1>CWoWLikeCameraAnimator.cpp(325): warning C4244: '+=' : conversion from 'const irr::f32' to 'int', possible loss of data
+     1>CWoWLikeCameraAnimator.cpp(382): warning C4244: 'argument' : conversion from 'int' to 'irr::f32', possible loss of data
+         CRealisticWater.cpp
          CTestScenes.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\vkraka\Documents\WorldOfWraithRPG\Visual Studio\\..\Bin\MSVC32\Release\WOW_Klient.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\Users\vkraka\Documents\WorldOfWraithRPG\Visual Studio\\..\Irrlicht\lib\MSVC32" /LIBPATH:"C:\Users\vkraka\Documents\WorldOfWraithRPG\Visual Studio\\..\Bin\MSVC32\Debug\\" /LIBPATH:"C:\Users\vkraka\Documents\WorldOfWraithRPG\Visual Studio\\..\irrKlang\lib\MSVC32" irrlicht.lib irrKlang.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\vkraka\Documents\WorldOfWraithRPG\Visual Studio\\..\Bin\MSVC32\Release\WOW_Klient.pdb" /ASSEMBLYDEBUG /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\vkraka\Documents\WorldOfWraithRPG\Visual Studio\\..\Bin\MSVC32\Release\WOW_Klient.lib" /MACHINE:X86 /SAFESEH Release\CColManager.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\m1tnick\Documents\WorldOfWraithRPG\Visual Studio\\..\Bin\MSVC32\Release\WOW_Klient.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\Users\m1tnick\Documents\WorldOfWraithRPG\Visual Studio\\..\Irrlicht\lib\MSVC32" /LIBPATH:"C:\Users\m1tnick\Documents\WorldOfWraithRPG\Visual Studio\\..\Bin\MSVC32\Debug\\" /LIBPATH:"C:\Users\m1tnick\Documents\WorldOfWraithRPG\Visual Studio\\..\irrKlang\lib\MSVC32" irrlicht.lib irrKlang.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\m1tnick\Documents\WorldOfWraithRPG\Visual Studio\\..\Bin\MSVC32\Release\WOW_Klient.pdb" /ASSEMBLYDEBUG /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\m1tnick\Documents\WorldOfWraithRPG\Visual Studio\\..\Bin\MSVC32\Release\WOW_Klient.lib" /MACHINE:X86 /SAFESEH Release\CColManager.obj
          Release\CConfigLoader.obj
          Release\CCore.obj
          Release\CIntro.obj
          Release\CLoginManager.obj
          Release\CMain.obj
+         Release\CMeshFunctions.obj
          Release\CServerConnector.obj
          Release\CWoWCollisionAnimator.obj
          Release\CWOWKlient.obj
@@ -18,9 +33,9 @@
          Release\CTestScenes.obj
          Generating code
          Finished generating code
-         WOW_Klient.vcxproj -> C:\Users\vkraka\Documents\WorldOfWraithRPG\Visual Studio\\..\Bin\MSVC32\Release\WOW_Klient.exe
-     1>Done Building Project "C:\Users\vkraka\Documents\WorldOfWraithRPG\Source\WOW_Klient\WOW_Klient.vcxproj" (Build target(s)).
+         WOW_Klient.vcxproj -> C:\Users\m1tnick\Documents\WorldOfWraithRPG\Visual Studio\\..\Bin\MSVC32\Release\WOW_Klient.exe
+     1>Done Building Project "C:\Users\m1tnick\Documents\WorldOfWraithRPG\Source\WOW_Klient\WOW_Klient.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:03.52
+Time Elapsed 00:00:06.35

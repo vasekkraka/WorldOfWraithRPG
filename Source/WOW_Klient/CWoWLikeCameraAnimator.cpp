@@ -360,12 +360,12 @@ bool wwAnim::isPresed(int keyNumber)
 	return KeyIsDown[keyNumber];
 }
 
-int wwAnim::wheelPos()
+f32 wwAnim::wheelPos()
 {
 	return wheel;
 }
 
-vector3df wwAnim::caulculatePosition(ISceneCollisionManager * col, vector3df centr, f32 xUhel, f32 yUhel, int radius)
+vector3df wwAnim::caulculatePosition(ISceneCollisionManager * col, vector3df centr, f32 xUhel, f32 yUhel, f32 radius)
 {
 	vector3df Cposition;
 	ci++;

@@ -24,15 +24,15 @@ public:
 
 	bool isClicked(int buttonNumber);
 	bool isPresed(int keyNumber);
-	int wheelPos();
-	vector3df wwAnim::caulculatePosition(ISceneCollisionManager * col, vector3df centr, f32 xUhel, f32 yUhel, int radius);
+	f32 wheelPos();
+	vector3df wwAnim::caulculatePosition(ISceneCollisionManager * col, vector3df centr, f32 xUhel, f32 yUhel, f32 radius);
 
 private:
 	ISceneNode * metaNode;
 	core::vector3df Rotation;
 	core::vector3df Position;
 	f32 rotX, rotY;
-	int wheel, okruh;
+	f32 wheel, okruh;
 	bool buttonStat[3];
 	vector2d<s32> mousePos;
 	vector2d<s32> rotStart;
