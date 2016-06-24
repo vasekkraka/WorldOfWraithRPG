@@ -55,7 +55,7 @@ namespace WowKlient
 		LoginManager(WowKlient::Core::GameState * data);
 		~LoginManager();
 		void loginPrompt();
-		irr::core::string<char> getUserName();
+		irr::core::stringw getUserName();
 		irr::core::string<char> getUserPassword();
 
 	private:

@@ -49,16 +49,25 @@ namespace WowKlient
 		gState = gameS;
 	}
 
-	irr::core::string<char> LoginManager::getUserName()
+	irr::core::stringw LoginManager::getUserName()
 	{
 		IGUIEditBox * box = (IGUIEditBox * )gState->irrDevice->getGUIEnvironment()->getRootGUIElement()->getElementFromId(IDUSERNAMEBOX, true);
-
-		ILogger * log = gState->irrDevice->getLogger();
-
-		log->log(box->getText(), ELOG_LEVEL::ELL_INFORMATION);
-
+		if (box != NULL)
+		{
+			return box->getText();
+		}
+		
 		return "";
-
+	}
+	irr::core::string<char> LoginManager::getUserPassword()
+	{
+		IGUIEditBox * box = (IGUIEditBox *)gState->irrDevice->getGUIEnvironment()->getRootGUIElement()->getElementFromId(IDPASSWORDBOX, true);
+		if (box != NULL)
+		{
+			return box->getText();
+		}
+		
+		return "";
 	}
 
 	void LoginManager::loginPrompt()

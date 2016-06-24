@@ -2,7 +2,7 @@
 
 using namespace irr;
 
-using boost::asio::ip::tcp;
+using boost::asio::ip::udp;
 
 namespace WowKlient
 {
@@ -38,37 +38,47 @@ namespace WowKlient
 		// tady se navaze spojeni socketem k serveru a pokusi se provest autentizace
 		setState(STATE_CONNECTING);
 
-
 		try
 		{
 
 			boost::asio::io_service io_service;
 
-			tcp::resolver resolver(io_service);
-			tcp::resolver::query query("127.0.0.1", "800");
-			//tcp::resolver::iterator iterator = resolver.resolve(query);
+			udp::resolver resolver(io_service);
+			udp::resolver::query query("gapi.cz", "110");
 
-			tcp::socket s(io_service);
+			udp::socket s(io_service);
 
-			boost::asio::connect(s, resolver.resolve(query));
+			//boost::asio::connect(s, resolver.resolve(query));
 
+			char * request = "Text z BOOST TCP!!\n";
+
+			size_t request_length = strlen(request);
+
+			s.open(udp::v4());
+
+			s.send_to(boost::asio::buffer(request, request_length), *resolver.resolve(query));
 			
 
-			//boost::bind(&boost::asio::io_service::run, &io_service);
+			//boost::asio::write(s, boost::asio::buffer(request, request_length));  // tcp only
 
-			//while (std::cin.getline(line, chat_message::max_body_length + 1))
-			//{
-			//	using namespace std; // For strlen and memcpy.
-			//	chat_message msg;
-			//	msg.body_length(strlen(line));
-			//	memcpy(msg.body(), line, msg.body_length());
-			//	msg.encode_header();
-			//}
+			char recvData[100];
+
+			udp::endpoint sender_endp;
+
+			size_t recvLength = s.receive_from(boost::asio::buffer(recvData, 100), sender_endp);
+
+			//size_t recvLength = s.receive(boost::asio::buffer(recvData, 100));
+
+			std::cout.write(recvData, recvLength);
+
+			s.close();
 
 		}
 		catch (std::exception& e)
 		{
-			std::cerr << "Exception: " << e.what() << "\n";
+			std::cerr << "Síový problem: " << e.what() << "\n";
+			setState(STATE_ERROR);
+			return false;
 		}
 		
 		return true;

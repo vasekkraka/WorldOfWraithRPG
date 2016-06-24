@@ -14,5 +14,14 @@ namespace WowKlient
 		{
 			return irrklang::createIrrKlangDevice();
 		}
+
+		bool engineIsRunning(WowKlient::Core::GameState * gstate)
+		{
+			gstate->irrDevice->getTimer()->stop();
+			bool ret = gstate->irrDevice->run();
+			gstate->irrDevice->getTimer()->stop();
+			return ret;
+		}
+
 	}
 }

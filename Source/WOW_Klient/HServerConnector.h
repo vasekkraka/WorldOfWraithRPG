@@ -3,7 +3,8 @@
 
 #include "HWOWKlient.h"
 
-#define STATE_NOT_DEFINED -1
+#define STATE_NOT_DEFINED 0
+#define STATE_ERROR -1
 #define STATE_CONNECTING 1
 #define STATE_AUTH 2
 #define STATE_CHARACTER_LIST 3

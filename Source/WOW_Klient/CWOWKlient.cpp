@@ -100,12 +100,27 @@ namespace WowKlient
 
 		irrlichtDevice->getCursorControl()->changeIcon(ECURSOR_ICON::ECI_NORMAL, *cursorSprite);
 
-		while (1)
+		ServerConnector * sc = new ServerConnector(&gState);
+
+		while (engineIsRunning(&gState))
 		{
 			loginScreen->loginPrompt();
 			irrlichtDevice->getSceneManager()->clear();
 
-			loginScreen->getUserName();
+			ILogger * log = gState.irrDevice->getLogger();
+
+			gState.accInfo.userName = loginScreen->getUserName();
+			gState.accInfo.userPassword = loginScreen->getUserPassword();
+
+			char pole[100];
+
+			log->log(loginScreen->getUserName().c_str(), ELOG_LEVEL::ELL_INFORMATION);
+
+			log->log(gState.accInfo.userName.c_str(), ELOG_LEVEL::ELL_INFORMATION);
+			log->log(gState.accInfo.userPassword.c_str(), ELOG_LEVEL::ELL_INFORMATION);
+
+			//sc->tryConnectLogin();
+			
 		}
 		
 		exit(0);

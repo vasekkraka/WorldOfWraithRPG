@@ -39,9 +39,6 @@ void ServerInstance::initializeInstance()
 	{
 		printf("Error\n");
 	}
-
-	system("PAUSE");
-
 }
 
 bool ServerInstance::loadStaticData()
