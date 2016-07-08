@@ -13,6 +13,8 @@
 
 #include "HWOWServer.h"
 
+using namespace boost::asio;
+
 namespace WowServer
 {
 	class ServerInstance
@@ -22,10 +24,14 @@ namespace WowServer
 		~ServerInstance();
 
 		void initializeInstance();
+		bool login(sql::SQLString *login, sql::SQLString *password);
+		ip::tcp::acceptor *acceptorTCP = NULL;
+		boost::asio::io_service  *IPService;
 
 	private:
 		sql::Driver *sqlDriver = NULL;
 		sql::Connection *sqlConnection = NULL;
+		ip::tcp::socket *mainSock = NULL;
 
 		bool connectDatabase();
 		bool loadStaticData();
