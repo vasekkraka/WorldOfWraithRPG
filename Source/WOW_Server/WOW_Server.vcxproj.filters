@@ -33,6 +33,12 @@
     <ClInclude Include="HServerInstance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HNetworkConnector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HWoWSockets.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CWOWServer.cpp">
@@ -45,6 +51,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CServerInstance.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CNetworkConnector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,6 +1,8 @@
 #include "HWOWKlient.h"
 #include <Windows.h>
 
+#include "..\WOW_Server\HNetworkConnector.h"
+
 using namespace WowKlient;
 
 #ifdef BUILD_SUBSYSTEM_WINDOWS
@@ -20,6 +22,7 @@ int main(int argc, char *argv[])
 	}
 	else
 	{
+		posli(42);
 		localGame->initialize();
 		//localGame->playIntro();
 		localGame->gameRun();

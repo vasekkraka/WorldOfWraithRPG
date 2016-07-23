@@ -55,6 +55,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_WIN32_WINNT=0x0501;WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)\..\Irrlicht\include\;$(SolutionDir)\..\irrKlang\include\;$(SolutionDir)\..\boost_1_59_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <FloatingPointModel>Strict</FloatingPointModel>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -88,6 +89,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\WOW_Server\HNetworkConnector.h" />
+    <ClInclude Include="..\WOW_Server\HWoWSockets.h" />
     <ClInclude Include="HColManager.h" />
     <ClInclude Include="HMeshFunctions.h" />
     <ClInclude Include="HServerConnector.h" />
@@ -103,6 +106,7 @@
     <ClInclude Include="HRealisticWater.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\WOW_Server\CNetworkConnector.cpp" />
     <ClCompile Include="CColManager.cpp" />
     <ClCompile Include="CConfigLoader.cpp" />
     <ClCompile Include="CCore.cpp" />

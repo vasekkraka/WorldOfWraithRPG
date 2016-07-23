@@ -94,12 +94,15 @@
     <ClInclude Include="HBasicFunctions.h" />
     <ClInclude Include="HDataTypesDB.h" />
     <ClInclude Include="HDataTypesInstance.h" />
+    <ClInclude Include="HNetworkConnector.h" />
     <ClInclude Include="HServerInit.h" />
     <ClInclude Include="HServerInstance.h" />
     <ClInclude Include="HWOWServer.h" />
+    <ClInclude Include="HWoWSockets.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CBasicFunctions.cpp" />
+    <ClCompile Include="CNetworkConnector.cpp" />
     <ClCompile Include="CServerInit.cpp" />
     <ClCompile Include="CServerInstance.cpp" />
     <ClCompile Include="CWOWServer.cpp" />
