@@ -60,6 +60,9 @@
     <ClInclude Include="..\WOW_Server\HWoWSockets.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HMapLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CIntro.cpp">
@@ -102,6 +105,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\WOW_Server\CNetworkConnector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CMapLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

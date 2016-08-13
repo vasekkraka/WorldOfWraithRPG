@@ -14,7 +14,7 @@ using namespace gui;
 
 using namespace WowKlient::MeshFunctions;
 
-#define req_fps 50
+#define req_fps 60
 
 void SkinnedMeshCopyScene(WowKlient::Core::GameState gState)
 {
@@ -29,14 +29,14 @@ void SkinnedMeshCopyScene(WowKlient::Core::GameState gState)
 	usercamera->setPosition(vector3df(0, 0, 0));
 
 	scene::ISceneNode* skybox = smgr->addSkyBoxSceneNode(
-		driver->getTexture(PATH_PREFIX "/IrrTestScene/irrlicht2_up.jpg"),
-		driver->getTexture(PATH_PREFIX "/IrrTestScene/irrlicht2_dn.jpg"),
-		driver->getTexture(PATH_PREFIX "/IrrTestScene/irrlicht2_lf.jpg"),
-		driver->getTexture(PATH_PREFIX "/IrrTestScene/irrlicht2_rt.jpg"),
-		driver->getTexture(PATH_PREFIX "/IrrTestScene/irrlicht2_ft.jpg"),
-		driver->getTexture(PATH_PREFIX "/IrrTestScene/irrlicht2_bk.jpg"));
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/skybox/irrlicht2_up.jpg"),
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/skybox/irrlicht2_dn.jpg"),
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/skybox/irrlicht2_lf.jpg"),
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/skybox/irrlicht2_rt.jpg"),
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/skybox/irrlicht2_ft.jpg"),
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/skybox/irrlicht2_bk.jpg"));
 
-	IAnimatedMesh * dwarf_mesh = smgr->getMesh(PATH_PREFIX "/IrrTestScene/dwarf.x");
+	IAnimatedMesh * dwarf_mesh = smgr->getMesh(PATH_PREFIX "/IrrTestScene/dwarf/dwarf.x");
 
 	int casti[] = {0};
 
@@ -119,18 +119,20 @@ void WaterRealisticScene(WowKlient::Core::GameState gState)
 	}
 
 	scene::ISceneNode* skybox = smgr->addSkyBoxSceneNode(
-		driver->getTexture(PATH_PREFIX "/IrrTestScene/irrlicht2_up.jpg"),
-		driver->getTexture(PATH_PREFIX "/IrrTestScene/irrlicht2_dn.jpg"),
-		driver->getTexture(PATH_PREFIX "/IrrTestScene/irrlicht2_lf.jpg"),
-		driver->getTexture(PATH_PREFIX "/IrrTestScene/irrlicht2_rt.jpg"),
-		driver->getTexture(PATH_PREFIX "/IrrTestScene/irrlicht2_ft.jpg"),
-		driver->getTexture(PATH_PREFIX "/IrrTestScene/irrlicht2_bk.jpg"));
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/skybox/irrlicht2_up.jpg"),
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/skybox/irrlicht2_dn.jpg"),
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/skybox/irrlicht2_lf.jpg"),
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/skybox/irrlicht2_rt.jpg"),
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/skybox/irrlicht2_ft.jpg"),
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/skybox/irrlicht2_bk.jpg"));
 
 	RealisticWaterSceneNode * water = new RealisticWaterSceneNode(smgr, 1024, 1024, "../../../Data");
 
 	water->setPosition(vector3df(0, 20, 0));
 
 	water->setParent(smgr->getRootSceneNode());
+
+
 	while (gState.irrDevice->run())
 	{
 
@@ -167,19 +169,7 @@ void GilneasCityScene(WowKlient::Core::GameState gState)
 
 	driver->setTextureCreationFlag(E_TEXTURE_CREATION_FLAG::ETCF_ALWAYS_32_BIT);
 
-	vector3df a = vector3df(1, 0, 1);
-	vector3df b = vector3df(1, 1, 1);
-
-	a.normalize();
-	b.normalize();
-
-	f32 c = a.dotProduct(b);
-
-	double uhel_cos = acos(c) * 180.0 / PI;
-	double uhel_sin = asin(c) * 180.0 / PI;
-
-
-	IAnimatedMesh* mesh = smgr->getMesh("../../../data/IrrTestScene/human_stand.x");
+	IAnimatedMesh* mesh = smgr->getMesh("../../../data/IrrTestScene/human/human_stand.x");
 	((ISkinnedMesh *)mesh)->finalize();
 	
 	if (!mesh)
@@ -201,7 +191,7 @@ void GilneasCityScene(WowKlient::Core::GameState gState)
 		node->setScale(vector3df(60.0f, 60.0f, 60.0f));
 	}
 
-	IMeshSceneNode* terrain = smgr->addMeshSceneNode(smgr->getMesh("../../../data/IrrTestScene/gilneas_2.obj"), 0, 0, core::vector3df(0.f, -1000.f, 0.f), core::vector3df(0.f, 0.f, 0.f), core::vector3df(20.0f, 20.0f, 20.0f));
+	IMeshSceneNode* terrain = smgr->addMeshSceneNode(smgr->getMesh("../../../data/IrrTestScene/gilneas/gilneas_2.obj"), 0, 0, core::vector3df(0.f, -1000.f, 0.f), core::vector3df(0.f, 0.f, 0.f), core::vector3df(20.0f, 20.0f, 20.0f));
 	ITriangleSelector * trg = smgr->createOctreeTriangleSelector(terrain->getMesh(), terrain);
 
 
@@ -221,8 +211,124 @@ void GilneasCityScene(WowKlient::Core::GameState gState)
 
 	terrain->setMaterialType(E_MATERIAL_TYPE::EMT_SOLID);
 
+	
+	ICameraSceneNode* cam = smgr->addCameraSceneNode(0, vector3df(0, 100, 100), vector3df(0, 0, 0), 1, true);
+	cam->setTarget(node->getPosition());
+	cam->setNearValue(10);
+	cam->setFarValue(100000);
+
+	ISceneNodeAnimator * animator = new wwAnim(node, 0.0f, 0.0f, dev->getCursorControl());
+	cam->addAnimator(animator);
+
+	u32 fps_time = dev->getTimer()->getTime();
+	int frames = 0, fps = 0;
+
+	dev->getTimer()->tick();
+	u32 old_time = dev->getTimer()->getTime();
+	//	u32 old_time = GetTickCount();
+	f32 frame_time = 1000.0f / req_fps;
+	s32 wait = 0;
+	while (dev->run())
+	{
+		driver->beginScene(true, true, SColor(255, 120, 120, 120));
+		smgr->drawAll();
+		guienv->drawAll();
 
 
+		driver->endScene();
+
+		old_time += (u32)frame_time;
+		wait = old_time - dev->getTimer()->getTime();
+
+		if (wait > 0)
+		{
+			dev->sleep(wait);
+		}
+
+		int lastFPS = driver->getFPS();
+		core::stringw tmp = L"FPS: ";
+		tmp += lastFPS;
+
+		dev->setWindowCaption(tmp.c_str());
+
+	}
+};
+
+void BootyBayScene(WowKlient::Core::GameState gState)
+{
+	IrrlichtDevice * dev = gState.irrDevice;
+	IVideoDriver* driver = dev->getVideoDriver();
+	ISceneManager* smgr = dev->getSceneManager();
+	IGUIEnvironment* guienv = dev->getGUIEnvironment();
+
+	driver->setTextureCreationFlag(E_TEXTURE_CREATION_FLAG::ETCF_ALWAYS_32_BIT);
+
+	scene::ISceneNode* skybox = smgr->addSkyBoxSceneNode(
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/skybox/irrlicht2_up.jpg"),
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/skybox/irrlicht2_dn.jpg"),
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/skybox/irrlicht2_lf.jpg"),
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/skybox/irrlicht2_rt.jpg"),
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/skybox/irrlicht2_ft.jpg"),
+		driver->getTexture(PATH_PREFIX "/IrrTestScene/skybox/irrlicht2_bk.jpg"));
+
+	IAnimatedMesh* mesh = smgr->getMesh("../../../data/IrrTestScene/human/human_stand.x");
+	((ISkinnedMesh *)mesh)->finalize();
+
+	if (!mesh)
+	{
+		dev->drop();
+		return;
+	}
+	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh);
+
+	node->setAnimationSpeed(30);
+	
+	if (node)
+	{
+		node->setMaterialFlag(EMF_LIGHTING, false);
+		node->setMaterialFlag(EMF_NORMALIZE_NORMALS, false);
+		node->setPosition(vector3df(0, 0, -2500));
+		node->setRotation(vector3df(0, 45, 0));
+		node->setScale(vector3df(60.0f, 60.0f, 60.0f));
+	}
+
+	IMeshSceneNode* terrain = smgr->addMeshSceneNode(smgr->getMesh("../../../data/IrrTestScene/BootyBay/BootyBay.obj"), 0, 0, core::vector3df(0.f, -1000.f, 0.f), core::vector3df(0.f, 0.f, 0.f), core::vector3df(20.0f, 20.0f, 20.0f));
+	ITriangleSelector * trg = smgr->createOctreeTriangleSelector(terrain->getMesh(), terrain);
+	
+	terrain->setTriangleSelector(trg);
+	trg->drop();
+
+	ISceneNodeAnimatorCollisionResponse * colAnim = new irr::scene::CSceneNodeAnimatorWoWCollisionAnimator(smgr, trg, node, core::vector3df(20.0f, 30.0f, 20.0f), core::vector3df(0.0f, -75.0f, 0.0f), core::vector3df(0.0f, -30.0f, 0.0f), 0.05f);
+
+	node->addAnimator(colAnim);
+	colAnim->drop();
+	terrain->setMaterialFlag(video::EMF_LIGHTING, false);
+	terrain->setMaterialFlag(video::EMF_NORMALIZE_NORMALS, true);
+	terrain->setMaterialFlag(E_MATERIAL_FLAG::EMF_BACK_FACE_CULLING, false);
+
+	terrain->setMaterialType(E_MATERIAL_TYPE::EMT_SOLID);
+
+	RealisticWaterSceneNode * water = new RealisticWaterSceneNode(smgr, 10000, 10000, "../../../Data");
+
+	for (u32 i = 0; i < terrain->getMaterialCount(); i++)
+	{
+		if (terrain->getMaterial(i).getTexture(0))
+		{
+			printf("%i: \t %s\n", i, terrain->getMaterial(i).getTexture(0)->getName());
+		}
+
+		std::string ttu = terrain->getMaterial(i).getTexture(0)->getName().getPath().c_str();
+
+		if (ttu.compare("C:/Wow_MPQ_Extract/wmo_single/wmo_texture/VASHJIR_BULLKELP06.PNG") == 0)
+		{
+			terrain->getMaterial(i).MaterialType = E_MATERIAL_TYPE::EMT_TRANSPARENT_ALPHA_CHANNEL_REF;
+		}
+
+	}
+
+	water->setPosition(vector3df(0, -2048, -4500));
+
+	water->setParent(smgr->getRootSceneNode());
 
 	ICameraSceneNode* cam = smgr->addCameraSceneNode(0, vector3df(0, 100, 100), vector3df(0, 0, 0), 1, true);
 	cam->setTarget(node->getPosition());

@@ -66,6 +66,8 @@ namespace WowKlient
 			"a: realistic water scene node\n"
 			"b: skinned mesh copy part\n"
 			"c: Gilneas city scene\n"
+			"d: BootyBay snene\n"
+			"\n"
 			);
 		char chose = getchar();
 
@@ -81,6 +83,9 @@ namespace WowKlient
 			break;
 		case 'c':
 			GilneasCityScene(gState);
+			break;
+		case 'd':
+			BootyBayScene(gState);
 			break;
 		default:
 			break;

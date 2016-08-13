@@ -92,6 +92,7 @@
     <ClInclude Include="..\WOW_Server\HNetworkConnector.h" />
     <ClInclude Include="..\WOW_Server\HWoWSockets.h" />
     <ClInclude Include="HColManager.h" />
+    <ClInclude Include="HMapLoader.h" />
     <ClInclude Include="HMeshFunctions.h" />
     <ClInclude Include="HServerConnector.h" />
     <ClInclude Include="HWoWCollisionAnimator.h" />
@@ -113,6 +114,7 @@
     <ClCompile Include="CIntro.cpp" />
     <ClCompile Include="CLoginManager.cpp" />
     <ClCompile Include="CMain.cpp" />
+    <ClCompile Include="CMapLoader.cpp" />
     <ClCompile Include="CMeshFunctions.cpp" />
     <ClCompile Include="CServerConnector.cpp" />
     <ClCompile Include="CWoWCollisionAnimator.cpp" />

@@ -10,8 +10,8 @@ using namespace io;
 using namespace gui;
 
 #define cam_circle 1000
-#define rotspeed 0.3f
-#define krok 125
+#define rotspeed 0.1f
+#define krok 175
 
 //! constructor
 wwAnim::wwAnim(ISceneNode* MetaNode, float StartUhelY, float StartUhelX, gui::ICursorControl * CursorControl)

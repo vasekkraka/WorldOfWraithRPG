@@ -10,5 +10,7 @@ void SkinnedMeshCopyScene(WowKlient::Core::GameState gState);
 
 void GilneasCityScene(WowKlient::Core::GameState gState);
 
+void BootyBayScene(WowKlient::Core::GameState gState);
+
 
 #endif

@@ -4,6 +4,7 @@
     <LocalDebuggerWorkingDirectory>..\..\Bin\MSVC32\Debug\</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     <LocalDebuggerCommand>..\Bin\MSVC32\Debug\$(TargetName)$(TargetExt)</LocalDebuggerCommand>
+    <LocalDebuggerCommandArguments>test</LocalDebuggerCommandArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LocalDebuggerWorkingDirectory>..\..\Bin\MSVC32\Release\</LocalDebuggerWorkingDirectory>

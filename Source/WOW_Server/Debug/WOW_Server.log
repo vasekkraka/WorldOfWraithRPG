@@ -1,17 +1,9 @@
-﻿Build started 13.07.2016 11:37:46.
-     1>Project "C:\Users\vkraka\Documents\WorldOfWraithRPG\Source\WOW_Server\WOW_Server.vcxproj" on node 2 (Build target(s)).
+﻿Build started 12. 8. 2016 14:18:22.
+     1>Project "C:\Users\m1tnick\Documents\WorldOfWraithRPG\Source\WOW_Server\WOW_Server.vcxproj" on node 2 (Build target(s)).
      1>Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\vkraka\Documents\WorldOfWraithRPG\Visual Studio\\..\Bin\MSVC32\Debug\WOW_Server.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\vkraka\Documents\WorldOfWraithRPG\Visual Studio\\..\cppconn\lib\debug" /LIBPATH:"C:\Users\vkraka\Documents\WorldOfWraithRPG\Visual Studio\\..\boost_1_59_0\stage\lib" /LIBPATH:"C:\Users\vkraka\Documents\WorldOfWraithRPG\Visual Studio\\..\Irrlicht\lib\MSVC32" irrlicht.lib mysqlcppconn.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\WOW_Server.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\vkraka\Documents\WorldOfWraithRPG\Visual Studio\\..\Bin\MSVC32\Debug\WOW_Server.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\vkraka\Documents\WorldOfWraithRPG\Visual Studio\\..\Bin\MSVC32\Debug\WOW_Server.lib" /MACHINE:X86 Debug\CBasicFunctions.obj
-         Debug\CServerInit.obj
-         Debug\CServerInstance.obj
-         Debug\CWOWServer.obj
-         Debug\WOW_Server.exe.embed.manifest.res
-       Manifest:
-         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\mt.exe /nologo /verbose /out:"Debug\WOW_Server.exe.embed.manifest" /makecdfs /manifest Debug\WOW_Server.exe.intermediate.manifest
-       LinkEmbedManifest:
-         WOW_Server.vcxproj -> C:\Users\vkraka\Documents\WorldOfWraithRPG\Visual Studio\\..\Bin\MSVC32\Debug\WOW_Server.exe
-     1>Done Building Project "C:\Users\vkraka\Documents\WorldOfWraithRPG\Source\WOW_Server\WOW_Server.vcxproj" (Build target(s)).
+         WOW_Server.vcxproj -> C:\Users\m1tnick\Documents\WorldOfWraithRPG\Visual Studio\\..\Bin\MSVC32\Debug\WOW_Server.exe
+     1>Done Building Project "C:\Users\m1tnick\Documents\WorldOfWraithRPG\Source\WOW_Server\WOW_Server.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.58
+Time Elapsed 00:00:00.29
