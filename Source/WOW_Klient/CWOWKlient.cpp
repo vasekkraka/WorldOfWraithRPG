@@ -63,10 +63,9 @@ namespace WowKlient
 
 		printf
 			(
-			"a: realistic water scene node\n"
-			"b: skinned mesh copy part\n"
-			"c: Gilneas city scene\n"
-			"d: BootyBay snene\n"
+			"a: skinned mesh copy part\n"
+			"b: Gilneas city scene\n"
+			"c: BootyBay snene\n"
 			"\n"
 			);
 		char chose = getchar();
@@ -76,15 +75,12 @@ namespace WowKlient
 		switch (chose)
 		{
 		case 'a':
-			WaterRealisticScene(gState);
-			break;
-		case 'b':
 			SkinnedMeshCopyScene(gState);
 			break;
-		case 'c':
+		case 'b':
 			GilneasCityScene(gState);
 			break;
-		case 'd':
+		case 'c':
 			BootyBayScene(gState);
 			break;
 		default:

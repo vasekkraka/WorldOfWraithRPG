@@ -206,6 +206,8 @@ void GilneasCityScene(WowKlient::Core::GameState gState)
 	terrain->setMaterialFlag(video::EMF_NORMALIZE_NORMALS, true);
 	terrain->setMaterialFlag(E_MATERIAL_FLAG::EMF_BACK_FACE_CULLING, false);
 
+	
+
 	//terrain->setDebugDataVisible(E_DEBUG_SCENE_TYPE::EDS_MESH_WIRE_OVERLAY);
 
 
@@ -219,6 +221,12 @@ void GilneasCityScene(WowKlient::Core::GameState gState)
 
 	ISceneNodeAnimator * animator = new wwAnim(node, 0.0f, 0.0f, dev->getCursorControl());
 	cam->addAnimator(animator);
+
+
+	terrain->setMaterialFlag(video::EMF_FOG_ENABLE, true);
+	node->setMaterialFlag(video::EMF_FOG_ENABLE, true);
+	driver->setFog(video::SColor(0, 234, 234, 234), video::EFT_FOG_LINEAR, -300, 2000, .0003f, true, false);
+
 
 	u32 fps_time = dev->getTimer()->getTime();
 	int frames = 0, fps = 0;
@@ -292,6 +300,8 @@ void BootyBayScene(WowKlient::Core::GameState gState)
 		node->setScale(vector3df(60.0f, 60.0f, 60.0f));
 	}
 
+	
+
 	IMeshSceneNode* terrain = smgr->addMeshSceneNode(smgr->getMesh("../../../data/IrrTestScene/BootyBay/BootyBay.obj"), 0, 0, core::vector3df(0.f, -1000.f, 0.f), core::vector3df(0.f, 0.f, 0.f), core::vector3df(20.0f, 20.0f, 20.0f));
 	ITriangleSelector * trg = smgr->createOctreeTriangleSelector(terrain->getMesh(), terrain);
 	
@@ -319,7 +329,7 @@ void BootyBayScene(WowKlient::Core::GameState gState)
 
 		std::string ttu = terrain->getMaterial(i).getTexture(0)->getName().getPath().c_str();
 
-		if (ttu.compare("C:/Wow_MPQ_Extract/wmo_single/wmo_texture/VASHJIR_BULLKELP06.PNG") == 0)
+		if (ttu.find("VASHJIR_BULLKELP06.PNG") != std::string::npos)
 		{
 			terrain->getMaterial(i).MaterialType = E_MATERIAL_TYPE::EMT_TRANSPARENT_ALPHA_CHANNEL_REF;
 		}
@@ -333,10 +343,14 @@ void BootyBayScene(WowKlient::Core::GameState gState)
 	ICameraSceneNode* cam = smgr->addCameraSceneNode(0, vector3df(0, 100, 100), vector3df(0, 0, 0), 1, true);
 	cam->setTarget(node->getPosition());
 	cam->setNearValue(10);
-	cam->setFarValue(100000);
+	cam->setFarValue(50000);
 
 	ISceneNodeAnimator * animator = new wwAnim(node, 0.0f, 0.0f, dev->getCursorControl());
 	cam->addAnimator(animator);
+
+	terrain->setMaterialFlag(video::EMF_FOG_ENABLE, true);
+	node->setMaterialFlag(video::EMF_FOG_ENABLE, true);
+	driver->setFog(video::SColor(0, 234, 234, 234), video::EFT_FOG_LINEAR, -1000, 6000, .0003f, true, false);
 
 	u32 fps_time = dev->getTimer()->getTime();
 	int frames = 0, fps = 0;

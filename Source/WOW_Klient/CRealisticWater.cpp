@@ -47,13 +47,13 @@ RealisticWaterSceneNode::RealisticWaterSceneNode(scene::ISceneManager* sceneMana
 
 	if (_videoDriver->getDriverType() == video::EDT_DIRECT3D9)
 	{
-		waterPixelShader = resourcePath + "/shaders/Water_ps.hlsl";
-		waterVertexShader = resourcePath + "/shaders/Water_vs.hlsl";
+		waterPixelShader = resourcePath + "/shaders/HLSL/Water_ps.hlsl";
+		waterVertexShader = resourcePath + "/shaders/HLSL/Water_vs.hlsl";
 	}
 	else if (_videoDriver->getDriverType() == video::EDT_OPENGL)
 	{
-		waterPixelShader = resourcePath + "/shaders/Water_ps.glsl";
-		waterVertexShader = resourcePath + "/shaders/Water_vs.glsl";
+		waterPixelShader = resourcePath + "/shaders/GLSL/Water_ps.glsl";
+		waterVertexShader = resourcePath + "/shaders/GLSL/Water_vs.glsl";
 	}
 
 	_shaderMaterial = GPUProgrammingServices->addHighLevelShaderMaterialFromFiles(

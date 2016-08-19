@@ -10,7 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\CE_BOOTYBAY_GREYWALL.PNG
+map_Kd CE_BOOTYBAY_GREYWALL.PNG
 
 newmtl text1
 Ns 96.078431
@@ -21,7 +21,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\CE_BOOTYBAY_ROOF.PNG
+map_Kd CE_BOOTYBAY_ROOF.PNG
 
 newmtl text10
 Ns 96.078431
@@ -32,7 +32,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\CE_BOOTYBAY_STUCCOWALL.PNG
+map_Kd CE_BOOTYBAY_STUCCOWALL.PNG
 
 newmtl text11
 Ns 96.078431
@@ -43,7 +43,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\RT_BOOTYBAY_TRIM04.PNG
+map_Kd RT_BOOTYBAY_TRIM04.PNG
 
 newmtl text12
 Ns 96.078431
@@ -54,7 +54,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\JLO_BBAY_FLOOR.PNG
+map_Kd JLO_BBAY_FLOOR.PNG
 
 newmtl text13
 Ns 96.078431
@@ -65,7 +65,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\RT_BOOTYBAY_STUCCOWALL01.PNG
+map_Kd RT_BOOTYBAY_STUCCOWALL01.PNG
 
 newmtl text14
 Ns 96.078431
@@ -76,7 +76,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\JLO_BBAY_ROCK.PNG
+map_Kd JLO_BBAY_ROCK.PNG
 
 newmtl text15
 Ns 96.078431
@@ -87,7 +87,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\RT_BOOTYBAY_TRIM03.PNG
+map_Kd RT_BOOTYBAY_TRIM03.PNG
 
 newmtl text16
 Ns 96.078431
@@ -98,7 +98,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\RT_BOOTYBAY_TRIM02.PNG
+map_Kd RT_BOOTYBAY_TRIM02.PNG
 
 newmtl text17
 Ns 96.078431
@@ -109,7 +109,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\JLO_BBAY_SHIPINTERIOR.PNG
+map_Kd JLO_BBAY_SHIPINTERIOR.PNG
 
 newmtl text18
 Ns 96.078431
@@ -120,7 +120,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\JLO_BBAY_NET.PNG
+map_Kd JLO_BBAY_NET.PNG
 
 newmtl text19
 Ns 96.078431
@@ -131,7 +131,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\RT_BOOTYBAY_WOODROOF01.PNG
+map_Kd RT_BOOTYBAY_WOODROOF01.PNG
 
 newmtl text2
 Ns 96.078431
@@ -142,7 +142,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\RT_BOOTYBAY_TRIM01.PNG
+map_Kd RT_BOOTYBAY_TRIM01.PNG
 
 newmtl text20
 Ns 96.078431
@@ -153,7 +153,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\CE_BOOTYBAY_WATERPOSTTOP.PNG
+map_Kd CE_BOOTYBAY_WATERPOSTTOP.PNG
 
 newmtl text21
 Ns 96.078431
@@ -164,7 +164,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\BBAY_WOOD_BEAM01.PNG
+map_Kd BBAY_WOOD_BEAM01.PNG
 
 newmtl text23
 Ns 96.078431
@@ -175,7 +175,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\STORMWINDCRATE01.PNG
+map_Kd STORMWINDCRATE01.PNG
 
 newmtl text25
 Ns 96.078431
@@ -186,7 +186,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\GOLDPILEBASE01.PNG
+map_Kd GOLDPILEBASE01.PNG
 
 newmtl text26
 Ns 96.078431
@@ -197,7 +197,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\STORMWINDBARREL.PNG
+map_Kd STORMWINDBARREL.PNG
 
 newmtl text27
 Ns 96.078431
@@ -208,7 +208,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\GOBLIN_BAMBOO_BROWN.PNG
+map_Kd GOBLIN_BAMBOO_BROWN.PNG
 
 newmtl text28
 Ns 96.078431
@@ -219,7 +219,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\VASHJIR_BULLKELP06.PNG
+map_Kd VASHJIR_BULLKELP06.PNG
 
 newmtl text29
 Ns 96.078431
@@ -230,7 +230,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\JLO_BBAY_PLANK.PNG
+map_Kd JLO_BBAY_PLANK.PNG
 
 newmtl text3
 Ns 96.078431
@@ -241,7 +241,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\JLO_BBAY_MISC.PNG
+map_Kd JLO_BBAY_MISC.PNG
 
 newmtl text4
 Ns 96.078431
@@ -252,7 +252,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\JLO_BBAY_PLANK.PNG
+map_Kd JLO_BBAY_PLANK.PNG
 
 newmtl text5
 Ns 96.078431
@@ -263,7 +263,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\JLO_BBAY_CEILING.PNG
+map_Kd JLO_BBAY_CEILING.PNG
 
 newmtl text6
 Ns 96.078431
@@ -274,7 +274,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\JLO_BBAY_WINDOWS.PNG
+map_Kd JLO_BBAY_WINDOWS.PNG
 
 newmtl text7
 Ns 96.078431
@@ -285,7 +285,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\JLO_BBAY_WALLPAPER.PNG
+map_Kd JLO_BBAY_WALLPAPER.PNG
 
 newmtl text8
 Ns 96.078431
@@ -296,7 +296,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\CE_BOOTYBAY_WATERPOST.PNG
+map_Kd CE_BOOTYBAY_WATERPOST.PNG
 
 newmtl text9
 Ns 96.078431
@@ -307,4 +307,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.000000
 illum 6
-map_Kd C:\Wow_MPQ_Extract\wmo_single\wmo_texture\CE_BOOTYBAY_ROOF2.PNG
+map_Kd CE_BOOTYBAY_ROOF2.PNG
