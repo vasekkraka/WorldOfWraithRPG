@@ -71,7 +71,9 @@ void wwAnim::animateNode(ISceneNode* node, u32 timeMs)
 
 
 		vector3df soucasna, nova;
-		soucasna = metaNode->getPosition();
+		metaNode->updateAbsolutePosition();
+		
+		soucasna = metaNode->getAbsolutePosition();
 		nova.X = soucasna.X + sinf((metaNode->getRotation().Y + 90) * (PI / 180)) * (krok / delta);
 		nova.Z = soucasna.Z + cosf((metaNode->getRotation().Y + 90) * (PI / 180)) * (krok / delta);
 		nova.Y = soucasna.Y;

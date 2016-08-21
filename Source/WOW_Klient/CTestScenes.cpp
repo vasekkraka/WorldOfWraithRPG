@@ -36,15 +36,17 @@ void SkinnedMeshCopyScene(WowKlient::Core::GameState gState)
 		driver->getTexture(PATH_PREFIX "/IrrTestScene/skybox/irrlicht2_ft.jpg"),
 		driver->getTexture(PATH_PREFIX "/IrrTestScene/skybox/irrlicht2_bk.jpg"));
 
-	IAnimatedMesh * dwarf_mesh = smgr->getMesh(PATH_PREFIX "/IrrTestScene/dwarf/dwarf.x");
+	//IAnimatedMesh * dwarf_mesh = smgr->getMesh(PATH_PREFIX "/IrrTestScene/dwarf/dwarf.x");
 
-	int casti[] = {0};
+	IAnimatedMesh * dwarf_mesh = smgr->getMesh(PATH_PREFIX "/IrrTestScene/draenei/draenei_female.blend.x");
 
-	ISkinnedMesh * skinned = makeMeshFromParts(&gState, dwarf_mesh, 1, casti);
+	int casti[] = {1,6,11,16};
+
+	ISkinnedMesh * skinned = makeMeshFromParts(&gState, dwarf_mesh, 4, casti);
 
 	IAnimatedMeshSceneNode * clone_node = smgr->addAnimatedMeshSceneNode(skinned, 0, 0, vector3df(30, 30, 0));
 
-	clone_node->setAnimationSpeed(5);
+	clone_node->setAnimationSpeed(25);
 
 	clone_node->setMaterialFlag(E_MATERIAL_FLAG::EMF_LIGHTING, false);
 
@@ -279,28 +281,45 @@ void BootyBayScene(WowKlient::Core::GameState gState)
 		driver->getTexture(PATH_PREFIX "/IrrTestScene/skybox/irrlicht2_ft.jpg"),
 		driver->getTexture(PATH_PREFIX "/IrrTestScene/skybox/irrlicht2_bk.jpg"));
 
-	IAnimatedMesh* mesh = smgr->getMesh("../../../data/IrrTestScene/human/human_stand.x");
-	((ISkinnedMesh *)mesh)->finalize();
+	IAnimatedMesh* mesh = smgr->getMesh("../../../data/IrrTestScene/draenei/draenei_female.blend.x");
+	//((ISkinnedMesh *)mesh)->finalize();
 
 	if (!mesh)
 	{
 		dev->drop();
 		return;
 	}
-	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh);
 
-	node->setAnimationSpeed(30);
-	
-	if (node)
-	{
-		node->setMaterialFlag(EMF_LIGHTING, false);
-		node->setMaterialFlag(EMF_NORMALIZE_NORMALS, false);
-		node->setPosition(vector3df(0, 0, -2500));
-		node->setRotation(vector3df(0, 45, 0));
-		node->setScale(vector3df(60.0f, 60.0f, 60.0f));
-	}
+	int casti[] = { 1, 6, 11, 16, 26, 27, 37, 57 };
 
-	
+	ISkinnedMesh * skinned = makeMeshFromParts(&gState, mesh, 8, casti);
+
+	IAnimatedMeshSceneNode * node = smgr->addAnimatedMeshSceneNode(skinned, 0, 0, vector3df(0, 0, -2500));
+
+	node->setAnimationSpeed(25);
+
+	node->setFrameLoop(1492, 1507);
+
+	node->setMaterialFlag(E_MATERIAL_FLAG::EMF_LIGHTING, false);
+
+	//node->setDebugDataVisible(irr::scene::E_DEBUG_SCENE_TYPE::EDS_SKELETON);
+
+	node->setScale(vector3df(40.0f, 40.0f, 40.0f));
+	node->setMaterialFlag(EMF_LIGHTING, false);
+	node->setMaterialFlag(EMF_NORMALIZE_NORMALS, false);
+
+	//IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh);
+
+	//node->setAnimationSpeed(30);
+	//
+	//if (node)
+	//{
+	//	node->setMaterialFlag(EMF_LIGHTING, false);
+	//	node->setMaterialFlag(EMF_NORMALIZE_NORMALS, false);
+	//	node->setPosition(vector3df(0, 0, -2500));
+	//	node->setRotation(vector3df(0, 45, 0));
+	//	node->setScale(vector3df(60.0f, 60.0f, 60.0f));
+	//}
 
 	IMeshSceneNode* terrain = smgr->addMeshSceneNode(smgr->getMesh("../../../data/IrrTestScene/BootyBay/BootyBay.obj"), 0, 0, core::vector3df(0.f, -1000.f, 0.f), core::vector3df(0.f, 0.f, 0.f), core::vector3df(20.0f, 20.0f, 20.0f));
 	ITriangleSelector * trg = smgr->createOctreeTriangleSelector(terrain->getMesh(), terrain);
