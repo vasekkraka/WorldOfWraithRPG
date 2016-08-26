@@ -11,7 +11,7 @@ using namespace gui;
 
 #define cam_circle 1000
 #define rotspeed 0.1f
-#define krok 175
+#define krok 100
 
 //! constructor
 wwAnim::wwAnim(ISceneNode* MetaNode, float StartUhelY, float StartUhelX, gui::ICursorControl * CursorControl)
@@ -51,6 +51,7 @@ void wwAnim::animateNode(ISceneNode* node, u32 timeMs)
 	vector3df rotace;
 	rotace.set(0, 0, 0);
 	anim_cycle++;
+	bool zmena = false;
 
 	if (isPresed(KEY_KEY_W))
 	{
@@ -81,10 +82,10 @@ void wwAnim::animateNode(ISceneNode* node, u32 timeMs)
 
 		metaNode->setPosition(nova);
 	}
+
 	if (isPresed(KEY_KEY_S))
 	{
 		move_cycle++;
-
 
 		f32 delta;
 		if ((timeMs - last_anim_time) == 0)
@@ -108,6 +109,7 @@ void wwAnim::animateNode(ISceneNode* node, u32 timeMs)
 
 		metaNode->setPosition(nova);
 	}
+
 	if (isPresed(KEY_KEY_A))
 	{
 		f32 delta;
@@ -182,10 +184,9 @@ void wwAnim::animateNode(ISceneNode* node, u32 timeMs)
 	last_anim_time = timeMs;
 
 
-
-
 	if (isClicked(1) && !isClicked(2) && !isClicked(3)) //rozhlizeni
 	{
+		zmena = true;
 		if (looking)
 		{
 			rotY += (mousePos.X - lookStart.X) * rotspeed;
@@ -215,6 +216,7 @@ void wwAnim::animateNode(ISceneNode* node, u32 timeMs)
 
 	if (!isClicked(1) && !isClicked(2) && isClicked(3)) // otaceni
 	{
+		zmena = true;
 		if (rotating)
 		{
 			rotY += (mousePos.X - rotStart.X) * rotspeed;
@@ -255,7 +257,7 @@ void wwAnim::animateNode(ISceneNode* node, u32 timeMs)
 				CSceneNodeAnimatorWoWCollisionAnimator * collResp = static_cast<CSceneNodeAnimatorWoWCollisionAnimator *>(*it);
 				if (!collResp->isFalling())
 				{
-					collResp->jump(125, 500);
+					collResp->jump(100, 1500);
 				}
 			}
 			it++;
@@ -264,6 +266,7 @@ void wwAnim::animateNode(ISceneNode* node, u32 timeMs)
 
 	if (wheelPos() != 0)
 	{
+		zmena = true;
 		okruh += wheelPos();
 		if (okruh < 20 || okruh > cam_circle)
 		{
@@ -272,16 +275,20 @@ void wwAnim::animateNode(ISceneNode* node, u32 timeMs)
 		//printf("%i\n", wheelPos());
 	}
 
-	metaNode->updateAbsolutePosition();
+	if (zmena == true || nodeLastPosition != metaNode->getAbsolutePosition())
+	{
+		metaNode->updateAbsolutePosition();
 
-	novaPozice = caulculatePosition(metaNode->getSceneManager()->getSceneCollisionManager(), metaNode->getBoundingBox().getCenter() + metaNode->getAbsolutePosition(), rotX, rotY, okruh);
-	node->setPosition(novaPozice);
-	node->setRotation(rotace);
+		nodeLastPosition = metaNode->getAbsolutePosition();
 
-	ICameraSceneNode * camera = static_cast<ICameraSceneNode*>(node);
-	camera->updateAbsolutePosition();
-	camera->setTarget(metaNode->getAbsolutePosition());
+		novaPozice = caulculatePosition(metaNode->getSceneManager()->getSceneCollisionManager(), metaNode->getBoundingBox().getCenter() + metaNode->getAbsolutePosition(), rotX, rotY, okruh);
+		node->setPosition(novaPozice);
+		node->setRotation(rotace);
 
+		ICameraSceneNode * camera = static_cast<ICameraSceneNode*>(node);
+		camera->updateAbsolutePosition();
+		camera->setTarget(metaNode->getAbsolutePosition());
+	}
 }
 
 //! Writes attributes of the scene node animator.
@@ -398,7 +405,6 @@ vector3df wwAnim::caulculatePosition(ISceneCollisionManager * col, vector3df cen
 
 	if (nd != NULL)
 	{
-		printf("Zasah\n");
 		return colPoint;
 	}
 	else

@@ -29,8 +29,7 @@ public:
 
 private:
 	ISceneNode * metaNode;
-	core::vector3df Rotation;
-	core::vector3df Position;
+	core::vector3df Rotation, Position, nodeLastPosition;
 	f32 rotX, rotY;
 	f32 wheel, okruh;
 	bool buttonStat[3];

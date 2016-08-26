@@ -1,9 +1,6 @@
 #ifndef HWOWKlient
 #define HWOWKlient
 
-#include <boost\asio.hpp>
-#include <boost\thread.hpp>
-
 #include "HBuildConfig.h"
 #include <irrlicht.h>
 #include <irrKlang.h>

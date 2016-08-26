@@ -296,30 +296,21 @@ void BootyBayScene(WowKlient::Core::GameState gState)
 
 	IAnimatedMeshSceneNode * node = smgr->addAnimatedMeshSceneNode(skinned, 0, 0, vector3df(0, 0, -2500));
 
-	node->setAnimationSpeed(25);
+	node->setAnimationSpeed(0);
 
-	node->setFrameLoop(1492, 1507);
+	node->setFrameLoop(2119, 2158);
+
+	//node->setFrameLoop(1490, 1506);
 
 	node->setMaterialFlag(E_MATERIAL_FLAG::EMF_LIGHTING, false);
 
 	//node->setDebugDataVisible(irr::scene::E_DEBUG_SCENE_TYPE::EDS_SKELETON);
 
-	node->setScale(vector3df(40.0f, 40.0f, 40.0f));
+	node->setScale(vector3df(30.0f, 30.0f, 30.0f));
 	node->setMaterialFlag(EMF_LIGHTING, false);
 	node->setMaterialFlag(EMF_NORMALIZE_NORMALS, false);
 
-	//IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh);
 
-	//node->setAnimationSpeed(30);
-	//
-	//if (node)
-	//{
-	//	node->setMaterialFlag(EMF_LIGHTING, false);
-	//	node->setMaterialFlag(EMF_NORMALIZE_NORMALS, false);
-	//	node->setPosition(vector3df(0, 0, -2500));
-	//	node->setRotation(vector3df(0, 45, 0));
-	//	node->setScale(vector3df(60.0f, 60.0f, 60.0f));
-	//}
 
 	IMeshSceneNode* terrain = smgr->addMeshSceneNode(smgr->getMesh("../../../data/IrrTestScene/BootyBay/BootyBay.obj"), 0, 0, core::vector3df(0.f, -1000.f, 0.f), core::vector3df(0.f, 0.f, 0.f), core::vector3df(20.0f, 20.0f, 20.0f));
 	ITriangleSelector * trg = smgr->createOctreeTriangleSelector(terrain->getMesh(), terrain);
@@ -339,6 +330,12 @@ void BootyBayScene(WowKlient::Core::GameState gState)
 
 	RealisticWaterSceneNode * water = new RealisticWaterSceneNode(smgr, 10000, 10000, "../../../Data");
 
+	water->setColorBlendFactor(0.0f);
+
+	water->setPosition(vector3df(0, -2048, -4500));
+
+	water->setParent(smgr->getRootSceneNode());
+
 	for (u32 i = 0; i < terrain->getMaterialCount(); i++)
 	{
 		if (terrain->getMaterial(i).getTexture(0))
@@ -347,17 +344,15 @@ void BootyBayScene(WowKlient::Core::GameState gState)
 		}
 
 		std::string ttu = terrain->getMaterial(i).getTexture(0)->getName().getPath().c_str();
-
-		if (ttu.find("VASHJIR_BULLKELP06.PNG") != std::string::npos)
+		
+		if ((ttu.find("VASHJIR_BULLKELP06.PNG") != std::string::npos) || (ttu.find("StranglethornTree_Leaves_Set.png") != std::string::npos) || (ttu.find("None_StrangleTree1_Vine256.png") != std::string::npos))
 		{
 			terrain->getMaterial(i).MaterialType = E_MATERIAL_TYPE::EMT_TRANSPARENT_ALPHA_CHANNEL_REF;
 		}
 
 	}
 
-	water->setPosition(vector3df(0, -2048, -4500));
-
-	water->setParent(smgr->getRootSceneNode());
+	
 
 	ICameraSceneNode* cam = smgr->addCameraSceneNode(0, vector3df(0, 100, 100), vector3df(0, 0, 0), 1, true);
 	cam->setTarget(node->getPosition());
@@ -382,6 +377,7 @@ void BootyBayScene(WowKlient::Core::GameState gState)
 	while (dev->run())
 	{
 		driver->beginScene(true, true, SColor(255, 120, 120, 120));
+		//printf("DrawALL:Scena : ");
 		smgr->drawAll();
 		guienv->drawAll();
 

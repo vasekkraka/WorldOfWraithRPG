@@ -3,6 +3,9 @@
 
 #include "HWOWKlient.h"
 
+#include <boost\asio.hpp>
+#include <boost\thread.hpp>
+
 #define STATE_NOT_DEFINED 0
 #define STATE_ERROR -1
 #define STATE_CONNECTING 1
