@@ -67,7 +67,7 @@ void wwAnim::animateNode(ISceneNode* node, u32 timeMs)
 		{
 			delta = 1000.0f / (timeMs - last_anim_time);
 		}
-		//printf("Cas: %u, %f %f\n", (timeMs - last_anim_time), delta, sinf((metaNode->getRotation().Y + 90) * (PI / 180) * (krok / delta)));
+
 		last_anim_time = timeMs;
 
 
@@ -96,7 +96,6 @@ void wwAnim::animateNode(ISceneNode* node, u32 timeMs)
 		{
 			delta = 1000.0f / (timeMs - last_anim_time);
 		}
-		//printf("Cas: %u, %f %f\n", (timeMs - last_anim_time), delta, sinf((metaNode->getRotation().Y + 90) * (PI / 180) * (krok / delta)));
 		last_anim_time = timeMs;
 
 

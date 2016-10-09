@@ -218,7 +218,7 @@ void CSceneNodeAnimatorWoWCollisionAnimator::animateNode(ISceneNode* node, u32 t
 		}
 		break;
 	case -1:
-		FallingVelocity = (Gravity * 0.005f) * (f32)diff;
+		FallingVelocity.Y = (Gravity.Y * 0.005f) * (f32)diff;
 		if (FallingVelocity.Y > 50)
 		{
 			FallingVelocity.Y = 50;
@@ -257,6 +257,7 @@ void CSceneNodeAnimatorWoWCollisionAnimator::animateNode(ISceneNode* node, u32 t
 		{
 			jumped_height = 0;
 			Falling = false;
+			jumping = -1;
 			FallingVelocity.set(0, 0, 0);
 		}
 

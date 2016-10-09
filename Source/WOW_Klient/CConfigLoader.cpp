@@ -85,6 +85,19 @@ namespace WowKlient
 								printf("\t%s: \"%i\"", xml->getAttributeName(i), xml->getAttributeValueAsInt(i));
 							}
 						}
+
+						if ((irr::core::string<char>)xml->getNodeName() == "user_conf")
+						{
+							for (u32 i = 0; i < xml->getAttributeCount(); i++)
+							{
+								if ((irr::core::string<char>)xml->getAttributeName(i) == "req_fps")
+								{
+									int reqFps = xml->getAttributeValueAsInt(i);
+									gConf->reqFps = reqFps;
+								}
+								printf("\t%s: \"%i\"", xml->getAttributeName(i), xml->getAttributeValueAsInt(i));
+							}
+						}
 							break;
 
 						case irr::io::EXN_TEXT:

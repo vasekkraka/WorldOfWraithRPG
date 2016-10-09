@@ -56,16 +56,37 @@ int main(int argc, char *argv[])
 					output_file.write("map_Kd", 6);
 					output_file.write(" ..\\wmo_texture\\", 16);
 					int back_slash = text_path.find_last_of("\\");
-					output_file.write(text_path.substr(back_slash+1).c_str(), text_path.substr(back_slash).length()-4);
-					output_file.write("PNG", 3);
-					output_file.write("\n", 1);
+
+					std::string texture = "";
+					texture.append(text_path.substr(back_slash + 1, text_path.substr(back_slash).length() - 4));
 					
-					std::string src_path = "C:\\Wow_MPQ_Extract\\texture.mpq_png_converted\\";
-					src_path.append(text_path.substr(0, text_path.length()-3));
+					//std::string src_path = "C:\\Wow_MPQ_Extract\\texture.mpq_png_converted\\";
+					std::string src_path = "C:\\wow\\all_texture\\";
+					src_path.append(texture.c_str());
 					src_path.append("PNG");
 
+					std::string textureWithoutSpace = "";
+
+					int index = 0;
+
+					while ((index = texture.find_first_of(' ')) > 0)
+					{
+						textureWithoutSpace.append(texture.substr(0, index));
+						texture = texture.substr(index + 1, texture.length() - index + 1);
+					}
+
+					textureWithoutSpace.append(texture.c_str());
+
+					texture = textureWithoutSpace;
+
+					replace(texture.begin(), texture.end(), ' ', '_');
+
+					output_file.write(texture.c_str(), texture.length());
+					output_file.write("PNG", 3);
+					output_file.write("\n", 1);
+
 					std::string dest_path = "C:\\Wow_MPQ_Extract\\wmo_single\\wmo_texture\\";
-					dest_path.append(text_path.substr(back_slash + 1, text_path.substr(back_slash).length() - 4));
+					dest_path.append(texture.c_str());
 					dest_path.append("PNG");
 
 					printf("====> '%s'", src_path.c_str());

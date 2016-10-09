@@ -284,6 +284,8 @@ void BootyBayScene(WowKlient::Core::GameState gState)
 	IAnimatedMesh* mesh = smgr->getMesh("../../../data/IrrTestScene/draenei/draenei_female.blend.x");
 	//((ISkinnedMesh *)mesh)->finalize();
 
+	printf("--> Node\n");
+
 	if (!mesh)
 	{
 		dev->drop();
@@ -296,7 +298,7 @@ void BootyBayScene(WowKlient::Core::GameState gState)
 
 	IAnimatedMeshSceneNode * node = smgr->addAnimatedMeshSceneNode(skinned, 0, 0, vector3df(0, 0, -2500));
 
-	node->setAnimationSpeed(0);
+	node->setAnimationSpeed(20);
 
 	node->setFrameLoop(2119, 2158);
 
@@ -310,14 +312,14 @@ void BootyBayScene(WowKlient::Core::GameState gState)
 	node->setMaterialFlag(EMF_LIGHTING, false);
 	node->setMaterialFlag(EMF_NORMALIZE_NORMALS, false);
 
-
+	printf("--> Node parts\n");
 
 	IMeshSceneNode* terrain = smgr->addMeshSceneNode(smgr->getMesh("../../../data/IrrTestScene/BootyBay/BootyBay.obj"), 0, 0, core::vector3df(0.f, -1000.f, 0.f), core::vector3df(0.f, 0.f, 0.f), core::vector3df(20.0f, 20.0f, 20.0f));
 	ITriangleSelector * trg = smgr->createOctreeTriangleSelector(terrain->getMesh(), terrain);
-	
+	printf("--> Teren\n");
 	terrain->setTriangleSelector(trg);
 	trg->drop();
-
+	printf("--> Selector\n");
 	ISceneNodeAnimatorCollisionResponse * colAnim = new irr::scene::CSceneNodeAnimatorWoWCollisionAnimator(smgr, trg, node, core::vector3df(20.0f, 30.0f, 20.0f), core::vector3df(0.0f, -75.0f, 0.0f), core::vector3df(0.0f, -30.0f, 0.0f), 0.05f);
 
 	node->addAnimator(colAnim);
@@ -338,21 +340,14 @@ void BootyBayScene(WowKlient::Core::GameState gState)
 
 	for (u32 i = 0; i < terrain->getMaterialCount(); i++)
 	{
-		if (terrain->getMaterial(i).getTexture(0))
-		{
-			printf("%i: \t %s\n", i, terrain->getMaterial(i).getTexture(0)->getName());
-		}
-
 		std::string ttu = terrain->getMaterial(i).getTexture(0)->getName().getPath().c_str();
 		
-		if ((ttu.find("VASHJIR_BULLKELP06.PNG") != std::string::npos) || (ttu.find("StranglethornTree_Leaves_Set.png") != std::string::npos) || (ttu.find("None_StrangleTree1_Vine256.png") != std::string::npos))
+		if ((ttu.find("JLO_BBAY_NET.png") != std::string::npos) || (ttu.find("VASHJIR_BULLKELP06.PNG") != std::string::npos) || (ttu.find("StranglethornTree_Leaves_Set.png") != std::string::npos) || (ttu.find("None_StrangleTree1_Vine256.png") != std::string::npos))
 		{
 			terrain->getMaterial(i).MaterialType = E_MATERIAL_TYPE::EMT_TRANSPARENT_ALPHA_CHANNEL_REF;
 		}
 
 	}
-
-	
 
 	ICameraSceneNode* cam = smgr->addCameraSceneNode(0, vector3df(0, 100, 100), vector3df(0, 0, 0), 1, true);
 	cam->setTarget(node->getPosition());
@@ -372,15 +367,13 @@ void BootyBayScene(WowKlient::Core::GameState gState)
 	dev->getTimer()->tick();
 	u32 old_time = dev->getTimer()->getTime();
 	//	u32 old_time = GetTickCount();
-	f32 frame_time = 1000.0f / req_fps;
+	f32 frame_time = 1000.0f / gState.gConf->reqFps;
 	s32 wait = 0;
 	while (dev->run())
 	{
 		driver->beginScene(true, true, SColor(255, 120, 120, 120));
-		//printf("DrawALL:Scena : ");
 		smgr->drawAll();
 		guienv->drawAll();
-
 
 		driver->endScene();
 
@@ -395,6 +388,10 @@ void BootyBayScene(WowKlient::Core::GameState gState)
 		int lastFPS = driver->getFPS();
 		core::stringw tmp = L"FPS: ";
 		tmp += lastFPS;
+
+		tmp += L" Triangles count: ";
+
+		tmp += terrain->getTriangleSelector()->getTriangleCount();
 
 		dev->setWindowCaption(tmp.c_str());
 

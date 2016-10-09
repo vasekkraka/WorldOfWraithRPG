@@ -20,6 +20,7 @@ namespace WowKlient
 				bool fullScreen;
 				bool vSync;
 				bool stencilBuffer;
+				irr::u32 reqFps;
 			};
 
 			/*

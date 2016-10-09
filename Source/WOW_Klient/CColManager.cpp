@@ -302,11 +302,6 @@ bool testTriangleIntersection(SCollisionData* colData, const core::triangle3df& 
 core::vector3df collideWithWorld(s32 recursionDepth, SCollisionData &colData, core::vector3df pos, core::vector3df vel)
 {
 	f32 veryCloseDistance = colData.slidingSpeed;
-
-	//if (recursionDepth > 0 && (vel.X != 0 || vel.Z != 0))
-	//{
-	//	printf("Depth: %i\n", recursionDepth);
-	//}
 	
 	if (recursionDepth > 5)
 		return pos;
@@ -318,30 +313,12 @@ core::vector3df collideWithWorld(s32 recursionDepth, SCollisionData &colData, co
 	colData.foundCollision = false;
 	colData.nearestDistance = FLT_MAX;
 
-	vector3df v1 = colData.normalizedVelocity;
-	//v1.X = abs(v1.X);
-	//v1.Y = abs(v1.Y);
-	//v1.Z = abs(v1.Z);
-	vector3df v2 = vector3df(0, -1, 0);
-
-	f32 c = v1.dotProduct(v2.normalize());
-	//f32 c = colData.normalizedVelocity.dotProduct(vector3df(0, 1, 0).normalize());
-
-	double uhel_cos = 90 - acos(c) * 180.0 / PI;
-
-	//printf("Uhel ^: %f\n", abs(uhel_cos));
+	double uhel_cos = 90 - acos(colData.normalizedVelocity.dotProduct(vector3df(0, -1, 0).normalize())) * 180.0 / PI;
 
 	if (recursionDepth > 0 && vel.getLength() > 0 && vel.Y < 0)
 	{
 		if (abs(uhel_cos) < 50)
-		{
 			return pos;
-		}
-		else
-		{
-			//printf("%f, %f, %f \n", v1.X, v1.Y, v1.Z);
-			//printf("Uhel ^: %f\n", abs(uhel_cos));
-		}
 	}
 
 
@@ -352,10 +329,6 @@ core::vector3df collideWithWorld(s32 recursionDepth, SCollisionData &colData, co
 	box.addInternalPoint(colData.R3Position + colData.R3Velocity);
 	box.MinEdge -= colData.eRadius;
 	box.MaxEdge += colData.eRadius;
-
-	//printf("%f, %f, %f\n", colData.R3Position.X, colData.R3Position.Y, colData.R3Position.Z);
-
-	//printf("%f, %f, %f\n", colData.R3Velocity.X, colData.R3Velocity.Y, colData.R3Velocity.Z);
 
 	s32 totalTriangleCnt = colData.selector->getTriangleCount();
 	Triangles.set_used(totalTriangleCnt);
@@ -410,122 +383,15 @@ core::vector3df collideWithWorld(s32 recursionDepth, SCollisionData &colData, co
 
 	const core::vector3df newVelocityVector = newDestinationPoint -
 		colData.intersectionPoint;
-	
-	
 
 	if (newVelocityVector.getLength() < veryCloseDistance)
 		return newBasePoint;
 
+	//printf("Puvodni delka: %f | nova delka: %f\n", colData.velocity.getLength(), newVelocityVector.getLength());
+
 	return collideWithWorld(recursionDepth+1, colData,
 		newBasePoint, newVelocityVector);
 }
-
-//core::vector3df collideWithWorldNoSliding(s32 recursionDepth, SCollisionData &colData, core::vector3df pos, core::vector3df vel)
-//{
-//	f32 veryCloseDistance = colData.slidingSpeed;
-//
-//	
-//
-//	if (recursionDepth > 5)
-//		return pos;
-//
-//	colData.velocity = vel;
-//
-//	//printf("%f, %f, %f\n | ", vel.X, vel.Y, vel.Z);
-//
-//	colData.normalizedVelocity = vel;
-//	colData.normalizedVelocity.normalize();
-//	//printf("%f, %f, %f\n | ", colData.normalizedVelocity.X, colData.normalizedVelocity.Y, colData.normalizedVelocity.Z);
-//	colData.basePoint = pos;
-//	colData.foundCollision = false;
-//	colData.nearestDistance = FLT_MAX;
-//
-//	if (vel.getLength() > 0 && vel.Y < 0)
-//	{
-//
-//		f32 c = colData.normalizedVelocity.dotProduct(vector3df(1, 0, 0).normalize());
-//
-//		double uhel_cos = 90 - acos(c) * 180.0 / PI;
-//		//printf("Uhel dolu: %f\n", uhel_cos);
-//	}
-//
-//	//------------------ collide with world
-//
-//	// get all triangles with which we might collide
-//	core::aabbox3d<f32> box(colData.R3Position);
-//	box.addInternalPoint(colData.R3Position + colData.R3Velocity);
-//	box.MinEdge -= colData.eRadius;
-//	box.MaxEdge += colData.eRadius;
-//
-//
-//	s32 totalTriangleCnt = colData.selector->getTriangleCount();
-//	Triangles.set_used(totalTriangleCnt);
-//
-//	core::matrix4 scaleMatrix;
-//	scaleMatrix.setScale(
-//			core::vector3df(1.0f / colData.eRadius.X,
-//					1.0f / colData.eRadius.Y,
-//					1.0f / colData.eRadius.Z));
-//
-//	s32 triangleCnt = 0;
-//
-//
-//	colData.selector->getTriangles(Triangles.pointer(), totalTriangleCnt, triangleCnt, box, &scaleMatrix);
-//
-//	for (s32 i=0; i<triangleCnt; ++i)
-//		if(testTriangleIntersection(&colData, Triangles[i]))
-//			colData.triangleIndex = i;
-//
-//	//---------------- end collide with world
-//
-//	if (!colData.foundCollision)
-//	{
-//		return pos + vel;
-//	}
-//
-//	return pos;
-//
-//	// original destination point
-//	const core::vector3df destinationPoint = pos + vel;
-//	core::vector3df newBasePoint = pos;
-//
-//	// only update if we are not already very close
-//	// and if so only move very close to intersection, not to the
-//	// exact point
-//
-//
-//	// calculate sliding plane
-//
-//	const core::vector3df slidePlaneOrigin = colData.intersectionPoint;
-//	const core::vector3df slidePlaneNormal = (newBasePoint - colData.intersectionPoint).normalize();
-//	core::plane3d<f32> slidingPlane(slidePlaneOrigin, slidePlaneNormal);
-//
-//	core::vector3df newDestinationPoint =
-//		destinationPoint -
-//		(slidePlaneNormal * slidingPlane.getDistanceTo(destinationPoint));
-//
-//	// generate slide vector
-//
-//	const core::vector3df newVelocityVector = newDestinationPoint -
-//		colData.intersectionPoint;
-//	
-//	/*SYSTEMTIME konec;
-//	GetSystemTime(&konec);
-//	printf("Cas: %f\n", (double)((konec.wMilliseconds - zacatek.wMilliseconds)));*/
-//
-//	
-//
-//	//printf("Recurs Depth : %i | %i\n", recursionDepth, Triangles.size());
-//	
-//
-//	if (newVelocityVector.getLength() < veryCloseDistance)
-//	{
-//		return newBasePoint;
-//	}
-//
-//	return collideWithWorld(recursionDepth+1, colData,
-//		newBasePoint, newVelocityVector);
-//}
 
 
 //! Collides a moving ellipsoid with a 3d world with gravity and returns
