@@ -19,11 +19,16 @@ int main(int argc, char *argv[])
 		{
 			localGame->runTestScene();
 		}
+		if (!strcmp(argv[1], "map"))
+		{
+			localGame->runMapEditor();
+		}
 	}
 	else
 	{
 		//posli(42);
 		localGame->initialize();
+		
 		//localGame->playIntro();
 		localGame->gameRun();
 	}

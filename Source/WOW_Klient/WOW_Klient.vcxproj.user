@@ -10,6 +10,6 @@
     <LocalDebuggerWorkingDirectory>..\..\Bin\MSVC32\Release\</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     <LocalDebuggerCommand>..\Bin\MSVC32\Release\$(TargetName)$(TargetExt)</LocalDebuggerCommand>
-    <LocalDebuggerCommandArguments>test</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>map</LocalDebuggerCommandArguments>
   </PropertyGroup>
 </Project>

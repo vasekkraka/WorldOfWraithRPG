@@ -56,6 +56,40 @@ namespace WowKlient
 		return true;
 	}
 
+	void WoWGameKlient::runMapEditor()
+	{
+		initialize();
+
+		irr::gui::IGUIEnvironment* guienv = gState.irrDevice->getGUIEnvironment();
+		irr::video::IVideoDriver * driver = gState.irrDevice->getVideoDriver();
+		irr::scene::ISceneManager * smgr = gState.irrDevice->getSceneManager();
+		
+		while (gState.irrDevice->run())
+		{
+
+			u32 oldtime = gState.irrDevice->getTimer()->getTime();
+			int fps = driver->getFPS();
+
+			core::stringw str = L"World of Wraith - Story Begin MAP EDITOR [";
+			str += driver->getName();
+			str += "] FPS:";
+			str += fps;
+
+			gState.irrDevice->setWindowCaption(str.c_str());
+
+			driver->beginScene(true, true, SColor(255, 128, 128, 128)); // zacnu, s cernym pozadim
+
+			guienv->drawAll();
+			smgr->drawAll();
+
+			driver->endScene();
+			u32 newtime = gState.irrDevice->getTimer()->getTime();
+			if ((newtime - oldtime) < 1000 / gState.gConf->reqFps)
+			{
+				gState.irrDevice->sleep((1000 / gState.gConf->reqFps) - (newtime - oldtime));
+			}
+		}
+	}
 
 	void WoWGameKlient::runTestScene()
 	{

@@ -36,6 +36,7 @@ namespace WowKlient
 			void gameRun();
 			void playIntro();
 			void runTestScene();
+			void runMapEditor();
 			
 
 		private:
