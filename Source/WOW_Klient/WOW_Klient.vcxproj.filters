@@ -63,6 +63,9 @@
     <ClInclude Include="HMapLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HMapEditor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CIntro.cpp">
@@ -108,6 +111,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CMapLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CMapEditor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
