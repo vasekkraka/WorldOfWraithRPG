@@ -1,5 +1,11 @@
 #include "HMapEditor.h"
+#include "HMapEditorEventReciever.h"
 
+#include <boost/filesystem.hpp>
+#include <boost/foreach.hpp> 
+
+namespace fs = boost::filesystem;
+using namespace std;
 
 MapEditor::MapEditor()
 {
@@ -27,25 +33,54 @@ void MapEditor::runMapEditor()
 	irr::video::IVideoDriver * driver = gState->irrDevice->getVideoDriver();
 	irr::scene::ISceneManager * smgr = gState->irrDevice->getSceneManager();
 
+	MapSceneContext SceneContext;
+
+	MapEditorEventReceiver eventReciever(SceneContext);
+	gState->irrDevice->setEventReceiver(&eventReciever);
+
 	ICameraSceneNode * cam = smgr->addCameraSceneNodeMaya();
 	cam->setPosition(vector3df(0,0,0));
 	cam->setTarget(vector3df(0, 0, -100));
 
 	smgr->addCubeSceneNode(10.0f, 0, 0, vector3df(0, 0, -100), vector3df(0, 0, 0));
 
-	IGUIButton * button_add =  guienv->addButton(rect<s32>(gState->gConf->resolution.Width - 50, 500, gState->gConf->resolution.Width, 520), 0, ID_GUI_ADD_BUTTON, L"Add", L"ToolTip");
+	IGUIButton * buttonAdd =  guienv->addButton(rect<s32>(gState->gConf->resolution.Width - 300, 330, gState->gConf->resolution.Width, 350), 0, ID_GUI_ADD_BUTTON, L"Add", L"ToolTip");
 
 	IGUIListBox * listBoxModels = guienv->addListBox(rect<s32>(gState->gConf->resolution.Width - 300, 0, gState->gConf->resolution.Width, 330), 0, ID_GUI_LISTBOX_MODELS, true);
 
-	//for (s32 i = 0; i<irr::gui::EGDC_COUNT; ++i)
-	//{
-	//	video::SColor col = guienv->getSkin()->getColor((EGUI_DEFAULT_COLOR)i);
-	//	col.setAlpha(90);
-	//	guienv->getSkin()->setColor((EGUI_DEFAULT_COLOR)i, col);
-	//}
+	IGUISkin * skin = guienv->getSkin();
+	IGUIFont * font = guienv->getFont(PATH_PREFIX "\\font\\Comic_10.xml");
 
-	//gState->irrDevice->setEventReceiver();
-	
+	if (font)
+		skin->setFont(font);
+
+	ifstream  mtl_file;
+	ofstream  output_file;
+
+
+	fs::path targetDir(PATH_PREFIX "\\model");
+
+	fs::directory_iterator it(targetDir), eod;
+
+	int mtl_count = 0;
+
+	BOOST_FOREACH(fs::path const &p, std::make_pair(it, eod))
+	{
+		if (is_regular_file(p))
+		{
+			std::string pripona = p.filename().string().substr(p.filename().string().length() - 4, 4);
+			printf("\n pripona: %s", pripona.c_str());
+
+			if (!pripona.compare(".obj"))
+			{
+				mtl_count++;
+				listBoxModels->addItem(p.filename().c_str());
+			}
+
+		}
+	}
+
+	printf("\n\nTotal MTL count: %i", mtl_count);
 
 	while (gState->irrDevice->run())
 	{

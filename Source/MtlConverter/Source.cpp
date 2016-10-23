@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 	ifstream  mtl_file;
 	ofstream  output_file;
 
-
+	 
 
 	namespace fs = boost::filesystem;
 

@@ -66,6 +66,9 @@
     <ClInclude Include="HMapEditor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HMapEditorEventReciever.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CIntro.cpp">

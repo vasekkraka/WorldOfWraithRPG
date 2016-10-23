@@ -94,6 +94,7 @@
     <ClInclude Include="..\WOW_Server\HWoWSockets.h" />
     <ClInclude Include="HColManager.h" />
     <ClInclude Include="HMapEditor.h" />
+    <ClInclude Include="HMapEditorEventReciever.h" />
     <ClInclude Include="HMapLoader.h" />
     <ClInclude Include="HMeshFunctions.h" />
     <ClInclude Include="HServerConnector.h" />

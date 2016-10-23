@@ -18,7 +18,7 @@ public:
 	void setGState(WowKlient::Core::GameState * state);
 	void runMapEditor();
 	bool saveMapXML();
-	bool loadMapXMP();
+	bool loadMapXML();
 
 private:
 	WowKlient::Core::GameState * gState;
