@@ -33,20 +33,28 @@ void MapEditor::runMapEditor()
 	irr::video::IVideoDriver * driver = gState->irrDevice->getVideoDriver();
 	irr::scene::ISceneManager * smgr = gState->irrDevice->getSceneManager();
 
-	MapSceneContext SceneContext;
-
-	MapEditorEventReceiver eventReciever(SceneContext);
-	gState->irrDevice->setEventReceiver(&eventReciever);
+	IMeshSceneNode * metaNode;
 
 	ICameraSceneNode * cam = smgr->addCameraSceneNodeMaya();
 	cam->setPosition(vector3df(0,0,0));
 	cam->setTarget(vector3df(0, 0, -100));
 
-	smgr->addCubeSceneNode(10.0f, 0, 0, vector3df(0, 0, -100), vector3df(0, 0, 0));
+	IMeshSceneNode * cube = smgr->addCubeSceneNode(10.0f, 0, 0, vector3df(0, 0, -100), vector3df(0, 0, 0));
+
+	cube->setTriangleSelector(smgr->createTriangleSelector(cube->getMesh(), cube));
 
 	IGUIButton * buttonAdd =  guienv->addButton(rect<s32>(gState->gConf->resolution.Width - 300, 330, gState->gConf->resolution.Width, 350), 0, ID_GUI_ADD_BUTTON, L"Add", L"ToolTip");
 
 	IGUIListBox * listBoxModels = guienv->addListBox(rect<s32>(gState->gConf->resolution.Width - 300, 0, gState->gConf->resolution.Width, 330), 0, ID_GUI_LISTBOX_MODELS, true);
+
+	MapSceneContext SceneContext;
+
+	SceneContext.device = gState->irrDevice;
+	SceneContext.listBoxModels = listBoxModels;
+	SceneContext.metaNode = &metaNode;
+
+	MapEditorEventReceiver eventReciever(SceneContext);
+	gState->irrDevice->setEventReceiver(&eventReciever);
 
 	IGUISkin * skin = guienv->getSkin();
 	IGUIFont * font = guienv->getFont(PATH_PREFIX "\\font\\Comic_10.xml");
@@ -56,8 +64,6 @@ void MapEditor::runMapEditor()
 
 	ifstream  mtl_file;
 	ofstream  output_file;
-
-
 	fs::path targetDir(PATH_PREFIX "\\model");
 
 	fs::directory_iterator it(targetDir), eod;
@@ -80,7 +86,7 @@ void MapEditor::runMapEditor()
 		}
 	}
 
-	printf("\n\nTotal MTL count: %i", mtl_count);
+	printf("\n\nTotal OBJ count: %i", mtl_count);
 
 	while (gState->irrDevice->run())
 	{
@@ -94,11 +100,24 @@ void MapEditor::runMapEditor()
 		str += fps;
 
 		gState->irrDevice->setWindowCaption(str.c_str());
+		
 
 		driver->beginScene(true, true, SColor(255, 128, 128, 128)); // zacnu, s cernym pozadim
 				
 		smgr->drawAll();
 		guienv->drawAll();
+
+		vector3df point;
+		triangle3df triangle;
+
+		smgr->getSceneCollisionManager()->getSceneNodeAndCollisionPointFromRay(smgr->getSceneCollisionManager()->getRayFromScreenCoordinates(gState->irrDevice->getCursorControl()->getPosition()), point, triangle);
+
+		video::SMaterial material;
+		material.Lighting = false;
+		material.Wireframe = true;
+		driver->setMaterial(material);
+		driver->setTransform(video::ETS_WORLD, core::matrix4());
+		driver->draw3DTriangle(triangle, SColor(200, 255, 0, 0));
 
 		driver->endScene();
 		u32 newtime = gState->irrDevice->getTimer()->getTime();
