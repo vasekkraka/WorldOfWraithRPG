@@ -33,19 +33,17 @@ void MapEditor::runMapEditor()
 	irr::video::IVideoDriver * driver = gState->irrDevice->getVideoDriver();
 	irr::scene::ISceneManager * smgr = gState->irrDevice->getSceneManager();
 
-	IMeshSceneNode * metaNode;
+	IMeshSceneNode * metaNode = NULL;
 
-	ICameraSceneNode * cam = smgr->addCameraSceneNodeMaya();
-	cam->setPosition(vector3df(0,0,0));
-	cam->setTarget(vector3df(0, 0, -100));
+	ICameraSceneNode * cam = smgr->addCameraSceneNode();
+	cam->setPosition(vector3df(0,0,0-100));
+	cam->setTarget(vector3df(0, 0, 0));
 
-	IMeshSceneNode * cube = smgr->addCubeSceneNode(10.0f, 0, 0, vector3df(0, 0, -100), vector3df(0, 0, 0));
+	IGUIImage * previewImage = guienv->addImage(rect<s32>(gState->gConf->resolution.Width - SIZE_GUI_IMAGE_PREVIEW_WIDTH, gState->gConf->resolution.Height - SIZE_GUI_IMAGE_PREVIEW_HEIGHT, gState->gConf->resolution.Width, gState->gConf->resolution.Height), 0, ID_GUI_IMAGE_PREVIEW, L"Preview");
 
-	cube->setTriangleSelector(smgr->createTriangleSelector(cube->getMesh(), cube));
+	IGUIButton * buttonAdd = guienv->addButton(rect<s32>(gState->gConf->resolution.Width - SIZE_GUI_IMAGE_PREVIEW_WIDTH, gState->gConf->resolution.Height - SIZE_GUI_IMAGE_PREVIEW_HEIGHT - SIZE_GUI_ADD_BUTTON_HEIGHT, gState->gConf->resolution.Width, gState->gConf->resolution.Height - SIZE_GUI_IMAGE_PREVIEW_HEIGHT), 0, ID_GUI_ADD_BUTTON, L"Add", L"ToolTip");
 
-	IGUIButton * buttonAdd =  guienv->addButton(rect<s32>(gState->gConf->resolution.Width - 300, 330, gState->gConf->resolution.Width, 350), 0, ID_GUI_ADD_BUTTON, L"Add", L"ToolTip");
-
-	IGUIListBox * listBoxModels = guienv->addListBox(rect<s32>(gState->gConf->resolution.Width - 300, 0, gState->gConf->resolution.Width, 330), 0, ID_GUI_LISTBOX_MODELS, true);
+	IGUIListBox * listBoxModels = guienv->addListBox(rect<s32>(gState->gConf->resolution.Width - SIZE_GUI_IMAGE_PREVIEW_WIDTH, 0, gState->gConf->resolution.Width, gState->gConf->resolution.Height - SIZE_GUI_IMAGE_PREVIEW_HEIGHT - SIZE_GUI_ADD_BUTTON_HEIGHT), 0, ID_GUI_LISTBOX_MODELS, true);
 
 	MapSceneContext SceneContext;
 
@@ -88,6 +86,12 @@ void MapEditor::runMapEditor()
 
 	printf("\n\nTotal OBJ count: %i", mtl_count);
 
+	ITexture* rtt = 0;
+
+	rtt = driver->addRenderTargetTexture(dimension2d<u32>(SIZE_GUI_IMAGE_PREVIEW_WIDTH, SIZE_GUI_IMAGE_PREVIEW_HEIGHT), "RTT1");
+
+	previewImage->setImage(rtt);
+
 	while (gState->irrDevice->run())
 	{
 
@@ -103,6 +107,17 @@ void MapEditor::runMapEditor()
 		
 
 		driver->beginScene(true, true, SColor(255, 128, 128, 128)); // zacnu, s cernym pozadim
+
+		if (rtt)
+		{
+			if (metaNode)
+			metaNode->setVisible(true);
+			driver->setRenderTarget(rtt, true, true, SColor(255, 128, 128, 128));
+			smgr->drawAll();
+			if (metaNode)
+			metaNode->setVisible(false);
+			driver->setRenderTarget(0, true, true, SColor(255, 128, 128, 128));
+		}
 				
 		smgr->drawAll();
 		guienv->drawAll();
