@@ -23,7 +23,7 @@ public:
 	virtual bool isEventReceiverEnabled() const;
 
 	bool isClicked(int buttonNumber);
-	bool isPresed(int keyNumber);
+	bool isPresed(int keyNumber); 
 	f32 wheelPos();
 	vector3df wwAnim::caulculatePosition(ISceneCollisionManager * col, vector3df centr, f32 xUhel, f32 yUhel, f32 radius);
 

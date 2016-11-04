@@ -36,14 +36,22 @@ void MapEditor::runMapEditor()
 	IMeshSceneNode * metaNode = NULL;
 
 	ICameraSceneNode * cam = smgr->addCameraSceneNode();
-	cam->setPosition(vector3df(0,0,0-100));
+	cam->setPosition(vector3df(0, 0, -125));
 	cam->setTarget(vector3df(0, 0, 0));
 
-	IGUIImage * previewImage = guienv->addImage(rect<s32>(gState->gConf->resolution.Width - SIZE_GUI_IMAGE_PREVIEW_WIDTH, gState->gConf->resolution.Height - SIZE_GUI_IMAGE_PREVIEW_HEIGHT, gState->gConf->resolution.Width, gState->gConf->resolution.Height), 0, ID_GUI_IMAGE_PREVIEW, L"Preview");
+	IGUIWindow * toolWindow = guienv->addWindow(rect<s32>(gState->gConf->resolution.Width - SIZE_TOOL_WINDOW_WIDTH, 0, gState->gConf->resolution.Width, gState->gConf->resolution.Height), false, L"Nástroje");
 
-	IGUIButton * buttonAdd = guienv->addButton(rect<s32>(gState->gConf->resolution.Width - SIZE_GUI_IMAGE_PREVIEW_WIDTH, gState->gConf->resolution.Height - SIZE_GUI_IMAGE_PREVIEW_HEIGHT - SIZE_GUI_ADD_BUTTON_HEIGHT, gState->gConf->resolution.Width, gState->gConf->resolution.Height - SIZE_GUI_IMAGE_PREVIEW_HEIGHT), 0, ID_GUI_ADD_BUTTON, L"Add", L"ToolTip");
+	IGUITabControl * tabControl = guienv->addTabControl(rect<s32>(4, SIZE_TAB_CONTROL_HEIGHT, SIZE_TAB_CONTROL_WIDTH, gState->gConf->resolution.Height), toolWindow);
 
-	IGUIListBox * listBoxModels = guienv->addListBox(rect<s32>(gState->gConf->resolution.Width - SIZE_GUI_IMAGE_PREVIEW_WIDTH, 0, gState->gConf->resolution.Width, gState->gConf->resolution.Height - SIZE_GUI_IMAGE_PREVIEW_HEIGHT - SIZE_GUI_ADD_BUTTON_HEIGHT), 0, ID_GUI_LISTBOX_MODELS, true);
+	IGUITab * tabModel = tabControl->addTab(L"Model", 1);
+
+	IGUITab * tabNPC = tabControl->addTab(L"NPC", 1);
+	
+	IGUIImage * previewImage = guienv->addImage(rect<s32>(0, gState->gConf->resolution.Height - SIZE_GUI_LISTBOX_MODELS_HEIGHT, SIZE_GUI_IMAGE_PREVIEW_WIDTH, SIZE_GUI_IMAGE_PREVIEW_HEIGHT), tabModel, ID_GUI_IMAGE_PREVIEW, L"Preview");
+
+//	IGUIButton * buttonAdd = guienv->addButton(rect<s32>(gState->gConf->resolution.Width - SIZE_GUI_IMAGE_PREVIEW_WIDTH, gState->gConf->resolution.Height - SIZE_GUI_IMAGE_PREVIEW_HEIGHT - SIZE_GUI_ADD_BUTTON_HEIGHT, gState->gConf->resolution.Width, gState->gConf->resolution.Height - SIZE_GUI_IMAGE_PREVIEW_HEIGHT), window, ID_GUI_ADD_BUTTON, L"Add", L"ToolTip");
+//
+	IGUIListBox * listBoxModels = guienv->addListBox(rect<s32>(0, 0, SIZE_TAB_WIDTH, gState->gConf->resolution.Height SIZE_GUI_LISTBOX_MODELS_HEIGHT), tabModel, ID_GUI_LISTBOX_MODELS, true);
 
 	MapSceneContext SceneContext;
 
@@ -110,12 +118,16 @@ void MapEditor::runMapEditor()
 
 		if (rtt)
 		{
+			bool visible;
 			if (metaNode)
-			metaNode->setVisible(true);
+			{
+				visible = metaNode->isVisible();
+				metaNode->setVisible(true);
+			}
 			driver->setRenderTarget(rtt, true, true, SColor(255, 128, 128, 128));
 			smgr->drawAll();
 			if (metaNode)
-			metaNode->setVisible(false);
+			metaNode->setVisible(visible);
 			driver->setRenderTarget(0, true, true, SColor(255, 128, 128, 128));
 		}
 				

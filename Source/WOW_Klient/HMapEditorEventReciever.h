@@ -23,15 +23,38 @@ public:
 	{
 		if (event.EventType == EET_MOUSE_INPUT_EVENT)
 		{
+			IGUIElement * elm = SceneContext.device->getGUIEnvironment()->getRootGUIElement()->getElementFromPoint(SceneContext.device->getCursorControl()->getPosition());
+			mousePos = SceneContext.device->getCursorControl()->getPosition();
 			switch (event.MouseInput.Event)
 			{
 			case EMIE_LMOUSE_PRESSED_DOWN:
-				IGUIElement * elm = SceneContext.device->getGUIEnvironment()->getRootGUIElement()->getElementFromPoint(SceneContext.device->getCursorControl()->getPosition());
 				if (elm->getID() == ID_GUI_IMAGE_PREVIEW)
 				{
 					printf("\n Mys  na obrazku :-) \n");
+					rotating = true;
 				}
 				break;
+			case EMIE_LMOUSE_LEFT_UP:
+				if (rotating)
+				{
+					rotating = false;
+				}
+				break;
+			case EMIE_RMOUSE_PRESSED_DOWN:
+				if (elm->getID() == ID_GUI_IMAGE_PREVIEW)
+				{
+					(*SceneContext.metaNode)->setVisible(!(*SceneContext.metaNode)->isVisible());
+				}
+				break;
+			}
+
+			if (isRotatingPreview() && (*SceneContext.metaNode) != NULL)
+			{
+				vector3df rot = (*SceneContext.metaNode)->getRotation();
+
+				rot.Y += (SceneContext.device->getCursorControl()->getPosition().X - getLastMousePos().X);
+
+				(*SceneContext.metaNode)->setRotation(rot);
 			}
 		}
 		if (event.EventType == EET_GUI_EVENT)
@@ -62,19 +85,25 @@ public:
 					*SceneContext.metaNode = SceneContext.device->getSceneManager()->addMeshSceneNode(mesh, 0, 0, vector3df(0, 0, -100));
 					(*SceneContext.metaNode)->setMaterialFlag(E_MATERIAL_FLAG::EMF_LIGHTING, false);
 					(*SceneContext.metaNode)->setMaterialType(E_MATERIAL_TYPE::EMT_TRANSPARENT_ALPHA_CHANNEL_REF);
+					(*SceneContext.metaNode)->setVisible(false);
+
+					(*SceneContext.metaNode)->setPosition(vector3df(0,0,0));
 
 					(*SceneContext.metaNode)->setTriangleSelector(SceneContext.device->getSceneManager()->createTriangleSelector((*SceneContext.metaNode)->getMesh(), (*SceneContext.metaNode)));
 
-					float max = (*SceneContext.metaNode)->getBoundingBox().getExtent().X;
-					if ((*SceneContext.metaNode)->getBoundingBox().getExtent().Y >  max) {
-						max = (*SceneContext.metaNode)->getBoundingBox().getExtent().Y;
+					vector3df size = (*SceneContext.metaNode)->getBoundingBox().getExtent();
+
+					float max = size.X;
+					if (size.Z >  max) {
+						max = size.Z;
 					}
-					if ((*SceneContext.metaNode)->getBoundingBox().getExtent().Z >  max) {
-						max = (*SceneContext.metaNode)->getBoundingBox().getExtent().Z;
+
+					if (size.Y >  max) {
+						max = size.Y;
 					}
 
 					core::vector3df c = (*SceneContext.metaNode)->getBoundingBox().getCenter();
-					float scale = (100.0f / (SceneContext.device->getVideoDriver()->getScreenSize().Width / SceneContext.device->getVideoDriver()->getScreenSize().Height)) / max;
+					float scale = (100.0f / max);
 
 					c.X = -(c.X * scale);
 					c.Y = -(c.Y * scale);
@@ -89,8 +118,20 @@ public:
 		return false;
 	}
 
+	bool isRotatingPreview()
+	{
+		return rotating;
+	}
+
+	vector2d<s32> getLastMousePos()
+	{
+		return mousePos;
+	}
+
 private:
 	MapSceneContext & SceneContext;
+	bool rotating = false;
+	vector2d<s32> mousePos;
 };
 
 #endif
