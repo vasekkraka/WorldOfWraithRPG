@@ -39,19 +39,21 @@ void MapEditor::runMapEditor()
 	cam->setPosition(vector3df(0, 0, -125));
 	cam->setTarget(vector3df(0, 0, 0));
 
-	IGUIWindow * toolWindow = guienv->addWindow(rect<s32>(gState->gConf->resolution.Width - SIZE_TOOL_WINDOW_WIDTH, 0, gState->gConf->resolution.Width, gState->gConf->resolution.Height), false, L"Nástroje");
+	IGUIWindow * toolWindow = guienv->addWindow(rect<s32>(gState->gConf->resolution.Width - SIZE_TOOL_WINDOW_WIDTH, 0, gState->gConf->resolution.Width, SIZE_TOOL_WINDOW_HEIGHT), false, L"Nástroje");
 
-	IGUITabControl * tabControl = guienv->addTabControl(rect<s32>(4, SIZE_TAB_CONTROL_HEIGHT, SIZE_TAB_CONTROL_WIDTH, gState->gConf->resolution.Height), toolWindow);
+	IGUITabControl * tabControl = guienv->addTabControl(rect<s32>(4, 25, SIZE_TAB_CONTROL_WIDTH, SIZE_TAB_CONTROL_HEIGHT), toolWindow);
 
-	IGUITab * tabModel = tabControl->addTab(L"Model", 1);
+	IGUITab * tabMap = tabControl->addTab(L"Map", 1);
 
-	IGUITab * tabNPC = tabControl->addTab(L"NPC", 1);
+	IGUITab * tabNPC = tabControl->addTab(L"NPC", 2);
+
+	IGUITab * tabProperties = tabControl->addTab(L"Properties", 3);
 	
-	IGUIImage * previewImage = guienv->addImage(rect<s32>(0, gState->gConf->resolution.Height - SIZE_GUI_LISTBOX_MODELS_HEIGHT, SIZE_GUI_IMAGE_PREVIEW_WIDTH, SIZE_GUI_IMAGE_PREVIEW_HEIGHT), tabModel, ID_GUI_IMAGE_PREVIEW, L"Preview");
+	IGUIImage * previewImage = guienv->addImage(rect<s32>(SIZE_TAB_LEFT, SIZE_GUI_IMAGE_PREVIEW_TOP, SIZE_GUI_IMAGE_PREVIEW_WIDTH, SIZE_GUI_IMAGE_PREVIEW_TOP + SIZE_GUI_IMAGE_PREVIEW_HEIGHT), tabMap, ID_GUI_IMAGE_PREVIEW, L"Preview");
 
-//	IGUIButton * buttonAdd = guienv->addButton(rect<s32>(gState->gConf->resolution.Width - SIZE_GUI_IMAGE_PREVIEW_WIDTH, gState->gConf->resolution.Height - SIZE_GUI_IMAGE_PREVIEW_HEIGHT - SIZE_GUI_ADD_BUTTON_HEIGHT, gState->gConf->resolution.Width, gState->gConf->resolution.Height - SIZE_GUI_IMAGE_PREVIEW_HEIGHT), window, ID_GUI_ADD_BUTTON, L"Add", L"ToolTip");
-//
-	IGUIListBox * listBoxModels = guienv->addListBox(rect<s32>(0, 0, SIZE_TAB_WIDTH, gState->gConf->resolution.Height SIZE_GUI_LISTBOX_MODELS_HEIGHT), tabModel, ID_GUI_LISTBOX_MODELS, true);
+	IGUIButton * buttonAdd = guienv->addButton(rect<s32>(SIZE_TAB_LEFT, SIZE_GUI_ADD_BUTTON_TOP, SIZE_GUI_ADD_BUTTON_WIDTH, SIZE_GUI_ADD_BUTTON_TOP + SIZE_GUI_ADD_BUTTON_HEIGHT), tabMap, ID_GUI_ADD_BUTTON, L"Add", L"ToolTip");
+
+	IGUIListBox * listBoxModels = guienv->addListBox(rect<s32>(SIZE_TAB_LEFT, 0, SIZE_TAB_RIGHT, SIZE_GUI_LISTBOX_MODELS_HEIGHT + SIZE_TAB_CONTROL_TOP), tabMap, ID_GUI_LISTBOX_MODELS, true);
 
 	MapSceneContext SceneContext;
 
@@ -81,7 +83,6 @@ void MapEditor::runMapEditor()
 		if (is_regular_file(p))
 		{
 			std::string pripona = p.filename().string().substr(p.filename().string().length() - 4, 4);
-			printf("\n pripona: %s", pripona.c_str());
 
 			if (!pripona.compare(".obj"))
 			{
