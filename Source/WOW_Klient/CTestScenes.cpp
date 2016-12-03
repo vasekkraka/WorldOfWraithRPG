@@ -172,7 +172,7 @@ void GilneasCityScene(WowKlient::Core::GameState gState)
 	driver->setTextureCreationFlag(E_TEXTURE_CREATION_FLAG::ETCF_ALWAYS_32_BIT);
 
 	IAnimatedMesh* mesh = smgr->getMesh("../../../data/IrrTestScene/human/human_stand.x");
-	((ISkinnedMesh *)mesh)->finalize();
+	//((ISkinnedMesh *)mesh)->finalize();
 	
 	if (!mesh)
 	{

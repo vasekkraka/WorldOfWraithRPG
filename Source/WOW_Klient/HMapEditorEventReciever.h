@@ -43,6 +43,7 @@ public:
 			case EMIE_RMOUSE_PRESSED_DOWN:
 				if (elm->getID() == ID_GUI_IMAGE_PREVIEW)
 				{
+					if ((*SceneContext.metaNode) != NULL)
 					(*SceneContext.metaNode)->setVisible(!(*SceneContext.metaNode)->isVisible());
 				}
 				break;

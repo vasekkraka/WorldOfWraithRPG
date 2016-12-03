@@ -43,11 +43,8 @@ void MapEditor::runMapEditor()
 
 	IGUITabControl * tabControl = guienv->addTabControl(rect<s32>(4, 25, SIZE_TAB_CONTROL_WIDTH, SIZE_TAB_CONTROL_HEIGHT), toolWindow);
 
-	IGUITab * tabMap = tabControl->addTab(L"Map", 1);
-
-	IGUITab * tabNPC = tabControl->addTab(L"NPC", 2);
-
-	IGUITab * tabProperties = tabControl->addTab(L"Properties", 3);
+	IGUITab * tabMap = tabControl->addTab(L"WMO", 1);
+	IGUITab * tabProperties = tabControl->addTab(L"Vlastnosti", 1);
 	
 	IGUIImage * previewImage = guienv->addImage(rect<s32>(SIZE_TAB_LEFT, SIZE_GUI_IMAGE_PREVIEW_TOP, SIZE_GUI_IMAGE_PREVIEW_WIDTH, SIZE_GUI_IMAGE_PREVIEW_TOP + SIZE_GUI_IMAGE_PREVIEW_HEIGHT), tabMap, ID_GUI_IMAGE_PREVIEW, L"Preview");
 
