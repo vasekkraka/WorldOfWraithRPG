@@ -55,7 +55,7 @@ void SkinnedMeshCopyScene(WowKlient::Core::GameState gState)
 
 	while (gState.irrDevice->run())
 	{
-
+		
 		u32 oldtime = gState.irrDevice->getTimer()->getTime();
 		int fps = driver->getFPS();
 

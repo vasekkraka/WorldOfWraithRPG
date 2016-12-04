@@ -39,6 +39,27 @@ void MapEditor::runMapEditor()
 	cam->setPosition(vector3df(0, 0, -125));
 	cam->setTarget(vector3df(0, 0, 0));
 
+	IGUIToolBar * toolBar = guienv->addToolBar(guienv->getRootGUIElement(), ID_GUI_TOOLBAR);
+
+	toolBar->setRelativePosition(position2di(0,0));
+	toolBar->setMinSize(dimension2du(600,50));
+	toolBar->setMaxSize(dimension2du(600, 50));
+
+	driver->setTextureCreationFlag(E_TEXTURE_CREATION_FLAG::ETCF_ALWAYS_32_BIT);
+
+	ITexture * buttonTexture;
+	IGUIButton * toolbarButton;
+
+	buttonTexture = driver->getTexture(PATH_PREFIX "\\icons\\new.png");
+	driver->makeColorKeyTexture(buttonTexture, SColor(0, 0, 0, 0));
+	toolbarButton = toolBar->addButton(ID_GUI_TOOLBAR_BUTTON_NEW, L"", L"Vytovøí novou prazdnou mapu", buttonTexture);
+	toolbarButton->setUseAlphaChannel();
+
+	buttonTexture = driver->getTexture(PATH_PREFIX "\\icons\\open.png");
+	driver->makeColorKeyTexture(buttonTexture, SColor(0, 0, 0, 0));
+	toolbarButton = toolBar->addButton(ID_GUI_TOOLBAR_BUTTON_OPEN, L"", L"Otevøe soubor s mapou", buttonTexture);
+	toolbarButton->setUseAlphaChannel();
+
 	IGUIWindow * toolWindow = guienv->addWindow(rect<s32>(gState->gConf->resolution.Width - SIZE_TOOL_WINDOW_WIDTH, 0, gState->gConf->resolution.Width, SIZE_TOOL_WINDOW_HEIGHT), false, L"Nástroje");
 
 	IGUITabControl * tabControl = guienv->addTabControl(rect<s32>(4, 25, SIZE_TAB_CONTROL_WIDTH, SIZE_TAB_CONTROL_HEIGHT), toolWindow);

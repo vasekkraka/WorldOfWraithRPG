@@ -65,6 +65,16 @@ public:
 
 			switch (event.GUIEvent.EventType)
 			{
+			case EGET_BUTTON_CLICKED:
+				switch (id)
+				{
+				case ID_GUI_TOOLBAR_BUTTON_NEW:
+					printf("\nNew :-) \n");
+					break;
+				default:
+					break;
+				}
+				break;
 			case EGET_LISTBOX_CHANGED:
 			case EGET_LISTBOX_SELECTED_AGAIN:
 				if (id == ID_GUI_LISTBOX_MODELS)
