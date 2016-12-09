@@ -38,6 +38,8 @@
 #define ID_GUI_TOOLBAR_BUTTON_NEW 200
 #define ID_GUI_TOOLBAR_BUTTON_WMO 220
 #define ID_GUI_TOOLBAR_BUTTON_NPC 230
+#define ID_GUI_TOOLBAR_BUTTON_SAVE 240
+#define ID_GUI_TOOLBAR_BUTTON_ROUTE 250
 
 
 
@@ -50,10 +52,15 @@ public:
 	~MapEditor();
 
 	void setGState(WowKlient::Core::GameState * state);
+	
 	void runMapEditor();
+	IGUIToolBar * createToolbar(WowKlient::Core::GameState * gState);
+
 	bool saveMapXML();
 	bool loadMapXML();
-
+	bool saveServerData();
+	bool loadServerData();
+	
 private:
 	WowKlient::Core::GameState * gState;
 };

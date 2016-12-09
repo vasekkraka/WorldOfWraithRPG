@@ -3,15 +3,19 @@
 
 #include "HMapLoader.h"
 #include "HWOWKlient.h"
+#include "HMapEditor.h"
 
 struct MapSceneContext
 {
 	IrrlichtDevice *device;
 	s32             counter;
+	WowKlient::Core::GameState * gState;
+	IGUIWindow * toolBox;
 	IGUIListBox * listBoxModels;
 	IGUIButton * buttonAdd;
 	IAnimatedMeshSceneNode * previewNode;
 	IMeshSceneNode ** metaNode;
+	IGUIImage * previewImage;
 };
 
 class MapEditorEventReceiver : public IEventReceiver
@@ -62,16 +66,26 @@ public:
 		{
 			s32 id = event.GUIEvent.Caller->getID();
 			IGUIEnvironment* env = SceneContext.device->getGUIEnvironment();
-
+			
 			switch (event.GUIEvent.EventType)
 			{
+			case EGET_ELEMENT_CLOSED:
+				switch (id)
+				{
+				case ID_TOOL_WINDOW:
+					SceneContext.toolBox->setVisible(false);
+					return true;
+					break;
+				}
+				break;
 			case EGET_BUTTON_CLICKED:
 				switch (id)
 				{
 				case ID_GUI_TOOLBAR_BUTTON_NEW:
 					printf("\nNew :-) \n");
 					break;
-				default:
+				case ID_GUI_TOOLBAR_BUTTON_WMO:
+					SceneContext.toolBox->setVisible(true);
 					break;
 				}
 				break;
