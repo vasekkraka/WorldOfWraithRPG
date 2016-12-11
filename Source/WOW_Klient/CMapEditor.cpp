@@ -27,7 +27,36 @@ void MapEditor::setGState(WowKlient::Core::GameState * state)
 	gState = state;
 }
 
-IGUIToolBar * MapEditor::createToolbar(WowKlient::Core::GameState * gState)
+
+
+void MapEditor::prepairModelsList(mapSceneContext * sceneContext)
+{
+	ifstream  mtl_file;
+	ofstream  output_file;
+	fs::path targetDir(PATH_PREFIX "\\model");
+
+	fs::directory_iterator it(targetDir), eod;
+
+	int mtl_count = 0;
+
+	BOOST_FOREACH(fs::path const &p, std::make_pair(it, eod))
+	{
+		if (is_regular_file(p))
+		{
+			std::string pripona = p.filename().string().substr(p.filename().string().length() - 4, 4);
+
+			if (!pripona.compare(".obj"))
+			{
+				mtl_count++;
+				sceneContext->listBoxModels->addItem(p.filename().c_str());
+			}
+
+		}
+	}
+	printf("\n\nTotal OBJ count: %i", mtl_count);
+}
+
+IGUIToolBar * MapEditor::createToolbar(mapSceneContext * sceneContext)
 {
 	irr::gui::IGUIEnvironment* guienv = gState->irrDevice->getGUIEnvironment();
 	irr::video::IVideoDriver * driver = gState->irrDevice->getVideoDriver();
@@ -75,42 +104,25 @@ IGUIToolBar * MapEditor::createToolbar(WowKlient::Core::GameState * gState)
 	return toolBar;
 }
 
+void initializeCamera(mapSceneContext * sceneContext)
+{
+	sceneContext->cameraNode = sceneContext->device->getSceneManager()->addCameraSceneNodeMaya();
+	sceneContext->cameraNode->setPosition(vector3df(0, 0, -125));
+	sceneContext->cameraNode->setTarget(vector3df(0, 0, 0));
+}
+
 void MapEditor::runMapEditor()
 {
 	irr::gui::IGUIEnvironment* guienv = gState->irrDevice->getGUIEnvironment();
 	irr::video::IVideoDriver * driver = gState->irrDevice->getVideoDriver();
 	irr::scene::ISceneManager * smgr = gState->irrDevice->getSceneManager();
 
-	IMeshSceneNode * metaNode = NULL;
-
-	ICameraSceneNode * cam = smgr->addCameraSceneNode();
-	cam->setPosition(vector3df(0, 0, -125));
-	cam->setTarget(vector3df(0, 0, 0));
-
-	driver->setTextureCreationFlag(E_TEXTURE_CREATION_FLAG::ETCF_ALWAYS_32_BIT);
-
-	createToolbar(gState);
-
-	IGUIWindow * toolWindow = guienv->addWindow(rect<s32>(gState->gConf->resolution.Width - SIZE_TOOL_WINDOW_WIDTH, 0, gState->gConf->resolution.Width, SIZE_TOOL_WINDOW_HEIGHT), false, L"Nástroje", 0,ID_TOOL_WINDOW);
-	toolWindow->setVisible(false);
-
-	IGUITabControl * tabControl = guienv->addTabControl(rect<s32>(4, 25, SIZE_TAB_CONTROL_WIDTH, SIZE_TAB_CONTROL_HEIGHT), toolWindow);
-
-	IGUITab * tabMap = tabControl->addTab(L"WMO", 1);
-	IGUITab * tabProperties = tabControl->addTab(L"Vlastnosti", 1);
-
-	IGUIImage * previewImage = guienv->addImage(rect<s32>(SIZE_TAB_LEFT, SIZE_GUI_IMAGE_PREVIEW_TOP, SIZE_GUI_IMAGE_PREVIEW_WIDTH, SIZE_GUI_IMAGE_PREVIEW_TOP + SIZE_GUI_IMAGE_PREVIEW_HEIGHT), tabMap, ID_GUI_IMAGE_PREVIEW, L"Preview");
-
-	IGUIButton * buttonAdd = guienv->addButton(rect<s32>(SIZE_TAB_LEFT, SIZE_GUI_ADD_BUTTON_TOP, SIZE_GUI_ADD_BUTTON_WIDTH, SIZE_GUI_ADD_BUTTON_TOP + SIZE_GUI_ADD_BUTTON_HEIGHT), tabMap, ID_GUI_ADD_BUTTON, L"Add", L"ToolTip");
-
-	IGUIListBox * listBoxModels = guienv->addListBox(rect<s32>(SIZE_TAB_LEFT, 0, SIZE_TAB_RIGHT, SIZE_GUI_LISTBOX_MODELS_HEIGHT + SIZE_TAB_CONTROL_TOP), tabMap, ID_GUI_LISTBOX_MODELS, true);
-
-	MapSceneContext SceneContext;
+	mapSceneContext SceneContext;
 	SceneContext.gState = gState;
 	SceneContext.device = gState->irrDevice;
+	IMeshSceneNode * metaNode = NULL;
 	SceneContext.metaNode = &metaNode;
-	SceneContext.toolBox = toolWindow;
-	SceneContext.listBoxModels = listBoxModels;
+	ITexture* rtt = 0;
 
 	MapEditorEventReceiver eventReciever(SceneContext);
 	gState->irrDevice->setEventReceiver(&eventReciever);
@@ -121,36 +133,26 @@ void MapEditor::runMapEditor()
 	if (font)
 		skin->setFont(font);
 
-	ifstream  mtl_file;
-	ofstream  output_file;
-	fs::path targetDir(PATH_PREFIX "\\model");
+	createToolbar(&SceneContext);
 
-	fs::directory_iterator it(targetDir), eod;
+	SceneContext.toolBox = guienv->addWindow(rect<s32>(gState->gConf->resolution.Width - SIZE_TOOL_WINDOW_WIDTH, 0, gState->gConf->resolution.Width, SIZE_TOOL_WINDOW_HEIGHT), false, L"Nástroje", 0,ID_TOOL_WINDOW);
+	SceneContext.toolBox->setVisible(false);
 
-	int mtl_count = 0;
+	IGUITabControl * tabControl = guienv->addTabControl(rect<s32>(4, 25, SIZE_TAB_CONTROL_WIDTH, SIZE_TAB_CONTROL_HEIGHT), SceneContext.toolBox);
 
-	BOOST_FOREACH(fs::path const &p, std::make_pair(it, eod))
-	{
-		if (is_regular_file(p))
-		{
-			std::string pripona = p.filename().string().substr(p.filename().string().length() - 4, 4);
+	IGUITab * tabMap = tabControl->addTab(L"WMO", 1);
+	IGUITab * tabProperties = tabControl->addTab(L"Vlastnosti", 1);
 
-			if (!pripona.compare(".obj"))
-			{
-				mtl_count++;
-				listBoxModels->addItem(p.filename().c_str());
-			}
+	SceneContext.previewImage = guienv->addImage(rect<s32>(SIZE_TAB_LEFT, SIZE_GUI_IMAGE_PREVIEW_TOP, SIZE_GUI_IMAGE_PREVIEW_WIDTH, SIZE_GUI_IMAGE_PREVIEW_TOP + SIZE_GUI_IMAGE_PREVIEW_HEIGHT), tabMap, ID_GUI_IMAGE_PREVIEW, L"Preview");
 
-		}
-	}
+	guienv->addButton(rect<s32>(SIZE_TAB_LEFT, SIZE_GUI_ADD_BUTTON_TOP, SIZE_GUI_ADD_BUTTON_WIDTH, SIZE_GUI_ADD_BUTTON_TOP + SIZE_GUI_ADD_BUTTON_HEIGHT), tabMap, ID_GUI_ADD_BUTTON, L"Add", L"ToolTip");
 
-	printf("\n\nTotal OBJ count: %i", mtl_count);
-
-	ITexture* rtt = 0;
+	SceneContext.listBoxModels = guienv->addListBox(rect<s32>(SIZE_TAB_LEFT, 0, SIZE_TAB_RIGHT, SIZE_GUI_LISTBOX_MODELS_HEIGHT + SIZE_TAB_CONTROL_TOP), tabMap, ID_GUI_LISTBOX_MODELS, true);
 
 	rtt = driver->addRenderTargetTexture(dimension2d<u32>(SIZE_GUI_IMAGE_PREVIEW_WIDTH, SIZE_GUI_IMAGE_PREVIEW_HEIGHT), "RTT1");
+	SceneContext.previewImage->setImage(rtt);
 
-	previewImage->setImage(rtt);
+	prepairModelsList(&SceneContext);
 
 	while (gState->irrDevice->run())
 	{

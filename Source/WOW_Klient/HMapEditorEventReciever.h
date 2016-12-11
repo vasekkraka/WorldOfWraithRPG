@@ -5,26 +5,16 @@
 #include "HWOWKlient.h"
 #include "HMapEditor.h"
 
-struct MapSceneContext
-{
-	IrrlichtDevice *device;
-	s32             counter;
-	WowKlient::Core::GameState * gState;
-	IGUIWindow * toolBox;
-	IGUIListBox * listBoxModels;
-	IGUIButton * buttonAdd;
-	IAnimatedMeshSceneNode * previewNode;
-	IMeshSceneNode ** metaNode;
-	IGUIImage * previewImage;
-};
 
 class MapEditorEventReceiver : public IEventReceiver
 {
 public:
-	MapEditorEventReceiver(MapSceneContext & context) : SceneContext(context) { }
+	MapEditorEventReceiver(mapSceneContext & context) : SceneContext(context) { }
 
 	virtual bool OnEvent(const SEvent& event)
 	{
+		ISceneManager * smgr = SceneContext.device->getSceneManager();
+
 		if (event.EventType == EET_MOUSE_INPUT_EVENT)
 		{
 			IGUIElement * elm = SceneContext.device->getGUIEnvironment()->getRootGUIElement()->getElementFromPoint(SceneContext.device->getCursorControl()->getPosition());
@@ -82,7 +72,10 @@ public:
 				switch (id)
 				{
 				case ID_GUI_TOOLBAR_BUTTON_NEW:
-					printf("\nNew :-) \n");
+					smgr->clear();
+					initializeCamera(&SceneContext);
+					SceneContext.mapNodes.push_back(new mapNode());
+					(*SceneContext.mapNodes.getLast())->node = smgr->addCubeSceneNode();
 					break;
 				case ID_GUI_TOOLBAR_BUTTON_WMO:
 					SceneContext.toolBox->setVisible(true);
@@ -93,7 +86,7 @@ public:
 			case EGET_LISTBOX_SELECTED_AGAIN:
 				if (id == ID_GUI_LISTBOX_MODELS)
 				{
-					wprintf(L"Vybran model: %s\n", SceneContext.listBoxModels->getListItem(SceneContext.listBoxModels->getSelected()));
+					//wprintf(L"Vybran model: %s\n", SceneContext.listBoxModels->getListItem(SceneContext.listBoxModels->getSelected()));
 
 					if (*SceneContext.metaNode != NULL)
 					{
@@ -154,7 +147,7 @@ public:
 	}
 
 private:
-	MapSceneContext & SceneContext;
+	mapSceneContext & SceneContext;
 	bool rotating = false;
 	vector2d<s32> mousePos;
 };

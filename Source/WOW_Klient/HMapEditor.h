@@ -41,7 +41,33 @@
 #define ID_GUI_TOOLBAR_BUTTON_SAVE 240
 #define ID_GUI_TOOLBAR_BUTTON_ROUTE 250
 
+struct nodeProperties
+{
+	s32 nodeId;
+	bool isTerrain;
+	bool isTargetable;
+};
 
+struct mapNode
+{
+	IMeshSceneNode * node;
+	nodeProperties * properties;
+};
+
+struct mapSceneContext
+{
+	IrrlichtDevice *device;
+	s32             counter;
+	WowKlient::Core::GameState * gState;
+	IGUIWindow * toolBox;
+	IGUIListBox * listBoxModels;
+	IGUIButton * buttonAdd;
+	IAnimatedMeshSceneNode * previewNode;
+	IMeshSceneNode ** metaNode;
+	IGUIImage * previewImage;
+	ICameraSceneNode * cameraNode;
+	irr::core::list<mapNode*> mapNodes;
+};
 
 
 class MapEditor
@@ -54,15 +80,18 @@ public:
 	void setGState(WowKlient::Core::GameState * state);
 	
 	void runMapEditor();
-	IGUIToolBar * createToolbar(WowKlient::Core::GameState * gState);
-
+	IGUIToolBar * createToolbar(mapSceneContext * sceneContext);
+	void prepairModelsList(mapSceneContext * sceneContext);	
 	bool saveMapXML();
 	bool loadMapXML();
 	bool saveServerData();
 	bool loadServerData();
 	
+	
 private:
 	WowKlient::Core::GameState * gState;
 };
+
+void initializeCamera(mapSceneContext * sceneContext);
 
 #endif
