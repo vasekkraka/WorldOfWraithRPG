@@ -106,9 +106,17 @@ IGUIToolBar * MapEditor::createToolbar(mapSceneContext * sceneContext)
 
 void initializeCamera(mapSceneContext * sceneContext)
 {
-	sceneContext->cameraNode = sceneContext->device->getSceneManager()->addCameraSceneNodeMaya();
-	sceneContext->cameraNode->setPosition(vector3df(0, 0, -125));
-	sceneContext->cameraNode->setTarget(vector3df(0, 0, 0));
+	sceneContext->cameraNodeMaya = sceneContext->device->getSceneManager()->addCameraSceneNodeMaya();
+	sceneContext->cameraNodeMaya->setTarget(vector3df(0, 50, 0));
+
+	//sceneContext->cameraNodeMaya->setRotation(vector3df(180, 0, 0));
+
+
+	sceneContext->cameraNodeModelPreview = sceneContext->device->getSceneManager()->addCameraSceneNode();
+	sceneContext->cameraNodeModelPreview->setPosition(vector3df(0, 0, -125));
+	sceneContext->cameraNodeModelPreview->setTarget(vector3df(0, 0, 0));
+
+	sceneContext->device->getSceneManager()->setActiveCamera(sceneContext->cameraNodeMaya);
 }
 
 void MapEditor::runMapEditor()
@@ -120,11 +128,11 @@ void MapEditor::runMapEditor()
 	mapSceneContext SceneContext;
 	SceneContext.gState = gState;
 	SceneContext.device = gState->irrDevice;
-	IMeshSceneNode * metaNode = NULL;
-	SceneContext.metaNode = &metaNode;
+	//IMeshSceneNode * metaNode = NULL;
+	SceneContext.metaNode = NULL;
 	ITexture* rtt = 0;
 
-	MapEditorEventReceiver eventReciever(SceneContext);
+	MapEditorEventReceiver eventReciever(&SceneContext);
 	gState->irrDevice->setEventReceiver(&eventReciever);
 
 	IGUISkin * skin = guienv->getSkin();
@@ -134,6 +142,7 @@ void MapEditor::runMapEditor()
 		skin->setFont(font);
 
 	createToolbar(&SceneContext);
+	initializeCamera(&SceneContext);
 
 	SceneContext.toolBox = guienv->addWindow(rect<s32>(gState->gConf->resolution.Width - SIZE_TOOL_WINDOW_WIDTH, 0, gState->gConf->resolution.Width, SIZE_TOOL_WINDOW_HEIGHT), false, L"Nástroje", 0,ID_TOOL_WINDOW);
 	SceneContext.toolBox->setVisible(false);
@@ -173,16 +182,38 @@ void MapEditor::runMapEditor()
 		if (rtt)
 		{
 			bool visible;
-			if (metaNode)
+			ICameraSceneNode * activeCam = smgr->getActiveCamera();
+			smgr->setActiveCamera(SceneContext.cameraNodeModelPreview);
+			if (SceneContext.metaNode != NULL)
 			{
-				visible = metaNode->isVisible();
-				metaNode->setVisible(true);
+				visible = SceneContext.metaNode->isVisible();
+				SceneContext.metaNode->setVisible(true);
+
+				SceneContext.device->getSceneManager()->setActiveCamera(SceneContext.cameraNodeModelPreview);
+				irr::core::list<mapNode *>::Iterator it = SceneContext.mapNodes.begin();
+				while (it != SceneContext.mapNodes.end())
+				{
+					(*it)->node->setVisible(false);
+					it++;
+				}
 			}
 			driver->setRenderTarget(rtt, true, true, SColor(255, 128, 128, 128));
 			smgr->drawAll();
-			if (metaNode)
-			metaNode->setVisible(visible);
+			if (SceneContext.metaNode)
+			{
+				SceneContext.metaNode->setVisible(visible);
+
+				SceneContext.device->getSceneManager()->setActiveCamera(SceneContext.cameraNodeModelPreview);
+				irr::core::list<mapNode *>::Iterator it = SceneContext.mapNodes.begin();
+				while (it != SceneContext.mapNodes.end())
+				{
+					(*it)->node->setVisible(true);
+					it++;
+				}
+			}
+
 			driver->setRenderTarget(0, true, true, SColor(255, 128, 128, 128));
+			smgr->setActiveCamera(activeCam);
 		}
 				
 		smgr->drawAll();

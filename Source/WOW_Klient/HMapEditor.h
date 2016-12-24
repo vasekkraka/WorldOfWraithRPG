@@ -63,9 +63,10 @@ struct mapSceneContext
 	IGUIListBox * listBoxModels;
 	IGUIButton * buttonAdd;
 	IAnimatedMeshSceneNode * previewNode;
-	IMeshSceneNode ** metaNode;
+	IMeshSceneNode * metaNode;
 	IGUIImage * previewImage;
-	ICameraSceneNode * cameraNode;
+	ICameraSceneNode * cameraNodeMaya;
+	ICameraSceneNode * cameraNodeModelPreview;
 	irr::core::list<mapNode*> mapNodes;
 };
 
