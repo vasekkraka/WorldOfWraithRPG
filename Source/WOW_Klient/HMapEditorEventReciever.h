@@ -14,11 +14,12 @@ public:
 	virtual bool OnEvent(const SEvent& event)
 	{
 		ISceneManager * smgr = SceneContext->device->getSceneManager();
+		IGUIElement * cursorElement = SceneContext->device->getGUIEnvironment()->getRootGUIElement()->getElementFromPoint(SceneContext->device->getCursorControl()->getPosition());
+		mousePos = SceneContext->device->getCursorControl()->getPosition();
 
-		if (event.EventType == EET_MOUSE_INPUT_EVENT)
+		switch (event.EventType)
 		{
-			IGUIElement * cursorElement = SceneContext->device->getGUIEnvironment()->getRootGUIElement()->getElementFromPoint(SceneContext->device->getCursorControl()->getPosition());
-			mousePos = SceneContext->device->getCursorControl()->getPosition();
+		case EET_MOUSE_INPUT_EVENT:
 			switch (event.MouseInput.Event)
 			{
 			case EMIE_LMOUSE_PRESSED_DOWN:
@@ -34,7 +35,7 @@ public:
 				{
 					rotating = false;
 				}
-				
+
 				break;
 			case EMIE_RMOUSE_PRESSED_DOWN:
 				if (cursorElement->getID() == ID_GUI_IMAGE_PREVIEW)
@@ -76,6 +77,15 @@ public:
 
 				SceneContext->metaNode->setRotation(rot);
 			}
+			break;
+		case EET_GUI_EVENT:
+			break;
+		case EET_KEY_INPUT_EVENT:
+			break;
+		}
+		if (event.EventType == EET_MOUSE_INPUT_EVENT)
+		{
+			
 		}
 		if (event.EventType == EET_GUI_EVENT)
 		{
