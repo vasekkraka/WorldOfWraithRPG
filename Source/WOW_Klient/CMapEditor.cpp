@@ -107,10 +107,12 @@ IGUIToolBar * MapEditor::createToolbar(mapSceneContext * sceneContext)
 void initializeCamera(mapSceneContext * sceneContext)
 {
 	sceneContext->cameraNodeMaya = sceneContext->device->getSceneManager()->addCameraSceneNodeMaya();
-	sceneContext->cameraNodeMaya->setTarget(vector3df(0, 50, 0));
-
-	//sceneContext->cameraNodeMaya->setRotation(vector3df(180, 0, 0));
-
+	sceneContext->cameraNodeMaya->setTarget(vector3df(0, 5, 0));
+	irr::core::list<ISceneNodeAnimator *>::ConstIterator anim = sceneContext->cameraNodeMaya->getAnimators().begin();
+	if ((*anim)->getType() == ESCENE_NODE_ANIMATOR_TYPE::ESNAT_CAMERA_MAYA)
+	{
+		((ISceneNodeAnimatorCameraMaya*)(*anim))->setDistance(1);
+	}
 
 	sceneContext->cameraNodeModelPreview = sceneContext->device->getSceneManager()->addCameraSceneNode();
 	sceneContext->cameraNodeModelPreview->setPosition(vector3df(0, 0, -125));

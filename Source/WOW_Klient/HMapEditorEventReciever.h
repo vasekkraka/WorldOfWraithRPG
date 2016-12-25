@@ -17,12 +17,12 @@ public:
 
 		if (event.EventType == EET_MOUSE_INPUT_EVENT)
 		{
-			IGUIElement * elm = SceneContext->device->getGUIEnvironment()->getRootGUIElement()->getElementFromPoint(SceneContext->device->getCursorControl()->getPosition());
+			IGUIElement * cursorElement = SceneContext->device->getGUIEnvironment()->getRootGUIElement()->getElementFromPoint(SceneContext->device->getCursorControl()->getPosition());
 			mousePos = SceneContext->device->getCursorControl()->getPosition();
 			switch (event.MouseInput.Event)
 			{
 			case EMIE_LMOUSE_PRESSED_DOWN:
-				if (elm->getID() == ID_GUI_IMAGE_PREVIEW)
+				if (cursorElement->getID() == ID_GUI_IMAGE_PREVIEW)
 				{
 					printf("\n Mys  na obrazku :-) \n");
 					rotating = true;
@@ -37,7 +37,7 @@ public:
 				
 				break;
 			case EMIE_RMOUSE_PRESSED_DOWN:
-				if (elm->getID() == ID_GUI_IMAGE_PREVIEW)
+				if (cursorElement->getID() == ID_GUI_IMAGE_PREVIEW)
 				{
 					if ((SceneContext->metaNode) != NULL)
 					{
