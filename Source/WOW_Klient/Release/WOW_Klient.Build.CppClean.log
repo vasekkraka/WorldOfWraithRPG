@@ -1,20 +1,3 @@
-c:\users\vkraka\documents\worldofwraithrpg\source\wow_klient\release\vc120.pdb
-c:\users\vkraka\documents\worldofwraithrpg\source\wow_klient\release\ctestscenes.obj
-c:\users\vkraka\documents\worldofwraithrpg\source\wow_klient\release\crealisticwater.obj
-c:\users\vkraka\documents\worldofwraithrpg\source\wow_klient\release\cwowlikecameraanimator.obj
-c:\users\vkraka\documents\worldofwraithrpg\source\wow_klient\release\cwowklient.obj
-c:\users\vkraka\documents\worldofwraithrpg\source\wow_klient\release\cwowcollisionanimator.obj
-c:\users\vkraka\documents\worldofwraithrpg\source\wow_klient\release\cserverconnector.obj
-c:\users\vkraka\documents\worldofwraithrpg\source\wow_klient\release\cmeshfunctions.obj
-c:\users\vkraka\documents\worldofwraithrpg\source\wow_klient\release\cmaploader.obj
-c:\users\vkraka\documents\worldofwraithrpg\source\wow_klient\release\cmapeditor.obj
-c:\users\vkraka\documents\worldofwraithrpg\source\wow_klient\release\cmain.obj
-c:\users\vkraka\documents\worldofwraithrpg\source\wow_klient\release\cloginmanager.obj
-c:\users\vkraka\documents\worldofwraithrpg\source\wow_klient\release\cintro.obj
-c:\users\vkraka\documents\worldofwraithrpg\source\wow_klient\release\ccore.obj
-c:\users\vkraka\documents\worldofwraithrpg\source\wow_klient\release\cconfigloader.obj
-c:\users\vkraka\documents\worldofwraithrpg\source\wow_klient\release\ccolmanager.obj
-c:\users\vkraka\documents\worldofwraithrpg\source\wow_klient\release\cnetworkconnector.obj
 c:\users\m1tnick\documents\worldofwraithrpg\source\wow_klient\release\vc120.pdb
 c:\users\m1tnick\documents\worldofwraithrpg\source\wow_klient\release\ctestscenes.obj
 c:\users\m1tnick\documents\worldofwraithrpg\source\wow_klient\release\crealisticwater.obj
@@ -32,8 +15,7 @@ c:\users\m1tnick\documents\worldofwraithrpg\source\wow_klient\release\ccore.obj
 c:\users\m1tnick\documents\worldofwraithrpg\source\wow_klient\release\cconfigloader.obj
 c:\users\m1tnick\documents\worldofwraithrpg\source\wow_klient\release\ccolmanager.obj
 c:\users\m1tnick\documents\worldofwraithrpg\source\wow_klient\release\cnetworkconnector.obj
-c:\users\vkraka\documents\worldofwraithrpg\bin\msvc32\release\wow_klient.exe
-c:\users\vkraka\documents\worldofwraithrpg\bin\msvc32\release\wow_klient.pdb
+c:\users\m1tnick\documents\worldofwraithrpg\source\wow_klient\release\cmapeditoreventreciever.obj
 c:\users\m1tnick\documents\worldofwraithrpg\bin\msvc32\release\wow_klient.exe
 c:\users\m1tnick\documents\worldofwraithrpg\bin\msvc32\release\wow_klient.pdb
 c:\users\m1tnick\documents\worldofwraithrpg\visual studio\\..\bin\msvc32\release\wow_klient.pdb

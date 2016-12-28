@@ -118,6 +118,7 @@
     <ClCompile Include="CLoginManager.cpp" />
     <ClCompile Include="CMain.cpp" />
     <ClCompile Include="CMapEditor.cpp" />
+    <ClCompile Include="CMapEditorEventReciever.cpp" />
     <ClCompile Include="CMapLoader.cpp" />
     <ClCompile Include="CMeshFunctions.cpp" />
     <ClCompile Include="CServerConnector.cpp" />

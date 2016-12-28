@@ -82,7 +82,9 @@ public:
 	
 	void runMapEditor();
 	IGUIToolBar * createToolbar(mapSceneContext * sceneContext);
-	void prepairModelsList(mapSceneContext * sceneContext);	
+	void prepairWmoModelsList(mapSceneContext * sceneContext);	
+	void prepairNpcModelsList(mapSceneContext * sceneContext);
+	void prepairAnimatedModelsList(mapSceneContext * sceneContext);
 	bool saveMapXML();
 	bool loadMapXML();
 	bool saveServerData();

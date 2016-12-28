@@ -27,13 +27,65 @@ void MapEditor::setGState(WowKlient::Core::GameState * state)
 	gState = state;
 }
 
-
-
-void MapEditor::prepairModelsList(mapSceneContext * sceneContext)
+void MapEditor::prepairNpcModelsList(mapSceneContext * sceneContext)
 {
 	ifstream  mtl_file;
 	ofstream  output_file;
-	fs::path targetDir(PATH_PREFIX "\\model");
+	fs::path targetDir(PATH_PREFIX "\\npc");
+
+	fs::directory_iterator it(targetDir), eod;
+
+	int mtl_count = 0;
+
+	BOOST_FOREACH(fs::path const &p, std::make_pair(it, eod))
+	{
+		if (is_regular_file(p))
+		{
+			std::string pripona = p.filename().string().substr(p.filename().string().length() - 4, 4);
+
+			if (!pripona.compare(".npc"))
+			{
+				mtl_count++;
+				sceneContext->listBoxModels->addItem(p.filename().c_str());
+			}
+
+		}
+	}
+	printf("\n\nTotal OBJ count: %i", mtl_count);
+}
+
+void MapEditor::prepairAnimatedModelsList(mapSceneContext * sceneContext)
+{
+	ifstream  mtl_file;
+	ofstream  output_file;
+	fs::path targetDir(PATH_PREFIX "\\npcmodel");
+
+	fs::directory_iterator it(targetDir), eod;
+
+	int mtl_count = 0;
+
+	BOOST_FOREACH(fs::path const &p, std::make_pair(it, eod))
+	{
+		if (is_regular_file(p))
+		{
+			std::string pripona = p.filename().string().substr(p.filename().string().length() - 4, 4);
+
+			if (!pripona.compare(".b3d"))
+			{
+				mtl_count++;
+				sceneContext->listBoxModels->addItem(p.filename().c_str());
+			}
+
+		}
+	}
+	printf("\n\nTotal OBJ count: %i", mtl_count);
+}
+
+void MapEditor::prepairWmoModelsList(mapSceneContext * sceneContext)
+{
+	ifstream  mtl_file;
+	ofstream  output_file;
+	fs::path targetDir(PATH_PREFIX "\\wmomodel");
 
 	fs::directory_iterator it(targetDir), eod;
 
@@ -130,7 +182,7 @@ void MapEditor::runMapEditor()
 	mapSceneContext SceneContext;
 	SceneContext.gState = gState;
 	SceneContext.device = gState->irrDevice;
-	//IMeshSceneNode * metaNode = NULL;
+
 	SceneContext.metaNode = NULL;
 	ITexture* rtt = 0;
 
@@ -146,7 +198,7 @@ void MapEditor::runMapEditor()
 	createToolbar(&SceneContext);
 	initializeCamera(&SceneContext);
 
-	SceneContext.toolBox = guienv->addWindow(rect<s32>(gState->gConf->resolution.Width - SIZE_TOOL_WINDOW_WIDTH, 0, gState->gConf->resolution.Width, SIZE_TOOL_WINDOW_HEIGHT), false, L"Nástroje", 0,ID_TOOL_WINDOW);
+	SceneContext.toolBox = guienv->addWindow(rect<s32>(gState->gConf->resolution.Width - SIZE_TOOL_WINDOW_WIDTH, 0, gState->gConf->resolution.Width, SIZE_TOOL_WINDOW_HEIGHT), false, L"Práce s WMO", 0,ID_TOOL_WINDOW);
 	SceneContext.toolBox->setVisible(false);
 
 	IGUITabControl * tabControl = guienv->addTabControl(rect<s32>(4, 25, SIZE_TAB_CONTROL_WIDTH, SIZE_TAB_CONTROL_HEIGHT), SceneContext.toolBox);
@@ -163,7 +215,7 @@ void MapEditor::runMapEditor()
 	rtt = driver->addRenderTargetTexture(dimension2d<u32>(SIZE_GUI_IMAGE_PREVIEW_WIDTH, SIZE_GUI_IMAGE_PREVIEW_HEIGHT), "RTT1");
 	SceneContext.previewImage->setImage(rtt);
 
-	prepairModelsList(&SceneContext);
+	prepairWmoModelsList(&SceneContext);
 
 	while (gState->irrDevice->run())
 	{
@@ -221,19 +273,8 @@ void MapEditor::runMapEditor()
 		smgr->drawAll();
 		guienv->drawAll();
 
-		vector3df point;
-		triangle3df triangle;
-
-		smgr->getSceneCollisionManager()->getSceneNodeAndCollisionPointFromRay(smgr->getSceneCollisionManager()->getRayFromScreenCoordinates(gState->irrDevice->getCursorControl()->getPosition()), point, triangle);
-
-		video::SMaterial material;
-		material.Lighting = false;
-		material.Wireframe = true;
-		driver->setMaterial(material);
-		driver->setTransform(video::ETS_WORLD, core::matrix4());
-		driver->draw3DTriangle(triangle, SColor(200, 255, 0, 0));
-
 		driver->endScene();
+		
 		u32 newtime = gState->irrDevice->getTimer()->getTime();
 		if ((newtime - oldtime) < 1000 / gState->gConf->reqFps)
 		{
